@@ -1,1 +1,117 @@
+/* landing page starts */
 
+.active-color {
+    color: #3974af !important;
+}
+
+.theme-color {
+    background-color: #ff9900;
+}
+
+.light-color,
+html,
+body {
+    background-color: #ffffcc;
+}
+
+.welcome-banner-container {
+    padding-top: 10vh;
+
+}
+
+/* 
+.flex-box-center {
+    display: flex;
+    align-items: center;
+} */
+
+.navi-bottons {
+    font-weight: bold;
+    color: #ff9900;
+    border: 2px solid #ff9900;
+}
+
+.navi-bottons-signup {
+    font-weight: bold;
+    color: rgb(87, 126, 218);
+    border: 2px solid rgb(87, 126, 218);
+}
+
+.navi-bottons:hover {
+    background-color: #ff9900;
+    color: #ffffcc;
+    border: 2px solid #f8b943;
+}
+
+.navi-bottons-signup:hover {
+    background-color: #3974af;
+    color: white;
+    border: 2px solid rgb(87, 126, 218);
+}
+
+#navbar-hi {
+    display: inline-block;
+    padding-top: 5px;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+#navbar-brand-box {
+    display: flex;
+    align-items: center;
+}
+
+.search-container {
+    margin-left: 5vw;
+    margin-right: 5vw;
+
+}
+
+.search-container {
+    height: 50px;
+}
+
+
+
+
+@media screen and (max-width:550px) {
+    .navi-items-text-first {
+        display: inline-block;
+        margin-top: 10px;
+    }
+
+    .welcome-banner {
+        margin: 0 1vw !important;
+        margin-bottom: 20vh !important;
+    }
+
+    .welcome-title {
+        margin-top: 6vh;
+    }
+
+}
+
+
+@media screen and (min-width:550px) {
+
+    .navi-items-text {
+        font-weight: bold;
+    }
+
+
+    .navi-items {
+        margin-left: 20px;
+    }
+
+    .welcome-banner {
+        margin-bottom: 40px !important;
+    }
+
+    .search-container {
+        margin-top: 8vh;
+    }
+
+
+}
+
+/* landing page finishes */
