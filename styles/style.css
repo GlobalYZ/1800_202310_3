@@ -1,22 +1,8 @@
 /* landing page starts */
 
-.active-color {
-    color: #3974af !important;
-}
-
-.theme-color {
-    background-color: #ff9900;
-}
-
-.light-color,
-html,
-body {
-    background-color: #ffffcc;
-}
 
 .welcome-banner-container {
     padding-top: 10vh;
-
 }
 
 /* 
@@ -24,30 +10,6 @@ body {
     display: flex;
     align-items: center;
 } */
-
-.navi-bottons {
-    font-weight: bold;
-    color: #ff9900;
-    border: 2px solid #ff9900;
-}
-
-.navi-bottons-signup {
-    font-weight: bold;
-    color: rgb(87, 126, 218);
-    border: 2px solid rgb(87, 126, 218);
-}
-
-.navi-bottons:hover {
-    background-color: #ff9900;
-    color: #ffffcc;
-    border: 2px solid #f8b943;
-}
-
-.navi-bottons-signup:hover {
-    background-color: #3974af;
-    color: white;
-    border: 2px solid rgb(87, 126, 218);
-}
 
 #navbar-hi {
     display: inline-block;
