@@ -1,0 +1,21 @@
+form {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .form-outline {
+    margin-bottom: 1.5rem;
+    width: 100%;
+  }
+  
+  .btn-navi {
+    margin-top: 1.5rem;
+  }
+  
+  .text-center {
+    margin-top: 1.5rem;
+  }
+  
