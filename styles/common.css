@@ -115,3 +115,14 @@ body {
     position:fixed;
     bottom:0;
 }
+
+/* footer ends */
+
+/* card starts */
+
+.card {
+    background-color: #f6efa0;
+    text-align: center;
+    margin: 5px;
+    overflow: auto;
+}
