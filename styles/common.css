@@ -12,6 +12,9 @@ body {
     background-color: #ffffcc;
 }
 
+
+/* two bottons start*/
+
 .navi-bottons {
     font-weight: bold;
     color: #ff9900;
@@ -35,3 +38,72 @@ body {
     color: white;
     border: 2px solid rgb(87, 126, 218);
 }
+
+/* two buttons finish */
+
+/* navbar starts */
+
+.navbar {
+    position: fixed;
+    width:100vw;
+}
+
+#navbar-hi {
+    display: inline-block;
+    padding-top: 5px;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+#navbar-brand-box {
+    display: flex;
+    align-items: center;
+}
+
+.search-container {
+    margin-left: 5vw;
+    margin-right: 5vw;
+
+}
+
+.search-container {
+    height: 50px;
+}
+
+.nav-container {
+    position: relative;
+}
+
+.nav-search {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width:30px;
+    cursor: pointer;
+}
+
+.nav-search span {
+    font-size: 30px;
+}
+
+.nav-search-bar .nav-searchbar-input {
+    width:30vw;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-icons {
+    margin-right:4px;
+}
+
+@media screen and (max-width:990px) {
+    form.nav-search-bar {
+        position:absolute;
+        left:60px;
+    }
+}
+
+/* nav bar finishes */

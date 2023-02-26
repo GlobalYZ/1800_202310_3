@@ -1,40 +1,11 @@
 /* landing page starts */
-
+.nav-search-bar {
+    display: none;
+}
 
 .welcome-banner-container {
     padding-top: 10vh;
 }
-
-/* 
-.flex-box-center {
-    display: flex;
-    align-items: center;
-} */
-
-#navbar-hi {
-    display: inline-block;
-    padding-top: 5px;
-    margin-left: 10px;
-    font-weight: bold;
-}
-
-#navbar-brand-box {
-    display: flex;
-    align-items: center;
-}
-
-.search-container {
-    margin-left: 5vw;
-    margin-right: 5vw;
-
-}
-
-.search-container {
-    height: 50px;
-}
-
-
-
 
 @media screen and (max-width:550px) {
     .navi-items-text-first {
