@@ -107,3 +107,11 @@ body {
 }
 
 /* nav bar finishes */
+
+/* footer starts */
+
+.footer-container {
+    width:100vw;
+    position:fixed;
+    bottom:0;
+}

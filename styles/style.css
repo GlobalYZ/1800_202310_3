@@ -24,6 +24,11 @@
 
 }
 
+footer {
+    position: fixed;
+    bottom:0;
+}
+
 
 @media screen and (min-width:550px) {
 
@@ -37,7 +42,7 @@
     }
 
     .welcome-banner {
-        margin-bottom: 40px !important;
+        margin-top:100px !important;
     }
 
     .search-container {
