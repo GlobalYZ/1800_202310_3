@@ -17,3 +17,8 @@ p {
 .details p {
     text-align: justify;
 }
+
+.container {
+padding-top: 70px;
+}
+
