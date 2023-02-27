@@ -15,3 +15,7 @@ p {
     'GRAD' 0,
     'opsz' 48
   }
+
+.details p {
+    text-align: justify;
+}
