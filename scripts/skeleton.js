@@ -14,6 +14,9 @@ function loadSkeleton(){
     }else if (document.getElementById("skeleton").getAttribute("message") == "weatheralert"){
         console.log($('#navbarPlaceholder').load('./components/navbar.html'));
         console.log($('#footerPlaceholder').load('./components/footer.html'));
+    }else if (document.getElementById("skeleton").getAttribute("message") == "roadconditiondetail"){
+        console.log($('#navbarPlaceholder').load('./components/navbar.html'));
+        console.log($('#footerPlaceholder').load('./components/footer.html'));
     }
 }
 loadSkeleton();  //invoke the function
