@@ -1,0 +1,21 @@
+.card {
+    max-height: 70%;
+}
+
+.card-title1 {
+    display:inline;
+    float: left;
+    margin-right: 20px;
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+.card-title2 {
+    display: inline;
+    float: left;
+}
+
+.card-img-bottom {
+    height: 300px;
+    border: 1px solid lightgray;
+}
