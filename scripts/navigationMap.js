@@ -3,51 +3,29 @@
 // 3. 在marker上添加事件
 
 function setupGeneral(){
+    $('.navigationMap-multiSearch-button').click(searchLocations)
     var h = window.innerHeight;
     var elementContainer = document.getElementById('map')
     elementContainer.setAttribute('style', 'height:' + (h-56) + 'px;margin-top:0;z-index:1;')
 } 
 
-function getCurrentAddress() {
-    var options = {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0
-      };
-      
-     function success(pos) {
-        var crd = pos.coords;
-      
-        console.log('Your current position is:');
-        console.log('Latitude : ' + crd.latitude);
-        console.log('Longitude: ' + crd.longitude);
-        console.log('More or less ' + crd.accuracy + ' meters.');
-        setMap(crd)
-      };
-      
-      function err() {
-        console.warn('denied to share your address!');
-        //pass the default school address
-        var crd = {
-            latitude: 49.281849,
-            longitude: -123.117149,
-        }
-        setMap(crd)
-      };
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success, err, options);
-    }
-}
-
-
 function setMap(currentAddress) {
+    if(currentAddress == false){
+        currentAddress = {
+            latitude: 49.282730,
+            longitude:-123.120735
+        }
+    }
+
+    console.log(currentAddress)
+
     let config = {
         minZoom: 7,
         maxZoom: 18
     };
     // magnification with which the map will start
-    const zoom = 14;
+    const zoom = 10;
+ 
 
     // coordinate array with popup text
     let points = [
@@ -87,5 +65,28 @@ function setMap(currentAddress) {
 
 }
 
+function searchLocations(){
+    var location1 = $("#search1").val()
+    var location2 = $("#search2").val()
+    console.log(location1, location2)
+    L.Routing.control({
+        waypoints: [
+            L.latLng(49.282730, -123.120735),
+            L.latLng(49.181540, -123.118980)
+        ],
+        routeWhileDragging: true,
+
+    }).addTo(map);  //map.getSize is not defined bug
+
+    // L.Routing.control({
+    //     waypoints: [
+    //       L.latLng(57.74, 11.94),
+    //       L.latLng(57.6792, 11.949)
+    //     ]
+    //   }).addTo(map);
+}
+
+// False indicates that user denied to give the current address
 setupGeneral()
-getCurrentAddress()
+setMap(false)
+

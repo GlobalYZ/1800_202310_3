@@ -7,3 +7,8 @@
     height:600px;
     width:100vw;
 }
+
+.navbar {
+    position: static;
+    z-index: 100;
+}

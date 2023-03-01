@@ -1,0 +1,47 @@
+.navbar {
+    position: static;
+    z-index: 100;
+}
+
+.nav-search-bar {
+    display: none;
+}
+
+.navigationMap-multiSearch {
+    position:fixed;
+    top:68px;
+    left:50px;
+    z-index:800;
+}
+
+.navigationMap-multiSearch .form-outline .form-control {
+    border:1px solid rgba(0,0,0,0.2);
+    width:300px;
+}
+
+.navigationMap-multiSearch .form-outline #search1{
+    margin-bottom:5px;
+}
+
+.navigationMap-multiSearch-button{
+    text-align: center;
+    height:65px;
+    width:65px;
+    border-radius: 50%;
+    border:2px solid rgba(0,0,0,0.2);
+    background-color: #fff;
+    color: rgba(0,0,0,0.6);
+    position:absolute;
+    right:-70px;
+    top:10px;
+}
+
+.navigationMap-multiSearch-button:hover {
+    background-color: #ff9900;
+    color: #ffffcc;
+    border: 2px solid #f8b943;
+}
+
+.navigationMap-multiSearch-button {
+    transition:background-color .3s ease-in-out, color .3s ease-in-out, border .3s ease-in-out;
+}

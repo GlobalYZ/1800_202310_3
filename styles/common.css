@@ -127,3 +127,19 @@ body {
     margin: 5px;
     overflow: auto;
 }
+
+/* card ends */
+
+/* map starts here */
+.map_container {
+    overflow:hidden;
+    z-index:1;
+}
+
+#map {
+    margin-top:56px;
+    height:600px;
+    width:100vw;
+}
+
+/* map ends here */
