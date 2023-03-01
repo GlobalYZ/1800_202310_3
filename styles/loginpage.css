@@ -23,3 +23,10 @@ form {
 .text-center {
   margin-top: 1.5rem;
 }
+
+footer {
+  position: static !important;
+  bottom:0;
+  text-align: center;
+  justify-content: center;
+}

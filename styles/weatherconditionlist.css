@@ -25,3 +25,10 @@
     height: 300px;
     border: 1px solid lightgray;
 }
+
+footer {
+    position: static !important;
+    bottom:0;
+    text-align: center;
+    justify-content: center;
+}

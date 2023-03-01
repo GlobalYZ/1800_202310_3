@@ -41,6 +41,13 @@
     outline: none;
 }
 
+footer {
+    position: static !important;
+    bottom:0;
+    text-align: center;
+    justify-content: center;
+}
+
 @media screen and (min-width:550px) {
     .form-group3 {
         width: 100% !important;

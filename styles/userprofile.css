@@ -13,6 +13,10 @@
     color: white;
 }
 
+.footer {
+  position: static;
+}
+
 @media screen and (max-width:550px) {
   .user-card {
     max-width: 400px !important;
