@@ -1,0 +1,9 @@
+.map_container {
+    overflow:hidden;
+}
+
+#map {
+    margin-top:56px;
+    height:600px;
+    width:100vw;
+}
