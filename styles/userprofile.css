@@ -1,0 +1,14 @@
+.user-card {
+  margin: 0 auto; /* set margin to 0 on top and bottom, and center horizontally */
+  max-width: 400px; /* set a max-width for the card */
+}
+
+.list-group {
+    margin: 0 auto; /* set margin to 0 on top and bottom, and center horizontally */
+    max-width: 400px; /* set a max-width for the card */
+  }
+
+.list-group-item:hover {
+    background-color: black;
+    color: white;
+}
