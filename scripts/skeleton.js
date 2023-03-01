@@ -33,5 +33,8 @@ function loadSkeleton(){
     }else if (document.getElementById("skeleton").getAttribute("message") =="userprofile"){
         console.log($('#navbarPlaceholder').load('../components/navbar.html'));
         console.log($('#footerPlaceholder').load('../components/footer.html'));
+    }else if (document.getElementById("skeleton").getAttribute("message") =="reportroadcondition"){
+        console.log($('#navbarPlaceholder').load('../components/navbar.html'));
+        console.log($('#footerPlaceholder').load('../components/footer.html'));
 }}
 loadSkeleton();  //invoke the function
