@@ -1,5 +1,11 @@
+.weather-list {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
 .card {
     max-height: 70%;
+    margin-bottom: 20px;
 }
 
 .card-title1 {
@@ -18,4 +24,11 @@
 .card-img-bottom {
     height: 300px;
     border: 1px solid lightgray;
+}
+
+footer {
+    position: static !important;
+    bottom:0;
+    text-align: center;
+    justify-content: center;
 }
