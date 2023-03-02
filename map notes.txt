@@ -1,11 +1,12 @@
 map current functions:
 Zoom in & Zoom out
 Map asks for accessing to user's current location. If the user declined, the map will set to the default address: BCIT school
-Maker points to primary location.
+Maker points to primary location
+navigation route map
+combined with google api, data transfer between address and latitude&lontitude
 
 
 to do:
-navigation route map
 -after the structure of database is done and all data needed is clear:
 Organize icon images for differenct road condition markers
 Add event listeners on the icon makers of road conditions, write popup messages.

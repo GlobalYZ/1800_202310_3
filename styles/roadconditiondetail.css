@@ -1,4 +1,6 @@
 img {
+    display:inline-block;
+    height: 30vw;
     padding: 5px;
 }
 
@@ -22,4 +24,9 @@ p {
 
 .container {
     padding-top: 70px;
-    }
+}
+
+.votecontainer .col{
+    display:flex;
+    align-items: center;
+}

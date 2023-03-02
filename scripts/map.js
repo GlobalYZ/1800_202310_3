@@ -3,9 +3,11 @@
 // 3. 在marker上添加事件
 
 function setupGeneral(){
-    var h = window.innerHeight;
-    var elementContainer = document.getElementById('map')
+    let h = window.innerHeight;
+    let w = window.innerWidth;
+    let elementContainer = document.getElementById('map')
     elementContainer.setAttribute('style', 'height:' + (h-56) + 'px;margin-top:0;z-index:1;')
+    document.getElementById('map_go').setAttribute('style', 'left:'+ (w-102)/2 + 'px;')
 } 
 
 function getCurrentAddress() {

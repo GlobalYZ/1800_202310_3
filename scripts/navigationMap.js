@@ -1,19 +1,58 @@
-// 1. 获取用户当前地址并让地图显示当前地址
-// 2. 导航
+
 // 3. 在marker上添加事件
 
-function setupGeneral(){
-    $('.navigationMap-multiSearch-button').click(searchLocations)
+var map = ""
+
+var locations = {
+    location1:"",
+    location2:""
+};
+var num = 111;
+
+function setupGeneral() {
     var h = window.innerHeight;
     var elementContainer = document.getElementById('map')
-    elementContainer.setAttribute('style', 'height:' + (h-56) + 'px;margin-top:0;z-index:1;')
-} 
+    elementContainer.setAttribute('style', 'height:' + (
+        h - 56
+    ) + 'px;margin-top:0;z-index:1;')
+    num = 222
+}
+
+
+function requestGaocoding(address, identifier) {
+    $.ajax({
+        url: "https://maps.googleapis.com/maps/api/geocode/json",
+        type: "get",
+        data: {
+            address: address, // good enough do not need rearrange data
+            key: "AIzaSyAkhygJBngZRdSBpNQQHkIf7OU99ioNjkg"
+        },
+        success: function (res) {
+            console.log(res)
+            if (res.status == "OK") {
+                console.log(res.results[0])
+                if(identifier == 1){
+                    locations.location1 = res.results[0].geometry.location
+                }else{
+                    locations.location2 = res.results[0].geometry.location
+                    setMultiMap()
+                }
+                
+            } else {
+                alert("Address is not matched, please edit your input!")
+            }
+        },
+        error: function (err) {
+            alert(err)
+        }
+    })
+}
 
 function setMap(currentAddress) {
-    if(currentAddress == false){
+    if (currentAddress == false) {
         currentAddress = {
             latitude: 49.282730,
-            longitude:-123.120735
+            longitude: -123.120735
         }
     }
 
@@ -25,7 +64,7 @@ function setMap(currentAddress) {
     };
     // magnification with which the map will start
     const zoom = 10;
- 
+
 
     // coordinate array with popup text
     let points = [
@@ -44,17 +83,16 @@ function setMap(currentAddress) {
     ];
 
     // calling map
-    const map = L.map("map", config).setView([
+    window.map = L.map("map", config).setView([
         currentAddress.latitude, currentAddress.longitude
     ], zoom);
-
 
 
     // Used to load and display tile layers on the map
     // Most tile servers require attribution, which you can set under `Layer`
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
-    
-    //add current location as primary marker
+
+    // add current location as primary marker
     marker = new L.marker([currentAddress.latitude, currentAddress.longitude]).addTo(map);
     // loop that adds many markers to the map
     // for (let i = 0; i < points.length; i++) {
@@ -63,30 +101,51 @@ function setMap(currentAddress) {
     //     marker = new L.marker([lat, lng]).bindPopup(popupText).addTo(map);
     // }
 
+    // document.getElementsByClassName('map_container')[0].setAttribute("map", map)
+    console.log(map)
+    return map
 }
 
-function searchLocations(){
-    var location1 = $("#search1").val()
-    var location2 = $("#search2").val()
-    console.log(location1, location2)
-    L.Routing.control({
-        waypoints: [
-            L.latLng(49.282730, -123.120735),
-            L.latLng(49.181540, -123.118980)
-        ],
-        routeWhileDragging: true,
+function setMultiMap() {
+    window.map = L.map('map');
 
-    }).addTo(map);  //map.getSize is not defined bug
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 
     // L.Routing.control({
     //     waypoints: [
-    //       L.latLng(57.74, 11.94),
-    //       L.latLng(57.6792, 11.949)
-    //     ]
-    //   }).addTo(map);
+    //         L.latLng(49.282730, -123.120735),
+    //         L.latLng(49.181540, -123.118980)
+    //     ],
+    //     routeWhileDragging: true
+
+    // }).addTo(map);
+    // map.getSize is not defined bug
+    console.log(locations)
+
+    L.Routing.control({
+        waypoints: [
+            L.latLng(locations.location1.lat, locations.location1.lng),
+            L.latLng(locations.location2.lat, locations.location2.lng)
+        ]
+    }).addTo(map);
 }
 
 // False indicates that user denied to give the current address
 setupGeneral()
-setMap(false)
+map = setMap(false)
+
+
+// $(".navigationMap-multiSearch-button").click(function (e, map) {
+//     console.log(map)
+// }).trigger('click', map);
+
+$("body").on('click', ".navigationMap-multiSearch-button", function () {
+    console.log(map)
+    map.off()
+    map.remove()
+    location1 = $('#search1').val()
+    location2 = $('#search2').val()
+    locations.location1 = requestGaocoding(location1, 1)
+    locations.location2 = requestGaocoding(location2, 2)
+})
 

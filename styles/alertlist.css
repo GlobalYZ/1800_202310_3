@@ -1,15 +1,15 @@
 p {
     padding: 5px;
     text-align: center;
-    margin-bottom: 0%;
+    margin-bottom: 0;
 }
 
 .row {
-    --bs-gutter-x: 0!important;
+    --bs-gutter-x: 0 !important;
 }
 
 .title {
-    margin-bottom: 0%;
+    margin-bottom: 0;
     text-align: left;
     padding-left: 10px;
 }
@@ -19,6 +19,9 @@ p {
 }
 
 .container {
-padding-top: 70px;
+    padding-top: 70px;
 }
 
+/* .alertlist-card:nth-child(odd) {
+    margin-right:5%;
+} */
