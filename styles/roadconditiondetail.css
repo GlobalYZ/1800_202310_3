@@ -1,13 +1,33 @@
 img {
     display:inline-block;
-    height: 30vw;
+    height: 320px;
     padding: 5px;
+    border-radius: 10px;
+}
+
+.images{
+    height: 350px;
+    width: 100%;
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.images .card{
+    --bs-gutter-x: 0;
+    display: inline-block;
 }
 
 p {
     padding: 5px;
     text-align: center;
     margin-bottom: 0%;
+}
+
+.votecontainer .col{
+    display:flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .votecontainer .material-symbols-outlined:hover {
@@ -18,15 +38,14 @@ p {
     'opsz' 48
   }
 
+.details{
+    background-color: white;  
+}
+
 .details p {
     text-align: justify;
 }
 
 .container {
     padding-top: 70px;
-}
-
-.votecontainer .col{
-    display:flex;
-    align-items: center;
 }
