@@ -4,12 +4,29 @@ p {
     margin-bottom: 0%;
 }
 
+.roadconditionphoto {
+    max-width: 100%;
+}
+
+img {
+    width: 100%;
+    padding: 5px;
+    border-radius: 10px;
+}
+
 .row {
     --bs-gutter-x: 0!important;
 }
 
 .title{
+    padding-left: 5px;
     margin-bottom: 0%;
+}
+
+.votecontainer .col{
+    display:flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .votecontainer .material-symbols-outlined:hover {
@@ -26,4 +43,17 @@ p {
 
 .container {
     padding-top: 70px;
-    }
+}
+
+.card{
+    background-color: white;  
+}
+
+.votecard{
+    background-color:  #f6efa0;
+}
+
+.card, .row {
+    display: flex;
+    flex-direction: row;
+}
