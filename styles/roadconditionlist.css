@@ -5,7 +5,7 @@ p {
 }
 
 .roadconditionphoto {
-    max-width: 200px;
+    max-width: 100%;
 }
 
 img {
@@ -19,6 +19,7 @@ img {
 }
 
 .title{
+    padding-left: 5px;
     margin-bottom: 0%;
 }
 
@@ -45,10 +46,14 @@ img {
 }
 
 .card{
-    background-color: white;
-    display: inline-block;    
+    background-color: white;  
 }
 
 .votecard{
     background-color:  #f6efa0;
+}
+
+.card, .row {
+    display: flex;
+    flex-direction: row;
 }
