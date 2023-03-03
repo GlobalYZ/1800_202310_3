@@ -4,12 +4,28 @@ p {
     margin-bottom: 0%;
 }
 
+.roadconditionphoto {
+    max-width: 200px;
+}
+
+img {
+    width: 100%;
+    padding: 5px;
+    border-radius: 10px;
+}
+
 .row {
     --bs-gutter-x: 0!important;
 }
 
 .title{
     margin-bottom: 0%;
+}
+
+.votecontainer .col{
+    display:flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .votecontainer .material-symbols-outlined:hover {
@@ -26,4 +42,13 @@ p {
 
 .container {
     padding-top: 70px;
-    }
+}
+
+.card{
+    background-color: white;
+    display: inline-block;    
+}
+
+.votecard{
+    background-color:  #f6efa0;
+}
