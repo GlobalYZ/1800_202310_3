@@ -110,10 +110,15 @@ body {
 /* nav bar finishes */
 
 /* footer starts */
+/* everything not footer or nav should go in main */
+.main{
+    padding-top: 70px;
+    min-height: 82vh;
+}
 
 .footer-container {
     width:100vw;
-    position:fixed;
+    position: relative;
     bottom:0;
     left:0;
 }
