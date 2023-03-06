@@ -1,3 +1,8 @@
+.main{
+    padding-top: 70px;
+    min-height: 85vh;
+}
+
 p {
     padding: 5px;
     text-align: center;
@@ -28,6 +33,10 @@ p {
     margin-bottom: 0%;
 }
 
+h2 {
+    margin-bottom: 0;
+}
+
 .votecontainer .col {
     display: flex;
     align-items: center;
@@ -44,10 +53,6 @@ p {
 
 .details p {
     text-align: justify;
-}
-
-.main{
-    padding-top: 70px;
 }
 
 .card {
@@ -92,10 +97,6 @@ p {
 .list-group-item:hover {
     background-color: black;
     color: white;
-}
-
-.footer {
-    position: static;
 }
 
 @media screen and (max-width:550px) {
