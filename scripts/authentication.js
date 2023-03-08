@@ -1,6 +1,22 @@
 // Initialize the FirebaseUI Widget using Firebase.
 var ui = new firebaseui.auth.AuthUI(firebase.auth());
 
+function getUser() {
+    firebase.auth().onAuthStateChanged(user => {
+        // Check if a user is signed in:
+        if (user) {
+            // Do something for the currently logged-in user here: 
+            console.log(user.uid); //print the uid in the browser console
+            console.log(user.displayName);  //print the user name in the browser console
+            localStorage.setItem("uid", user.uid)
+            localStorage.setItem("userName", user.displayName)
+            console.log("I am localStorage" + localStorage.getItem("uid"))
+        } else {
+            alert("something is wrong, please sign in again!")
+        }
+    });
+}
+
 var uiConfig = {
     callbacks: {
         signInSuccessWithAuthResult: function (authResult, redirectUrl) {
@@ -16,15 +32,18 @@ var uiConfig = {
             // The Firestore rules must allow the user to write.
             // ------------------------------------------------------------------------------------------
             var user = authResult.user; // get the user object from the Firebase authentication database
+            localStorage.setItem("loginStatus", true)
+            getUser()
             if (authResult.additionalUserInfo.isNewUser) { // if new user
                 db.collection("users").doc(user.uid).set({ // write to firestore. We are using the UID for the ID in users collection
                     name: user.displayName, // "users" collection
                     email: user.email, // with authenticated user's ID (user.uid)
-                    country: "Canada", // optional default profile info
-                    school: "BCIT" // optional default profile info
                 }).then(function () {
                     console.log("New user added to firestore");
-                    window.location.assign("./navigationMap.html"); // re-direct to main.html after signup
+                    
+                    //window.location.assign("./navigationMap.html"); // re-direct to main.html after signup
+                    
+                    getUser()
                 }).catch(function (error) {
                     console.log("Error adding new user: " + error);
                 });

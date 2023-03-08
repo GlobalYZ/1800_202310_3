@@ -1,13 +1,13 @@
 //----------------------------------------
 //  Your web app's Firebase configuration
 //----------------------------------------
-var firebaseConfig = {
-  apiKey: "AIzaSyBgKnD197GPm-HuBri1bppIvLhsvRRmTKo",
-authDomain: "comp1800-demo-use-54720.firebaseapp.com",
-projectId: "comp1800-demo-use-54720",
-storageBucket: "comp1800-demo-use-54720.appspot.com",
-messagingSenderId: "984921563717",
-appId: "1:984921563717:web:3d3c105ba841da4756b92c"
+const firebaseConfig = {
+  apiKey: "AIzaSyDo1HlTQD7FuDxjUKkClF_GhusBrqazvRg",
+  authDomain: "comp1800-navi.firebaseapp.com",
+  projectId: "comp1800-navi",
+  storageBucket: "comp1800-navi.appspot.com",
+  messagingSenderId: "11720730964",
+  appId: "1:11720730964:web:2bfc4902968b5761c180c1"
 };
 
 //--------------------------------------------

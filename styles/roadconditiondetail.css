@@ -1,21 +1,6 @@
-img {
-    display:inline-block;
-    height: 320px;
-    padding: 5px;
-    border-radius: 10px;
-}
-
-.images{
-    height: 350px;
-    width: 100%;
-    white-space: nowrap;
-    overflow-x: scroll;
-    overflow-y: hidden;
-}
-
-.images .card{
-    --bs-gutter-x: 0;
-    display: inline-block;
+.detail-title{
+    margin-top:10vh;
+    margin-bottom:4vh;
 }
 
 p {
@@ -38,6 +23,8 @@ p {
     'opsz' 48
   }
 
+  
+
 .details{
     background-color: white;  
 }
@@ -46,6 +33,110 @@ p {
     text-align: justify;
 }
 
-.container {
-    padding-top: 70px;
+.detail-container {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left:10vw;
+    margin-right: 10vw;
+    padding:0;
 }
+
+.detail-image-wrapper{
+    height:280px;
+}
+
+.detail-image-container{
+    width:100%;
+    height:297px;
+    overflow-y:hidden;
+    overflow-x: scroll;
+    white-space: nowrap;
+    display:flex;
+    align-items: center;
+    margin-bottom:4vh;
+}
+
+.detail-image-container::-webkit-scrollbar { 
+    display:none;
+ }
+
+
+.detail-image-container img {
+    display:inline-block;
+    border-radius:20px;
+    height:280px;
+    --bs-gutter-x: 0;
+    margin: 5px 10px;
+    border: 2px solid #ff9900;
+}
+
+.detail-text{
+    width:100vw;
+    padding: 40px 10vw 70px 10vw;
+    min-height:260px;
+    margin:0;
+    background-color: #fff;
+    position:relative;
+}
+
+.detail-textBody{
+    text-align:justify;
+  }
+
+
+.detail-votecard{
+    background-color:#f6efa0;
+    width:140px;
+    display: flex;
+    align-items: center;
+    height:40px;
+    border-radius: 4px;
+    position:absolute;
+    right:10vw;
+    bottom:20px;
+    box-shadow:0 4px 7px rgba(0, 0, 0, 0.2);
+    
+  }
+
+  .shadow{
+    content:' ';
+    position:relative;
+    top:-20px;
+    left:1.9vw;
+    display:inline-block;
+    height:3px;
+    width:88vw;
+    background-color: transparent;
+    box-shadow:0 6px 10px rgba(0, 0, 0, 0.7);
+  }
+
+  .detail-votecard-flex{
+    flex:1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+
+
+  .detail-voteIcon{
+    margin-left:10px;
+  }
+
+  .detail-voteIcon:hover{
+    color:#ff9900;
+    cursor: pointer;
+  }
+
+  .detail-voteNumber{
+    margin-right:6px;
+  }
+
+.footer-container {
+    position:static;
+}
+
+::-webkit-scrollbar {
+    display: none;
+  }

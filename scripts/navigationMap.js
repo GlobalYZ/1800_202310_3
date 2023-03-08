@@ -3,6 +3,11 @@
 
 var map = ""
 
+console.log(localStorage.getItem("uid"))
+console.log(localStorage.getItem("userName"))
+console.log(localStorage.getItem("loginStatus"))
+
+
 var locations = {
     location1:"",
     location2:""

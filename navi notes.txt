@@ -16,3 +16,5 @@ Map Limitations:
 can not recalculate route, only one route available
 can not generate public transit route
 
+We need to decide:
+Road Condition types
