@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>My BCIT Project</title>
+    <meta name="comp1800 template" content="My 1800 App">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap Library CSS CDN go here -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <!-- Boostrap Library JS CDN  go here -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+
+    <!-- jquery import -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- google icons -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <!-- page import -->
+    <link rel="stylesheet" href="../styles/common.css">
+    <link rel="stylesheet" href="../styles/alertpopup.css">
+    <!-- Other libraries go here -->
+
+    <!-- Link to styles of your own -->
+    <!-- <link rel="stylesheet" href="./styles/style.css"> -->
+
+</head>
+
+<body>
+    <!-- Navbar starts here -->
+    <nav id="navbarPlaceholder"></nav>
+    <!-- Navbar ends here -->
+    <div class="main">
+        <!-- Button trigger modal -->
+        <div class="container">
+            <button type="button" class="btn btn-primary navi-bottons" id="alertpopup" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Launch demo modal
+            </button>
+        </div>
+
+        <!-- Popup starts here-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Alert</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Et modi reiciendis quam sapiente voluptates ut eveniet velit sint.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Save Alert</button>
+                        <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Post History List ends here-->
+
+    <!-- Footer starts here -->
+    <footer id="footerPlaceholder"></footer>
+    <!-- Footer ends here -->
+
+    <!---------------------------------------------->
+    <!-- Your own JavaScript functions go here    -->
+    <!---------------------------------------------->
+
+    <!-- Link to scripts of your own -->
+    <!-- <script src="./scripts/script.js"></script> -->
+
+    <script src="../scripts/skeleton.js" id="skeleton" message="alertpopup"></script>
+    <script src="../scripts/alertpopup.js"></script>
+
+
+
+</body>
+
+
+</html>
