@@ -41,8 +41,8 @@ img {
     text-align: justify;
 }
 
-.listCOntainer{
-    padding:90px 40px;
+.container {
+    padding-top: 70px;
 }
 
 .card{
@@ -56,5 +56,4 @@ img {
 .card, .row {
     display: flex;
     flex-direction: row;
-    height:200px;
 }
