@@ -57,3 +57,51 @@ img {
     display: flex;
     flex-direction: row;
 }
+
+.detail-votecard{
+    background-color:#f6efa0;
+    width:140px;
+    display: flex;
+    align-items: center;
+    height:40px;
+    border-radius: 4px;
+    position:absolute;
+    right:10vw;
+    bottom:20px;
+    box-shadow:0 4px 7px rgba(0, 0, 0, 0.2);
+    
+  }
+
+  .shadow{
+    content:' ';
+    position:relative;
+    top:-20px;
+    left:1.9vw;
+    display:inline-block;
+    height:3px;
+    width:88vw;
+    background-color: transparent;
+    box-shadow:0 6px 10px rgba(0, 0, 0, 0.7);
+  }
+
+  .detail-votecard-flex{
+    flex:1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+
+
+  .detail-voteIcon{
+    margin-left:10px;
+  }
+
+  .detail-voteIcon:hover{
+    color:#ff9900;
+    cursor: pointer;
+  }
+
+  .detail-voteNumber{
+    margin-right:6px;
+  }
