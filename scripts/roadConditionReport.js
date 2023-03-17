@@ -51,7 +51,7 @@ function getFullAddress(){
                 $("#address").val(res.results[0].formatted_address)
                 window.addressObj.address = res.results[0].formatted_address
                 window.addressObj.latitude = res.results[0].geometry.location.lat
-                window.addressObj.longtitude = res.results[0].geometry.location.lng
+                window.addressObj.longitude = res.results[0].geometry.location.lng
                 window.addressObj.city = res.results[0].address_components[2].long_name
                 console.log(window.addressObj)
             }
@@ -109,12 +109,12 @@ function submit(){
     }else{
         db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).add({
             uid: "XfleyL6KPXbxpeCRZSli5VdWk9C2",
-            imageUrl:"base64List",
+            imageUrl:base64List,
             address:addressObj.address,
             city:addressObj.city,
             description:description,
             latitude: addressObj.latitude,
-            longtitude: addressObj.longtitude,
+            longitude: addressObj.longitude,
             type:type,
             likes:0,
             dislikes:0
