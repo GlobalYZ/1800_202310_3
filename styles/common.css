@@ -21,6 +21,8 @@ body {
     font-weight: bold;
     color: #ff9900;
     border: 2px solid #ff9900;
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
 .navi-bottons:hover {
@@ -33,6 +35,8 @@ body {
     font-weight: bold;
     color: rgb(87, 126, 218);
     border: 2px solid rgb(87, 126, 218);
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
 .navi-bottons-strong:hover {
@@ -42,6 +46,30 @@ body {
 }
 
 /* two buttons finish */
+
+/* alert message starts*/
+.navi-alertMessage {
+    width:80%;
+    right:10%;
+    top:120px;
+    position: fixed;
+    opacity:0;
+    transition: all 0.6s;
+    z-index:1000;
+}
+
+.navi-alertMessage p {
+    margin:0;
+}
+
+.navi-alertMessage span {
+    float:right;
+    top:5px;
+    right:5px;
+    cursor: pointer;
+}
+
+/* alert message finishes*/
 
 /* navbar starts */
 

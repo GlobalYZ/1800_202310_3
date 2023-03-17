@@ -28,13 +28,17 @@
     opacity: 1;
 }
 
+.form-control:disabled, .form-select:disabled {
+    background-color: #fff;
+    border:none;
+}
 
-.form-group input {
-    width: 400%;
-    height: 100%;
-    margin-left: -300%;
-    border: none;
-    cursor: pointer;
+.form-group {
+    margin-top: 20px;
+}
+
+.form-group label {
+    margin-bottom:10px;
 }
 
 .form-group input:focus {
@@ -49,29 +53,67 @@ footer {
 }
 
 @media screen and (min-width:550px) {
-    .form-group3 {
+    .form-group {
         width: 100% !important;
     }
 
-    .form-group1 {
-        width: 100%;
-    }
-
-    .form-group2 {
-        width: 100%;
-    }
 
 @media screen and (max-width:550px) {
-    .form-group3 {
+    .form-group {
         width: 80%;
     }
 
-    .form-group1 {
-        width: 80%;
-    }
-
-    .form-group2 {
-        width: 80%;
-    }
 }
+}
+
+.reportTitle{
+    margin-top: 90px;
+}
+
+.reportContent{
+    overflow: hidden;
+}
+
+.reportSubmit{
+    width:120px;
+    height:30px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.addressButton{
+    width:25%;
+    padding: 6px 12px;
+    text-align: center;
+    float:right;
+    margin-top:32px;
+    border-radius: 0.25rem;
+}
+
+#reportImagePreview {
+    margin-top:20px;
+    margin-bottom: 20px;
+}
+
+.reportImageContainer{
+    display: inline-block;
+    padding:10px;
+    background-color: #ffc107;
+    border-radius: 15px;
+    position: relative;
+    margin-right:30px;
+    
+}
+
+.reportImageContainer img {
+    display: inline-block;
+    height:150px;
+    border-radius: 15px;
+}
+
+.reportImageContainer span {
+    position: absolute;
+    top:10px;
+    right:10px;
+    cursor: pointer;
 }
