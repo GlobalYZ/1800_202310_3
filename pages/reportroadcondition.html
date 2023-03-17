@@ -96,10 +96,7 @@
 
                     <!--Image submission starts here-->
 
-                    <!-- <div class="form-group container">
-                                                                                                                            <label for="myFile">Upload Image</label>
-                                                                                                                            <input id="myFile" type="file" name="myFile" multiple class="file-loading">
-                                                                                                                        </div> -->
+                    <!-- <div class="form-group container">                                                                                            </div> -->
                         <div class="form-group"> 
                           <label for="Image" class="form-label">Please Upload images</label>
                           <input class="form-control" type="file" id="formFile" onchange="preview()" multiple>
@@ -120,6 +117,9 @@
             <footer id="footerPlaceholder"></footer>
             <!--Footer ends here-->
 
+            <!-- guardholder -->
+            <div id="guardContainerHolder"></div>
+
             <!-- alert Message -->
             <div class="alert alert-danger navi-alertMessage" role="alert" id="alertMessage">
               <span class="material-symbols-outlined" onclick="closeAlert()">close</span>
@@ -127,9 +127,10 @@
             </div>
 
             <!-- <script src="./scripts/script.js"></script> -->
-            <script src="../scripts/skeleton.js" id="skeleton" message="reportroadcondition"></script>
+           
             <!-- <script src="..scripts/draganddrop.js"></script> -->
             <script src="../scripts/firebaseAPI_TEAM99.js"></script>
+            <script src="../scripts/skeleton.js" id="skeleton" message="reportroadcondition"></script>
             <script src="../scripts/roadConditionReport.js"></script>
         </body>
     </body>
