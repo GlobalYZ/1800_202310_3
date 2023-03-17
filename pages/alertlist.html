@@ -32,6 +32,16 @@
     <!-- Link to styles of your own -->
     <!-- <link rel="stylesheet" href="./styles/style.css"> -->
 
+    
+        <!-- Link to styles of your own -->
+        <!-- <link rel="stylesheet" href="./styles/style.css"> --><script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"> </script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css"/>
+
+
 </head>
 
 <body>
@@ -47,12 +57,12 @@
             <div class="alertlist-card card col-md-7">
                 <!-- Title starts here-->
                 <div class="row justify-content-between align-items-center">
-                    <h2 class="col-auto fw-bold title">Alert 1</h2>
+                    <h2 class="col-auto fw-bold title"><span class="title"></span></h2>
                     <!-- Time starts here-->
                     <div class="card timecard col-5 align-items-center justify-content-center">
                         <div class="timecontainer row">
                             <p>
-                                Posted <span class="submissiontime">17:34:58 Febuary 22, 2003</span>
+                                Posted <span class="submissiontime"></span>
                             </p>
                         </div>
                     </div>
@@ -62,9 +72,7 @@
                 <div class="row px-1 justify-content-around">
                     <div class="details">
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores impedit fuga debitis
-                            laborum cupiditate, maxime sed rerum amet ratione dolore delectus. Sint nemo quia similique
-                            culpa,facilis aperiam.
+                            <span id = "alert-goes-here"></span>
                         </p>
                     </div>
                 </div>
@@ -74,12 +82,12 @@
             <div class="alertlist-card card col-md-7">
                 <!-- Title starts here-->
                 <div class="row justify-content-between align-items-center">
-                    <h2 class="col-auto fw-bold title">Alert 2</h2>
+                    <h2 class="col-auto fw-bold title"><span class="title"></span></h2>
                     <!-- Time starts here-->
                     <div class="card timecard col-5 align-items-center justify-content-center">
                         <div class="timecontainer row">
                             <p>
-                                Posted <span class="submissiontime">17:34:58 Febuary 22, 2003</span>
+                                Posted <span class="submissiontime"></span>
                             </p>
                         </div>
                     </div>
@@ -89,9 +97,7 @@
                 <div class="row px-1 justify-content-around">
                     <div class="details">
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores impedit fuga debitis
-                            laborum cupiditate, maxime sed rerum amet ratione dolore delectus. Sint nemo quia similique
-                            culpa,facilis aperiam.
+                            <span id = "alert-goes-here"></span>
                         </p>
                     </div>
                 </div>
@@ -113,6 +119,7 @@
 
     <!-- Link to scripts of your own -->
     <!-- <script src="./scripts/script.js"></script> -->
+    <script src="../scripts/firebaseAPI_TEAM99.js"></script>
 
     <script src="../scripts/skeleton.js" id="skeleton" message="alertlist"></script>
 
