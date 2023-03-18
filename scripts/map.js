@@ -1,5 +1,4 @@
-// 1. 获取用户当前地址并让地图显示当前地址
-// 2. 导航
+
 // 3. 在marker上添加事件
 
 var addressObj = new Object;
@@ -12,8 +11,8 @@ console.log(localStorage.getItem("loginStatus"))
 
 function getUrlParams(){
     var addressInput = $.Request("address")
-    if(addressInput){
-        console.log(addressInput)
+    if(addressInput !== "null"){
+        console.log(typeof(addressInput))
         $.ajax({
             url: "https://maps.googleapis.com/maps/api/geocode/json",
             type: "get",

@@ -46,24 +46,26 @@ function loadSkeleton() { // message used to tell which page we are loading
 }
 
 function getNavbar() {
-    console.log(1)
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            console.log($('#navbarPlaceholder').load('../components/navbar-loggedIn.html'));
+    
+    if (localStorage.getItem("loginStatus") == "true") {
+        console.log(111)
+        console.log($('#navbarPlaceholder').load('../components/navbar-loggedIn.html'));
 
-        } else {
-            console.log($('#navbarPlaceholder').load('../components/navbar.html'));
-        }
-    })
+    } else {
+        console.log($('#navbarPlaceholder').load('../components/navbar.html'));
+    }
+
 }
 
 function checkGuard() {
-    firebase.auth().onAuthStateChanged(function (user) {
 
-        if (! user) {
-            console.log($('#guardContainerHolder').load('../components/navigationGuards.html'));
-        }
-    })
+    
+
+    if (localStorage.getItem("loginStatus") == "false") {
+
+        console.log($('#guardContainerHolder').load('../components/navigationGuards.html'));
+    }
+
 }
 
 
@@ -101,31 +103,31 @@ function checkGuard() {
 function getFullAddress(address) {
     return new Promise((resolve, reject) => {
         $.ajax({
-                url: "https://maps.googleapis.com/maps/api/geocode/json",
-                type: "get",
-                data: {
-                        address: address, // good enough do not need rearrange data
-                        key: "AIzaSyAkhygJBngZRdSBpNQQHkIf7OU99ioNjkg"
-                    },
-                success: function (res) {
-                        if (res.status == "OK") {
-                            console.log(res.results[0])
-                            resolve(res.results[0].formatted_address)
+            url: "https://maps.googleapis.com/maps/api/geocode/json",
+            type: "get",
+            data: {
+                address: address, // good enough do not need rearrange data
+                key: "AIzaSyAkhygJBngZRdSBpNQQHkIf7OU99ioNjkg"
+            },
+            success: function (res) {
+                if (res.status == "OK") {
+                    console.log(res.results[0])
+                    resolve(res.results[0].formatted_address)
 
-                        }
-                    },
-                error: function (err) {
-                        reject(new Error(err.message))
                 }
-                }
-            )}
-    )}
+            },
+            error: function (err) {
+                reject(new Error(err.message))
+            }
+        })
+    })
+}
 
 loadSkeleton();
 // invoke the function
 
 // define the navbar search event
-function navbarSearch () {
+function navbarSearch() {
 
     console.log(222)
     var address = $(".nav-searchbar-input").val()
@@ -137,6 +139,6 @@ function navbarSearch () {
 
     })
 
-    // 
+    //
 
 }

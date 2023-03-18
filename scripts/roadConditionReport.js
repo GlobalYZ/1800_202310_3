@@ -136,7 +136,8 @@ function submit() {
                                 longitude: addressObj.longitude,
                                 type: type,
                                 likes: 0,
-                                dislikes: 0
+                                dislikes: 0,
+                                title:title
                             })
                         }
                     })
