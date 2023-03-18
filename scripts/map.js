@@ -2,6 +2,11 @@
 // 2. 导航
 // 3. 在marker上添加事件
 
+
+console.log(localStorage.getItem("uid"))
+console.log(localStorage.getItem("userName"))
+console.log(localStorage.getItem("loginStatus"))
+
 function setupGeneral(){
     let h = window.innerHeight;
     let w = window.innerWidth;
