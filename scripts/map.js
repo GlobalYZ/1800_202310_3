@@ -2,10 +2,45 @@
 // 2. 导航
 // 3. 在marker上添加事件
 
+var addressObj = new Object;
+
 
 console.log(localStorage.getItem("uid"))
 console.log(localStorage.getItem("userName"))
 console.log(localStorage.getItem("loginStatus"))
+
+
+function getUrlParams(){
+    var addressInput = $.Request("address")
+    if(addressInput){
+        console.log(addressInput)
+        $.ajax({
+            url: "https://maps.googleapis.com/maps/api/geocode/json",
+            type: "get",
+            data: {
+                address: addressInput, // good enough do not need rearrange data
+                key: "AIzaSyAkhygJBngZRdSBpNQQHkIf7OU99ioNjkg"
+            },
+            success: function (res) {
+                if (res.status == "OK") {
+                    $("#address").val(res.results[0].formatted_address)
+                    window.addressObj.address = res.results[0].formatted_address
+                    window.addressObj.latitude = res.results[0].geometry.location.lat
+                    window.addressObj.longitude = res.results[0].geometry.location.lng
+                    window.addressObj.city = res.results[0].address_components[2].long_name
+                    console.log(window.addressObj)
+                    setMap(window.addressObj)
+                }
+            },
+            error: function(err){
+                alert(err.message)
+            }
+        })
+    }else{
+        getCurrentAddress()
+    }
+    
+}
 
 function setupGeneral(){
     let h = window.innerHeight;
@@ -95,4 +130,4 @@ function setMap(currentAddress) {
 }
 
 setupGeneral()
-getCurrentAddress()
+getUrlParams()

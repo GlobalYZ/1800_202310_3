@@ -63,7 +63,6 @@ function getFullAddress() {
             alert(err.message)
         }
     })
-
 }
 
 function fixAddress() {
