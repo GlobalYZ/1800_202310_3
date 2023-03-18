@@ -37,3 +37,8 @@ map add a weather icon on top right corner
 map markers connected with firebase, popup message when user click each marker, user click popup message jumps to detail page
 delete function on the user profile for the post
 pop up message (setTimeout) on the map page
+
+Todo extra:
+pagination on the roadConditionList
+username display on the profile
+
