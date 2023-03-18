@@ -32,6 +32,19 @@
     <!-- jquery import -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+    <!--Firebase import-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.css"
+    />
+
     <!-- google icons -->
     <link
       rel="stylesheet"
@@ -53,54 +66,24 @@
   <!------------------------------>
 
   <body>
-    <div class="navbar">
     <!-- Navbar starts here -->
     <nav id="navbarPlaceholder"></nav>
-    </div>
+    <!-- Navbar ends here -->
 
-  <!-- Navbar ends here -->
-
-  <div class="weather">
-    <!-- Weather alert starts here-->
-    <div class="detail-text card">
-      <div class="px-4 py-5 my-5 text-center weather-container">
-        <h2 class="display-6 fw-bold weather-card">Weather Alert</h2>
-        <div class="col-lg-6 mx-auto">
-            <div class="card-body">
-              <h3 class="weather-card-title">Lorem Ipsum dolor sit</h3>
-              <p class="detail-textBody">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-                vel nisi faucibus purus consequat fermentum. Etiam ac felis in
-                neque euismod molestie. Vivamus non velit ac quam euismod
-                laoreet. Nulla non egestas neque. Mauris ut sollicitudin enim.
-                Donec ac sapien placerat eros pretium auctor et non mauris.
-              </p>
+    <div class="card-container">
+    <div class="weather">
+      <!-- Weather alert starts here-->
+      <div class="detail-text">
+          <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+              <div class="card-body text-center weather-container"></div>
             </div>
           </div>
         </div>
       </div>
-    
-    <!--Weather ends here-->
-
-      <div class="detail-votecard">
-        <!-- Upvotes starts here-->
-        <div class="detail-votecard-flex">
-          <span class="material-symbols-outlined detail-voteIcon">
-            thumb_up
-          </span>
-          <span style="margin-right: 5px">10</span>
-        </div>
-        <!-- Vote count here-->
-
-        <!-- Downvotes starts here-->
-        <div class="detail-votecard-flex">
-          <span class="material-symbols-outlined detail-voteIcon">
-            thumb_down
-          </span>
-          <span class="detail-voteNumber">10</span>
-        </div>
-      </div>
     </div>
+
+    <!--Weather ends here-->
 
     <!--Footer starts here-->
     <footer id="footerPlaceholder"></footer>
@@ -114,10 +97,8 @@
     <!-- <script src="./scripts/script.js"></script> -->
     <script src="../scripts/firebaseAPI_TEAM99.js"></script>
 
-    <script
-      src="../scripts/skeleton.js"
-      id="skeleton"
-      message="weatheralert"
-    ></script>
+    <script src="../scripts/skeleton.js" id="skeleton" message="weatheralert"></script>script>
+    <script src="../scripts/firebaseAPI_TEAM99.js"></script>
+    <script src="../scripts/weatheralert.js"></script>
   </body>
 </html>

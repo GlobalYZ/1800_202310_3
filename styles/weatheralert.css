@@ -50,7 +50,6 @@ footer {
 }
 
 .detail-text{
-    width:100vw;
     padding: 40px 10vw 70px 10vw;
     min-height:260px;
     margin:0;
@@ -73,25 +72,11 @@ footer {
     
   }
 
-  .detail-text{
-    width:100vw;
-    padding: 40px 10vw 70px 10vw;
-    min-height:260px;
-    margin:0;
-    background-color: #fff;
-    position:relative;
-}
-
-.detail-votecard{
-    background-color:#f6efa0;
-    width:140px;
+ .card-container {
     display: flex;
-    align-items: center;
-    height:40px;
-    border-radius: 4px;
-    position:absolute;
-    right:10vw;
-    bottom:20px;
-    box-shadow:0 4px 7px rgba(0, 0, 0, 0.2);
-    
-  }
+    justify-content: center;
+ }
+
+ .card-container .card {
+    max-width: 80%;
+ }
