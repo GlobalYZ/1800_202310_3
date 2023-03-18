@@ -18,3 +18,22 @@ can not generate public transit route
 
 We need to decide:
 Road Condition types
+
+ Todo List:
+road condition list add city filter and switch button(road condition list and alert list)
+add address in the road condition list card  
+alert list add switch button
+alert list (road condition card with address and weather alert with timestamp)
+customize map markers visibility in the contribution history and the popup message visbility with form elements [type1, type2, type3…](please refer to the type options in the report page)
+
+logout in the userprofile
+delete account in the userprofile                                                                                                                                  
+contributionHistory page needs to include an edit function (title and description pop up - edit + save get data from firebase first and then edit on top of the data)
+reportDetailsPage need to add post under users
+each time report is submitted needs to go to two databases: roadConditionList and Users
+need to use key values from Discord
+
+map add a weather icon on top right corner 
+map markers connected with firebase, popup message when user click each marker, user click popup message jumps to detail page
+delete function on the user profile for the post
+pop up message (setTimeout) on the map page

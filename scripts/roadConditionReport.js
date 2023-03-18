@@ -126,8 +126,9 @@ function submit() {
                         imageUrls.push(url)
                         console.log(url)
                         if(i == imageFiles.length-1){
+                            
                             db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).add({
-                                uid: "XfleyL6KPXbxpeCRZSli5VdWk9C2",
+                                uid: localStorage.getItem("uid"),
                                 imageUrl: imageUrls,
                                 address: addressObj.address,
                                 city: addressObj.city,
@@ -140,7 +141,6 @@ function submit() {
                             })
                         }
                     })
-
                 }, 1000)
                 
             )
@@ -153,10 +153,10 @@ function alertMessage(message) {
     var elem = document.getElementById("alertMessage");
     var alertText = document.getElementById("alertText")
     alertText.innerText = message
-    elem.setAttribute("style", "top:70px;opacity:1;")
+    elem.setAttribute("style", "top:70px;opacity:1;display:block;")
 }
 
 function closeAlert() {
     var elem = document.getElementById("alertMessage");
-    elem.setAttribute("style", "top:120px;opacity:0;")
+    elem.setAttribute("style", "top:120px;opacity:0;display:block;")
 }
