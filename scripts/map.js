@@ -22,11 +22,12 @@ function getUrlParams(){
             },
             success: function (res) {
                 if (res.status == "OK") {
-                    $("#address").val(res.results[0].formatted_address)
+                    $(".nav-searchbar-input").val(res.results[0].formatted_address)
+                    let address = res.results[0].formatted_address
                     window.addressObj.address = res.results[0].formatted_address
                     window.addressObj.latitude = res.results[0].geometry.location.lat
                     window.addressObj.longitude = res.results[0].geometry.location.lng
-                    window.addressObj.city = res.results[0].address_components[2].long_name
+                    window.addressObj.city = address.substring(address.indexOf(", ") +1, address.indexOf(", BC")).replace(/\s*/g,"");
                     console.log(window.addressObj)
                     setMap(window.addressObj)
                 }

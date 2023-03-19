@@ -46,7 +46,7 @@ function loadSkeleton() { // message used to tell which page we are loading
 }
 
 function getNavbar() {
-    
+
     if (localStorage.getItem("loginStatus") == "true") {
         console.log(111)
         console.log($('#navbarPlaceholder').load('../components/navbar-loggedIn.html'));
@@ -59,7 +59,6 @@ function getNavbar() {
 
 function checkGuard() {
 
-    
 
     if (localStorage.getItem("loginStatus") == "false") {
 
@@ -106,7 +105,7 @@ function getFullAddress(address) {
             url: "https://maps.googleapis.com/maps/api/geocode/json",
             type: "get",
             data: {
-                address: address, // good enough do not need rearrange data
+                address: address,
                 key: "AIzaSyAkhygJBngZRdSBpNQQHkIf7OU99ioNjkg"
             },
             success: function (res) {
@@ -114,10 +113,12 @@ function getFullAddress(address) {
                     console.log(res.results[0])
                     resolve(res.results[0].formatted_address)
 
+                } else {
+                    console.log(res)
                 }
             },
             error: function (err) {
-                reject(new Error(err.message))
+                reject(new Error(err))
             }
         })
     })
@@ -131,14 +132,31 @@ function navbarSearch() {
 
     console.log(222)
     var address = $(".nav-searchbar-input").val()
-    getFullAddress(address).then((address) => {
-        console.log(address)
-        var url = $.UrlUpdateParams('/pages/map.html', "address", address)
-        console.log(url)
-        window.location.href = url
+    console.log(address)
+    $.ajax({
+        url: "https://maps.googleapis.com/maps/api/geocode/json",
+        type: "get",
+        data: {
+            address: address,
+            key: "AIzaSyAkhygJBngZRdSBpNQQHkIf7OU99ioNjkg"
+        },
+        success: function (res) {
+            if (res.status == "OK") {
+                console.log(res.results[0])
+                let address = res.results[0].formatted_address
+                console.log(address)
+                var url = $.UrlUpdateParams('/pages/map.html', "address", address)
+                console.log(url)
+                window.location.href = url
 
+            } else {
+                console.log(res)
+            }
+        },
+        error: function (err) {
+            reject(new Error(err))
+        }
     })
 
-    //
 
 }
