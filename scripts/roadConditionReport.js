@@ -2,6 +2,7 @@ var imageFiles = []
 
 
 var addressObj = new Object();
+var submitted = false;
 
 function preview() {
     var imageUrl = URL.createObjectURL(event.target.files[0]);
@@ -21,8 +22,6 @@ function preview() {
     $(`#reportImage${index}`).click(clearImage)
 
     // })
-
-    
 
 
 }
@@ -52,14 +51,20 @@ function getFullAddress() {
             if (res.status == "OK") {
                 console.log(res.results[0])
                 $("#address").val(res.results[0].formatted_address)
+                let address = res.results[0].formatted_address
                 window.addressObj.address = res.results[0].formatted_address
                 window.addressObj.latitude = res.results[0].geometry.location.lat
                 window.addressObj.longitude = res.results[0].geometry.location.lng
-                window.addressObj.city = res.results[0].address_components[2].long_name
+                window.addressObj.city = address.substring(address.indexOf(", ") +1, address.indexOf(", BC")).replace(/\s*/g,"");
                 console.log(window.addressObj)
+            } else {
+                if (res.status == "ZERO_RESULTS") {
+                    alertMessage("Your input can not Match with any valid address! please try again")
+                }
+
             }
         },
-        error: function(err){
+        error: function (err) {
             alert(err.message)
         }
     })
@@ -104,48 +109,56 @@ function submit() {
     var type = $('#roadType').val()
     var addressObj = window.addressObj
     var imageFiles = window.imageFiles
+    var uid = localStorage.getItem("uid")
     if (title == "") {
         alertMessage("Please write title!")
     } else if (description == "") {
         alertMessage("Please write description!")
     } else if (addressObj.latitude == undefined) {
         alertMessage("Please press Match Address button before submission!")
-    } else if(!imageFiles){
+    } else if (! imageFiles) {
         alertMessage("Please upload at least one image!")
-    }else {
+    } else {
+        console.log(addressObj.city)
+        // db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).get().then(list => {
+        //     list.forEach(doc => {
+        //         console.log(doc.data().address)
+        //     })
+        // })
         var imageUrls = []
-        for (var i=0; i<imageFiles.length;i++){
-            let docId = Math.floor(Math.random() * 100)
-            var storageRef = firebase.storage().ref("/images/" + imageFiles[i].name)
-            
-            
-            storageRef.put(imageFiles[i]).then(
-                setTimeout(function(){
-                    storageRef.getDownloadURL().then(function(url){
-                        imageUrls.push(url)
-                        console.log(url)
-                        if(i == imageFiles.length-1){
-                            
-                            db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).add({
-                                uid: localStorage.getItem("uid"),
-                                imageUrl: imageUrls,
-                                address: addressObj.address,
-                                city: addressObj.city,
-                                description: description,
-                                latitude: addressObj.latitude,
-                                longitude: addressObj.longitude,
-                                type: type,
-                                likes: 0,
-                                dislikes: 0,
-                                title:title
-                            })
-                        }
-                    })
-                }, 1000)
-                
-            )
+        for (var index = 0; index <= imageFiles.length-1; index++) {
+            var storageRef = firebase.storage().ref("/images/" + imageFiles[index].name)
+            console.log(index)
+
+
+            storageRef.put(imageFiles[index]).then(setTimeout(function () {
+                storageRef.getDownloadURL().then(function (url) {
+                    imageUrls.push(url)
+                    console.log(imageFiles.length -1)
+                    console.log(index -1)
+                    console.log(index-1 == imageFiles.length - 1)
+                    
+                    if (index-1 == imageFiles.length - 1 && window.submitted == false) {
+                        console.log(111)
+                        db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).add({
+                            uid: uid,
+                            imageUrl: imageUrls,
+                            address: addressObj.address,
+                            city: addressObj.city,
+                            description: description,
+                            latitude: addressObj.latitude,
+                            longitude: addressObj.longitude,
+                            type: type,
+                            likes: 0,
+                            dislikes: 0,
+                            title: title
+                        })
+                        window.submitted = true
+                    }
+                })
+            }, 3000))
         }
-        
+
     }
 }
 
