@@ -35,7 +35,9 @@
 
         <!-- Other libraries go here -->
         <!-- import leaf -->
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"/> <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"></script>
+        <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"/> <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"></script> -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
         <link rel="stylesheet" href="../styles/common.css">
         <link rel="stylesheet" href="../styles/map.css">
 
@@ -49,6 +51,35 @@
 
         <!-- this is the map container -->
         <div class="map_container">
+            <div class="popupBox" style="display:none;opacity:0;" onclick="jumpToDetail()">
+                <span class="material-symbols-outlined popup-close" onclick="closePopUp(event)">
+                    close
+                    </span>
+                <p class="popup-title"></p>
+                <p class="popup-address">
+                    <span class="material-symbols-outlined" style="margin-right:3px;font-size:18px;">
+                    distance
+                    </span>
+                    <span class="popup-addressInput"></span>
+                    </p>
+                <p class="popup-description"></p>
+                <div class="popup-voteContainer">
+                    
+                    <div>
+                        <span class="material-symbols-outlined voteIcon">
+                            thumb_up
+                            </span>
+                            <span class="upvotes" style="margin-right:5px">10</span>
+                    </div>
+                    <div>
+                        <span class="material-symbols-outlined voteIcon">
+                            thumb_down
+                        </span>
+                        <span class="downvotes">10</span>
+                    </div>
+                </div>
+
+            </div>
             <div id="map"></div>
         </div>
 

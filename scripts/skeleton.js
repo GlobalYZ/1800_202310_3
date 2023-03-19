@@ -70,14 +70,14 @@ function checkGuard() {
 
 // define the method to bring parameters when jump to a page
 (function ($) {
-    $.extend({ // 1、取值使用    $.Request("name")
+    $.extend({ // 1、get the parameter    $.Request("name")
         Request: function (name) {
             var sValue = location.search.match(new RegExp("[\?\&]" + name + "=([^\&]*)(\&?)", "i"));
             // decodeURIComponent解码
             return sValue ? decodeURIComponent(sValue[1]) : decodeURIComponent(sValue);
 
         },
-        // 2、给url加参数    $.UrlUpdateParams(url, "add", 11111);
+        // 2、build url with parameter    $.UrlUpdateParams(url, "add", 11111);
         UrlUpdateParams: function (url, name, value) {
             var r = url;
             if (r != null && r != 'undefined' && r != "") {
