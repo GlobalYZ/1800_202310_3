@@ -10,7 +10,7 @@ function loadSkeleton() { // message used to tell which page we are loading
         console.log($('#footerPlaceholder').load('./components/footer.html'));
     } else if (document.getElementById("skeleton").getAttribute("message") == "loginpage") {
         getNavbar();
-        console.log($('#footerPlaceholder').load('../components/footer.html'));
+        
     } else if (document.getElementById("skeleton").getAttribute("message") == "weatheralert") {
         getNavbar();
         console.log($('#footerPlaceholder').load('../components/footer.html'));

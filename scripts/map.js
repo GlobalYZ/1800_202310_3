@@ -1,3 +1,5 @@
+
+
 // map needs to be accessed globally
 var map;
 var addressObj = new Object();
@@ -387,9 +389,10 @@ function countDownVote() {
 
 function upvote() {
 
-
-
-    //update Enability
+    if(!localStorage.getItem("loginStatus")){
+        console.log($('#guardContainerHolder').load('../components/navigationGuards.html'));
+    }else{
+         //update Enability
     var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).collection("voteRecords")
     checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
 
@@ -427,12 +430,21 @@ function upvote() {
         }
     })
 
+    }
+
+
+
+   
+
 
 
 }
 
 function downvote() {
-    var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).collection("voteRecords")
+    if(!localStorage.getItem("loginStatus")){
+        console.log($('#guardContainerHolder').load('../components/navigationGuards.html'));
+    }else{
+        var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).collection("voteRecords")
     checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
 
         if (doc.docs.length == 0) {
@@ -468,7 +480,7 @@ function downvote() {
 
         }
     })
-
+    }
 }
 
 
