@@ -1,3 +1,5 @@
+var isNvbarOpen = false;
+
 // ---------------------------------------------------
 // This function loads the parts of your skeleton
 // (navbar, footer, and other things) into html doc.
@@ -158,6 +160,17 @@ function navbarSearch() {
             reject(new Error(err))
         }
     })
+}
 
+// document.getElementById("navbarButton").addEventListener("click", navbarOpen)
 
+function navbarOpen(){
+    console.log(111)
+    if(isNvbarOpen == false){
+        document.getElementById("navbar-searchForm").setAttribute("style", "display:none;")
+        isNvbarOpen = true
+    }else{
+        document.getElementById("navbar-searchForm").setAttribute("style", "display:flex;")
+        isNvbarOpen = false
+    }
 }

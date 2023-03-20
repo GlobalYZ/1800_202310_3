@@ -5,7 +5,7 @@
                 arrow_back_ios
             </span>
         </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" id="navbarButton" onclick="navbarOpen()" type="button"" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -44,7 +44,7 @@
                 </li>
             </ul>
         </div>
-        <form class="input-group w-auto nav-search-bar">
+        <form id="navbar-searchForm" class="input-group w-auto nav-search-bar">
             <input type="search" class="form-control rounded nav-searchbar-input" placeholder="Search" aria-label="Search" aria-describedby="search-addon"/>
             <div class="nav-search" onclick="navbarSearch()">
                 <span class="material-symbols-outlined">Search</span>
