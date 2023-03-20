@@ -44,7 +44,6 @@
     font-size: 15px;
     border-bottom: 2px solid rgba(0,0,0,0.2);
     border-left: 2px solid rgba(0,0,0,0.2);
-    cursor: pointer;
     transition: all 0.6s;
 }
 
@@ -60,11 +59,14 @@
     position: absolute;
     right:5px;
     top:5px;
+    cursor: pointer;
 }
 
 .popupBox .popup-title {
-    font-size: 20px;
+    cursor: pointer;
+    font-size: 18px;
     margin: 0;
+    margin-bottom: 8px;
     width:235px;
     overflow: hidden;
     /*文本不会换行*/
@@ -77,7 +79,7 @@
 .popupBox .popup-address {
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     font-size:14px;
     line-height: 16px;
     overflow: hidden;
@@ -88,6 +90,7 @@
 }
 
 .popup-description {
+    cursor: pointer;
     height: 50px;
     margin: 0;
     overflow-wrap: break-word;

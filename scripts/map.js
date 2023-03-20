@@ -2,6 +2,7 @@
 var map;
 var addressObj = new Object();
 var markers = [];
+var currentMarker;
 
 console.log(localStorage.getItem("uid"))
 console.log(localStorage.getItem("userName"))
@@ -11,7 +12,7 @@ console.log(localStorage.getItem("loginStatus"))
 function getUrlParams() {
     var addressInput = $.Request("address")
     if (addressInput !== "null") {
-        console.log(typeof(addressInput))
+        console.log(typeof (addressInput))
         $.ajax({
             url: "https://maps.googleapis.com/maps/api/geocode/json",
             type: "get",
@@ -147,7 +148,7 @@ function setMap(currentAddress) {
 
     console.log(addressObj)
 
-  
+
 
     db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).get().then(list => {
         list.forEach(doc => {
@@ -166,7 +167,7 @@ function setMap(currentAddress) {
         })
         // Used to load and display tile layers on the map
         // Most tile servers require attribution, which you can set under `Layer`
-        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' }).addTo(map);
 
         // add current location as primary marker
         marker = new L.marker([currentAddress.latitude, currentAddress.longitude]).addTo(map);
@@ -226,47 +227,179 @@ function addMarkers(markers) {
         });
         console.log(Icon)
 
-        var marker = L.marker(new L.LatLng(markers[i].latitude, markers[i].longitude), {icon: Icon}).addTo(map).on('click', popup);
-        
+        var marker = L.marker(new L.LatLng(markers[i].latitude, markers[i].longitude), { icon: Icon }).addTo(map).on('click', popup);
+
     }
 
 }
 
-function popup(e){
-    console.log(e.latlng)
-    for(var i=0; i<markers.length;i++){
-        if(markers[i].latitude == e.latlng.lat && markers[i].longitude == e.latlng.lng){
-            //find the clicked marker
-            console.log(markers[i])
-            var elem = document.getElementsByClassName("popupBox")[0]
-            
-            
-            document.getElementsByClassName("popup-title")[0].innerHTML = markers[i].title
-            document.getElementsByClassName("popup-addressInput")[0].innerHTML = markers[i].address.substring(0, markers[i].address.indexOf(", BC"))
-            document.getElementsByClassName("popup-description")[0].innerHTML = markers[i].description
-            document.getElementsByClassName("upvotes")[0].innerHTML = markers[i].likes
-            document.getElementsByClassName("downvotes")[0].innerHTML = markers[i].dislikes
+function popup(e) {
+    var elem = document.getElementsByClassName("popupBox")[0]
+    elem.setAttribute("style", "opacity:0;dispay:none;");
 
 
+    setTimeout(function () {
+        for (var i = 0; i < markers.length; i++) {
+            if (markers[i].latitude == e.latlng.lat && markers[i].longitude == e.latlng.lng) {
+                currentMarker = markers[i]
+                document.getElementsByClassName("voteIcon")[0].addEventListener("click", upvote)
+                document.getElementsByClassName("voteIcon")[1].addEventListener("click", downvote)
+                checkVotable()
+                document.getElementsByClassName("popup-title")[0].innerHTML = markers[i].title
+                document.getElementsByClassName("popup-addressInput")[0].innerHTML = markers[i].address.substring(0, markers[i].address.indexOf(", BC"))
+                document.getElementsByClassName("popup-description")[0].innerHTML = markers[i].description
+                var checkVotes = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId)
+                checkVotes.get().then((doc) => {
+                    document.getElementsByClassName("upvotes")[0].innerHTML = doc.data().likes
+                    document.getElementsByClassName("downvotes")[0].innerHTML = doc.data().dislikes
+                })
+                
 
-            // console.log($(".popup-title").val())
-            elem.setAttribute("style", "opacity:1;dispay:block;")
-            
+
+            }
         }
-    }
+        elem.setAttribute("style", "opacity:1;dispay:block;")
+
+    }, 300)
+}
+
+function checkVotable() {
+    var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).collection("voteRecords")
+    checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
+        console.log(doc.docs[0].data())
+        if (doc.empty == false) {
+            //The user has upvoted or downvoted before
+            if (doc.docs[0].data().enableUpvote == false) {
+                var elem = document.getElementsByClassName("voteIcon")[0]
+                elem.removeEventListener("click", upvote)
+                elem.setAttribute("style", "color:#f8b943;cursor:default;")
+
+            }
+            if (doc.docs[0].data().enableDownvote == false) {
+                console.log(1)
+                var elem = document.getElementsByClassName("voteIcon")[1]
+                elem.removeEventListener("click", downvote)
+                elem.setAttribute("style", "color:#f8b943;cursor:default;")
+            }
+        } else {
+            //The user never upvote or downvotes
+            console.log("no data found")
+        }
+        // console.log(doc.data().enableDownvote)
+    })
+    // if(checkUser){
+    //     checkUser.get().then(doc => {
+    //         console.log(doc.data())
+    //         // console.log(doc.data().enableDownvote)
+    //     })
+    // }
 
 
 }
 
-function jumpToDetail(){
+
+
+function jumpToDetail() {
     console.log("go to detail")
 }
 
-function closePopUp(event){
+function closePopUp(event) {
     var elem = document.getElementsByClassName("popupBox")[0];
     elem.setAttribute("style", "opacity:0;dispay:none;");
     event.stopPropagation(); // prevent jumpToDetail from triger
+    var up = document.getElementsByClassName("voteIcon")[0];
+    var down = document.getElementsByClassName("voteIcon")[0];
+    up.setAttribute("style", "color:black;cursor:pointer;");
+    down.setAttribute("style", "color:black;cursor:pointer;");
 }
+
+function countUpvote() {
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).update({
+        likes: currentMarker.likes + 1
+
+    }).then(() => {
+        document.getElementsByClassName("upvotes")[0].innerHTML = currentMarker.likes + 1
+
+    })
+
+    // render html
+    var elem = document.getElementsByClassName("voteIcon")[0]
+    elem.removeEventListener("click", upvote)
+    elem.setAttribute("style", "color:#f8b943;cursor:default;")
+}
+
+function countDownVote() {
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).update({
+        dislikes: currentMarker.dislikes + 1
+
+    }).then(() => {
+        document.getElementsByClassName("downvotes")[0].innerHTML = currentMarker.dislikes + 1
+
+    })
+
+    // render html
+    var elem = document.getElementsByClassName("voteIcon")[1]
+    elem.removeEventListener("click", downvote)
+    elem.setAttribute("style", "color:#f8b943;cursor:default;")
+}
+
+
+function upvote() {
+
+
+
+    //update Enability
+    var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).collection("voteRecords")
+    checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
+
+        if (doc.docs.length == 0) {
+            checkUser.add({
+                enableDownvote: true,
+                enableUpvote: false,
+                votedUser: localStorage.getItem("uid")
+            }).then(() => {
+                countUpvote()
+            })
+        } else {
+            var voteId = doc.docs[0].id
+            checkUser.doc(voteId).update({
+                enableUpvote: false
+            }).then(() => {
+                countUpvote()
+            })
+
+        }
+    })
+
+
+
+}
+
+function downvote() {
+    var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).collection("voteRecords")
+    checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
+
+        if (doc.docs.length == 0) {
+            checkUser.add({
+                enableDownvote: false,
+                enableUpvote: true,
+                votedUser: localStorage.getItem("uid")
+            }).then(() => {
+                countUpvote()
+            })
+        } else {
+            var voteId = doc.docs[0].id
+            checkUser.doc(voteId).update({
+                enableDownvote: false
+            }).then(() => {
+                countDownVote()
+            })
+
+        }
+    })
+
+}
+
 
 setupGeneral();
 getUrlParams();
