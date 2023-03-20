@@ -3,6 +3,8 @@ var map;
 var addressObj = new Object();
 var markers = [];
 var currentMarker;
+var UpvoteActive;
+var DownvoteActive;
 
 console.log(localStorage.getItem("uid"))
 console.log(localStorage.getItem("userName"))
@@ -253,7 +255,7 @@ function popup(e) {
                     document.getElementsByClassName("upvotes")[0].innerHTML = doc.data().likes
                     document.getElementsByClassName("downvotes")[0].innerHTML = doc.data().dislikes
                 })
-                
+
 
 
             }
@@ -271,20 +273,27 @@ function checkVotable() {
             //The user has upvoted or downvoted before
             if (doc.docs[0].data().enableUpvote == false) {
                 var elem = document.getElementsByClassName("voteIcon")[0]
-                elem.removeEventListener("click", upvote)
-                elem.setAttribute("style", "color:#f8b943;cursor:default;")
+                UpvoteActive = false
+                elem.setAttribute("style", "color:#f8b943;")
 
+            } else {
+                UpvoteActive = true
             }
             if (doc.docs[0].data().enableDownvote == false) {
                 console.log(1)
                 var elem = document.getElementsByClassName("voteIcon")[1]
-                elem.removeEventListener("click", downvote)
-                elem.setAttribute("style", "color:#f8b943;cursor:default;")
+                elem.setAttribute("style", "color:#f8b943;")
+                DownvoteActive = false
+            } else {
+                DownvoteActive = true
             }
         } else {
             //The user never upvote or downvotes
             console.log("no data found")
         }
+        console.log("UpvoteActive" + UpvoteActive)
+        console.log("DownvoteActive" + DownvoteActive)
+
         // console.log(doc.data().enableDownvote)
     })
     // if(checkUser){
@@ -319,42 +328,43 @@ function countUpvote() {
 
     }).then(() => {
         document.getElementsByClassName("upvotes")[0].innerHTML = currentMarker.likes + 1
+        currentMarker.likes = currentMarker.likes + 1
 
     })
 
     // render html
     var elem = document.getElementsByClassName("voteIcon")[0]
-    elem.removeEventListener("click", upvote)
-    elem.setAttribute("style", "color:#f8b943;cursor:default;")
+    elem.setAttribute("style", "color:#f8b943;")
 }
 
-function disableUpvote(){
+function disableUpvote() {
     db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).update({
         likes: currentMarker.likes - 1
 
     }).then(() => {
         document.getElementsByClassName("upvotes")[0].innerHTML = currentMarker.likes - 1
+        currentMarker.likes = currentMarker.likes -1
 
     })
 
     // render html
     var elem = document.getElementsByClassName("voteIcon")[0]
-    elem.removeEventListener("click", upvote)
-    elem.setAttribute("style", "color:#f8b943;cursor:default;")
+    elem.setAttribute("style", "color:black;")
 }
 
-function disableDownVote(){
+function disableDownVote() {
     db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).update({
         dislikes: currentMarker.dislikes - 1
 
     }).then(() => {
         document.getElementsByClassName("downvotes")[0].innerHTML = currentMarker.dislikes - 1
+        currentMarker.dislikes = currentMarker.dislikes - 1
 
     })
 
     // render html
     var elem = document.getElementsByClassName("voteIcon")[1]
-    elem.setAttribute("style", "color:#black;")
+    elem.setAttribute("style", "color:black;")
 }
 
 function countDownVote() {
@@ -363,12 +373,14 @@ function countDownVote() {
 
     }).then(() => {
         document.getElementsByClassName("downvotes")[0].innerHTML = currentMarker.dislikes + 1
+        currentMarker.dislikes = currentMarker.dislikes + 1
 
     })
 
     // render html
     var elem = document.getElementsByClassName("voteIcon")[1]
     // elem.removeEventListener("click", downvote)
+
     elem.setAttribute("style", "color:#f8b943;")
 }
 
@@ -382,20 +394,35 @@ function upvote() {
     checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
 
         if (doc.docs.length == 0) {
+
             checkUser.add({
                 enableDownvote: true,
                 enableUpvote: false,
                 votedUser: localStorage.getItem("uid")
             }).then(() => {
                 countUpvote()
+                UpvoteActive = false
             })
+
         } else {
             var voteId = doc.docs[0].id
-            checkUser.doc(voteId).update({
-                enableUpvote: false
-            }).then(() => {
-                countUpvote()
-            })
+            if (UpvoteActive == true) {
+
+                checkUser.doc(voteId).update({
+                    enableUpvote: false
+                }).then(() => {
+                    countUpvote()
+                    UpvoteActive = false
+                })
+            } else {
+                checkUser.doc(voteId).update({
+                    enableUpvote: true
+                }).then(() => {
+                    disableUpvote()
+                    UpvoteActive = true
+                })
+
+            }
 
         }
     })
@@ -414,15 +441,30 @@ function downvote() {
                 enableUpvote: true,
                 votedUser: localStorage.getItem("uid")
             }).then(() => {
-                countUpvote()
+                countDownvote()
+                DownvoteActive = false
             })
         } else {
             var voteId = doc.docs[0].id
-            checkUser.doc(voteId).update({
-                enableDownvote: false
-            }).then(() => {
-                countDownVote()
-            })
+           
+            if (DownvoteActive == true) {
+
+                checkUser.doc(voteId).update({
+                    enableDownvote: false
+                }).then(() => {
+                    countDownVote()
+                DownvoteActive = false
+
+                })
+            } else {
+                checkUser.doc(voteId).update({
+                    enableDownvote: true
+                }).then(() => {
+                    disableDownVote()
+                    DownvoteActive = true
+                })
+
+            }
 
         }
     })
