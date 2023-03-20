@@ -6,18 +6,10 @@ function populateRoadConditionList() {
     let roadConditionCardID = params.searchParams.get("uid")
     console.log(roadConditionCardID);
 
-    // doublecheck: is your collection called "Reviews" or "reviews"?
     db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection("Richmond").get().then(allRoadConditions => {
         roadConditions = allRoadConditions.docs;
         console.log(roadConditions);
         roadConditions.forEach(doc => {
-
-            // <p class="city"></p>
-            // <p class="address"></p>
-            // <p class="latitude"></p>
-            // <p class="longitude"></p>
-            // <p class="type"></p>
-            // <p class="description"></p>
 
             var img = doc.data().imgUrl; //gets the name field
             var title = doc.data().title; //gets the name field
