@@ -27,7 +27,7 @@ function loadSkeleton() { // message used to tell which page we are loading
         getNavbar();
         console.log($('#footerPlaceholder').load('../components/footer.html'));
     } else if (document.getElementById("skeleton").getAttribute("message") == "map") {
-        console.log($('#navbarPlaceholder').load('../components/navbar.html'));
+        getNavbar();
     } else if (document.getElementById("skeleton").getAttribute("message") == "weatherconditionlist") {
         getNavbar();
         console.log($('#footerPlaceholder').load('../components/footer.html'));
@@ -46,6 +46,7 @@ function loadSkeleton() { // message used to tell which page we are loading
 }
 
 function getNavbar() {
+    console.log(localStorage.getItem("loginStatus"))
 
     if (localStorage.getItem("loginStatus") == "true") {
         console.log(111)

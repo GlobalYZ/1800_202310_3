@@ -328,6 +328,35 @@ function countUpvote() {
     elem.setAttribute("style", "color:#f8b943;cursor:default;")
 }
 
+function disableUpvote(){
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).update({
+        likes: currentMarker.likes - 1
+
+    }).then(() => {
+        document.getElementsByClassName("upvotes")[0].innerHTML = currentMarker.likes - 1
+
+    })
+
+    // render html
+    var elem = document.getElementsByClassName("voteIcon")[0]
+    elem.removeEventListener("click", upvote)
+    elem.setAttribute("style", "color:#f8b943;cursor:default;")
+}
+
+function disableDownVote(){
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).update({
+        dislikes: currentMarker.dislikes - 1
+
+    }).then(() => {
+        document.getElementsByClassName("downvotes")[0].innerHTML = currentMarker.dislikes - 1
+
+    })
+
+    // render html
+    var elem = document.getElementsByClassName("voteIcon")[1]
+    elem.setAttribute("style", "color:#black;")
+}
+
 function countDownVote() {
     db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).update({
         dislikes: currentMarker.dislikes + 1
@@ -339,8 +368,8 @@ function countDownVote() {
 
     // render html
     var elem = document.getElementsByClassName("voteIcon")[1]
-    elem.removeEventListener("click", downvote)
-    elem.setAttribute("style", "color:#f8b943;cursor:default;")
+    // elem.removeEventListener("click", downvote)
+    elem.setAttribute("style", "color:#f8b943;")
 }
 
 
