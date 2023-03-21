@@ -386,11 +386,18 @@ function countDownVote() {
     elem.setAttribute("style", "color:#f8b943;")
 }
 
+function closeLogin(){
+    document.getElementById("guardContainerHolder").innerHTML = ""
+}
+
 
 function upvote() {
 
     if(!localStorage.getItem("loginStatus")){
         console.log($('#guardContainerHolder').load('../components/navigationGuards.html'));
+        document.getElementById("popup-back").setAttribute("onclick", "")
+        document.getElementById("popup-back").addEventListener("click", closeLogin)
+        
     }else{
          //update Enability
     var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).collection("voteRecords")
