@@ -1,3 +1,6 @@
+// var UpvoteActive;
+// var DownvoteActive;
+
 function populateRoadConditionList() {
     let roadConditionCardTemplate = document.getElementById("roadConditionCardTemplate");
     let roadConditionCardGroup = document.getElementById("roadConditionCardGroup");
@@ -37,9 +40,11 @@ function populateRoadConditionList() {
                 roadConditionCard.querySelector('.titleHeading').innerHTML = title;     //equiv getElementByClassName
                 roadConditionCard.querySelector('.type').innerHTML = `Type: ${type}`;
                 roadConditionCard.querySelector('.upvotes').innerHTML = upvotes;
-                roadConditionCard.querySelector('.upvoteIcon').onclick = () => upvote(doc.id, upvotes, homeCity, cardCounter);
+                roadConditionCard.querySelector('.upvoteIcon').setAttribute("type", `${cardCounter}`)
+                roadConditionCard.querySelector('.upvoteIcon').onclick = () => upvote(doc.id, upvotes, homeCity);
                 roadConditionCard.querySelector('.downvotes').innerHTML = downvotes;
-                roadConditionCard.querySelector('.downvoteIcon').onclick = () => downvote(doc.id, downvotes, homeCity, cardCounter);
+                roadConditionCard.querySelector('.downvoteIcon').setAttribute("type", `${cardCounter}`)
+                roadConditionCard.querySelector('.downvoteIcon').onclick = () => downvote(doc.id, downvotes, homeCity);
                 roadConditionCard.querySelector('.city').innerHTML = city;
                 roadConditionCard.querySelector('.address').innerHTML = address;
                 roadConditionCard.querySelector('.latitude').innerHTML = `Latitude: ${latitude}`;
@@ -47,7 +52,7 @@ function populateRoadConditionList() {
                 roadConditionCard.querySelector('.description').innerHTML = `Description: ${description}`;
                 // reviewCard.querySelector('.time').innerHTML = new Date(time).toLocaleString();    //equiv getElementByClassName
 
-                // checkVotable(doc.id)
+                checkVotable(doc.id, homeCity, cardCounter);
 
                 roadConditionCardGroup.appendChild(roadConditionCard);
                 cardCounter++;
@@ -57,14 +62,14 @@ function populateRoadConditionList() {
 }
 populateRoadConditionList();
 
-function checkVotable(docId) {
-    var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection("Richmond").doc(docId).collection("voteRecords")
+function checkVotable(docId, homeCity, cardCounter) {
+    var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).doc(docId).collection("voteRecords")
     checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
         console.log(doc.docs[0].data())
         if (doc.empty == false) {
             //The user has upvoted or downvoted before
             if (doc.docs[0].data().enableUpvote == false) {
-                var elem = document.getElementsByClassName("voteIcon")[0]
+                var elem = document.getElementsByClassName("upvoteIcon")[cardCounter]
                 UpvoteActive = false
                 elem.setAttribute("style", "color:#f8b943;")
 
@@ -72,8 +77,7 @@ function checkVotable(docId) {
                 UpvoteActive = true
             }
             if (doc.docs[0].data().enableDownvote == false) {
-                console.log(1)
-                var elem = document.getElementsByClassName("voteIcon")[1]
+                var elem = document.getElementsByClassName("downvoteIcon")[cardCounter]
                 elem.setAttribute("style", "color:#f8b943;")
                 DownvoteActive = false
             } else {
@@ -98,71 +102,73 @@ function checkVotable(docId) {
 
 }
 
-function countUpvote(docId, votes) {
-    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection("Richmond").doc(docId).update({
-        likes: votes + 1
+function countUpvote(docId, votes, homeCity, cardCounter) {
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).doc(docId).update({
+        likes: votes
 
     }).then(() => {
-        document.getElementsByClassName("upvotes")[0].innerHTML = votes + 1
-        votes = votes + 1
+        document.getElementsByClassName("upvotes")[cardCounter].innerHTML = votes
+        // votes = votes + 1
 
     })
 
     // render html
-    var elem = document.getElementsByClassName("voteIcon")[0]
+    var elem = document.getElementsByClassName("upvoteIcon")[cardCounter]
     elem.setAttribute("style", "color:#f8b943;")
 }
 
-function disableUpvote(docId, votes) {
-    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(docId).doc(votes).update({
-        likes: votes - 1
+function disableUpvote(docId, votes, homeCity, cardCounter) {
+    console.log("you disable the upvote with", votes)
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).doc(docId).update({
+        likes: votes 
 
     }).then(() => {
-        document.getElementsByClassName("upvotes")[0].innerHTML = votes - 1
-        votes = votes - 1
+        document.getElementsByClassName("upvotes")[cardCounter].innerHTML = votes -1
+        console.log("you disable the upvote and passed data to firebase with", votes)
 
     })
 
     // render html
-    var elem = document.getElementsByClassName("voteIcon")[0]
+    var elem = document.getElementsByClassName("upvoteIcon")[cardCounter]
+    console.log(elem)
     elem.setAttribute("style", "color:black;")
 }
 
-function disableDownVote(docId, votes) {
-    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection("Richmond").doc(docId).update({
-        dislikes: votes - 1
+function disableDownVote(docId, votes, homeCity, cardCounter) {
+    console.log("you disabled the downvote")
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).doc(docId).update({
+        dislikes: votes
 
     }).then(() => {
-        document.getElementsByClassName("downvotes")[0].innerHTML = votes - 1
-        votes = votes - 1
+        document.getElementsByClassName("downvotes")[cardCounter].innerHTML = votes -1
 
     })
 
     // render html
-    var elem = document.getElementsByClassName("voteIcon")[1]
+    var elem = document.getElementsByClassName("downvoteIcon")[cardCounter]
     elem.setAttribute("style", "color:black;")
 }
 
-function countDownVote(docId, votes) {
-    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection("Richmond").doc(docId).update({
+function countDownVote(docId, votes, homeCity, cardCounter) {
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).doc(docId).update({
         dislikes: votes + 1
 
     }).then(() => {
-        document.getElementsByClassName("downvotes")[0].innerHTML = votes + 1
-        votes = votes + 1
+        document.getElementsByClassName("downvotes")[cardCounter].innerHTML = votes + 1
+        // votes = votes + 1
 
     })
 
     // render html
-    var elem = document.getElementsByClassName("voteIcon")[1]
-    // elem.removeEventListener("click", downvote)
-
+    var elem = document.getElementsByClassName("downvoteIcon")[cardCounter]
     elem.setAttribute("style", "color:#f8b943;")
 }
 
 
-function upvote(docId, votes) {
-    console.log(docId, votes)
+function upvote(docId, votes, homeCity) {
+    console.log(docId, votes, homeCity)
+    cardCounter = event.target.getAttribute("type")
+    console.log(cardCounter)
 
 
     if (!localStorage.getItem("loginStatus")) {
@@ -172,7 +178,7 @@ function upvote(docId, votes) {
 
     } else {
         //update Enability
-        var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection("Richmond").doc(docId).collection("voteRecords")
+        var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).doc(docId).collection("voteRecords")
         checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
 
             if (doc.docs.length == 0) {
@@ -182,25 +188,26 @@ function upvote(docId, votes) {
                     enableUpvote: false,
                     votedUser: localStorage.getItem("uid")
                 }).then(() => {
-                    countUpvote(docId, votes)
+                    countUpvote(docId, votes+1, homeCity, cardCounter)
                     UpvoteActive = false
                 })
 
             } else {
                 var voteId = doc.docs[0].id
+                var UpvoteActive = doc.docs[0].data().enableUpvote
                 if (UpvoteActive == true) {
 
                     checkUser.doc(voteId).update({
                         enableUpvote: false
                     }).then(() => {
-                        countUpvote(docId, votes)
+                        countUpvote(docId, votes, homeCity, cardCounter)
                         UpvoteActive = false
                     })
                 } else {
                     checkUser.doc(voteId).update({
                         enableUpvote: true
                     }).then(() => {
-                        disableUpvote(docId, votes)
+                        disableUpvote(docId, votes, homeCity, cardCounter)
                         UpvoteActive = true
                     })
                 }
@@ -209,11 +216,15 @@ function upvote(docId, votes) {
     }
 }
 
-function downvote(docId, votes) {
+function downvote(docId, votes, homeCity) {
+    console.log(docId, votes, homeCity)
+    cardCounter = event.target.getAttribute("type")
+    console.log(cardCounter)
+
     if (!localStorage.getItem("loginStatus")) {
         console.log($('#guardContainerHolder').load('../components/navigationGuards.html'));
     } else {
-        var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection("Richmond").doc(docId).collection("voteRecords")
+        var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).doc(docId).collection("voteRecords")
         checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
 
             if (doc.docs.length == 0) {
@@ -222,18 +233,19 @@ function downvote(docId, votes) {
                     enableUpvote: true,
                     votedUser: localStorage.getItem("uid")
                 }).then(() => {
-                    countDownvote(docId, votes)
+                    countDownvote(docId, votes, homeCity, cardCounter)
                     DownvoteActive = false
                 })
             } else {
                 var voteId = doc.docs[0].id
+                var DownvoteActive = doc.docs[0].data().enableDownvote
 
                 if (DownvoteActive == true) {
 
                     checkUser.doc(voteId).update({
                         enableDownvote: false
                     }).then(() => {
-                        countDownVote(docId, votes)
+                        countDownVote(docId, votes, homeCity, cardCounter)
                         DownvoteActive = false
 
                     })
@@ -241,7 +253,7 @@ function downvote(docId, votes) {
                     checkUser.doc(voteId).update({
                         enableDownvote: true
                     }).then(() => {
-                        disableDownVote(docId, votes)
+                        disableDownVote(docId, votes, homeCity, cardCounter)
                         DownvoteActive = true
                     })
                 }
