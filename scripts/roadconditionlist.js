@@ -11,7 +11,8 @@ function populateRoadConditionList() {
         console.log(roadConditions);
         roadConditions.forEach(doc => {
 
-            var img = doc.data().imgUrl; //gets the name field
+            // var img = doc.data().imgUrl; //gets the name field
+            console.log(doc.data().imageUrl)
             var title = doc.data().title; //gets the name field
             var type = doc.data().type; //gets the type field
             var upvotes = doc.data().likes; //gets the amount of likes
@@ -26,7 +27,7 @@ function populateRoadConditionList() {
 
             let roadConditionCard = roadConditionCardTemplate.content.cloneNode(true);
             let roadConditionCardImage = roadConditionCard.querySelector('.photo');
-            roadConditionCardImage.setAttribute('src', img);
+            // roadConditionCardImage.setAttribute('src', img);
             roadConditionCard.querySelector('.titleHeading').innerHTML = title;     //equiv getElementByClassName
             roadConditionCard.querySelector('.type').innerHTML = `Type: ${type}`;
             roadConditionCard.querySelector('.upvotes').innerHTML = upvotes;
@@ -41,5 +42,10 @@ function populateRoadConditionList() {
             roadConditionCardGroup.appendChild(roadConditionCard);
         })
     })
+}
+
+function upvote(e){
+
+    console.log(1)
 }
 populateRoadConditionList();
