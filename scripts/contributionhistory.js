@@ -79,3 +79,12 @@ function logout() {
             console.log("An error happened.");
         });
 }}
+
+function changeCities() {
+    let type = $('#cities').val()
+    const uid = localStorage.getItem("uid")
+
+    db.collection("users").doc(uid).update({
+        homeCity: type
+    })
+}

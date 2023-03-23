@@ -3,6 +3,10 @@
     min-height: 85vh;
 }
 
+#citiesLabel {
+    margin-bottom: 5px;
+}
+
 p {
     padding: 5px;
     text-align: center;
