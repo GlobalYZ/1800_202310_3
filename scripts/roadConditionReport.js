@@ -139,7 +139,6 @@ function submit() {
                     console.log(index-1 == imageFiles.length - 1)
                     
                     if (index-1 == imageFiles.length - 1 && window.submitted == false) {
-                        console.log(111)
                         db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).add({
                             uid: uid,
                             imageUrl: imageUrls,
@@ -152,13 +151,23 @@ function submit() {
                             likes: 0,
                             dislikes: 0,
                             title: title
+                        }).then((res) => {
+                            console.log(res.id)  //this is the id of the new post
+                            db.collection("users").doc(localStorage.getItem("uid")).set({
+                                roadConditionIds: firebase.firestore.FieldValue.arrayUnion(res.id)
+                            }).then(()=>{
+                                window.submitted = true
+                                primaryMessage("The submission is successful! Thanks for your contribution")
+                                setTimeout(function(){})
+                            })
+
                         })
-                        window.submitted = true
+                        
+                        
                     }
                 })
             }, 3000))
         }
-
     }
 }
 
@@ -167,9 +176,21 @@ function alertMessage(message) {
     var alertText = document.getElementById("alertText")
     alertText.innerText = message
     elem.setAttribute("style", "top:70px;opacity:1;display:block;")
+    setTimeout(function(){
+        var elem = document.getElementById("alertMessage");
+        elem.setAttribute("style", "top:120px;opacity:0;display:none;")
+    }, 2000)
 }
 
-function closeAlert() {
-    var elem = document.getElementById("alertMessage");
-    elem.setAttribute("style", "top:120px;opacity:0;display:block;")
+function primaryMessage(message){
+    var elem = document.getElementById("alert-primary");
+    var alertText = document.getElementById("alert-primary-text")
+    alertText.innerText = message
+    elem.setAttribute("style", "top:70px;opacity:1;display:block;")
+    setTimeout(function(){
+        var elem = document.getElementById("alert-primary");
+        elem.setAttribute("style", "top:120px;opacity:0;display:none;")
+    }, 2000)
 }
+
+

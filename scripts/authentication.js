@@ -39,7 +39,8 @@ var uiConfig = {
                     name: user.displayName, // "users" collection
                     email: user.email, // with authenticated user's ID (user.uid)
                     homeCity: "Vancouver", 
-                    enableMapIcons: true
+                    enableMapIcons: true,
+                    roadConditionIds:[]
                 }).then(function () {
                     console.log("New user added to firestore");
                     

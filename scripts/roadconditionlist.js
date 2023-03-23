@@ -10,7 +10,7 @@ function populateRoadConditionList() {
     db.collection("users").doc(userId).get().then(doc => {
         homeCity = doc.data().homeCity;
         console.log(homeCity);
-    
+
         db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).get().then(allRoadConditions => {
             roadConditions = allRoadConditions.docs;
             console.log(roadConditions);
@@ -41,10 +41,10 @@ function populateRoadConditionList() {
                 roadConditionCard.querySelector('.type').innerHTML = `Type: ${type}`;
                 roadConditionCard.querySelector('.upvotes').innerHTML = upvotes;
                 roadConditionCard.querySelector('.upvoteIcon').setAttribute("type", `${cardCounter}`)
-                roadConditionCard.querySelector('.upvoteIcon').onclick = () => upvote(doc.id, upvotes, homeCity);
+                roadConditionCard.querySelector('.upvoteIcon').onclick = () => upvote(doc.id, homeCity);
                 roadConditionCard.querySelector('.downvotes').innerHTML = downvotes;
                 roadConditionCard.querySelector('.downvoteIcon').setAttribute("type", `${cardCounter}`)
-                roadConditionCard.querySelector('.downvoteIcon').onclick = () => downvote(doc.id, downvotes, homeCity);
+                roadConditionCard.querySelector('.downvoteIcon').onclick = () => downvote(doc.id, homeCity);
                 roadConditionCard.querySelector('.city').innerHTML = city;
                 roadConditionCard.querySelector('.address').innerHTML = address;
                 roadConditionCard.querySelector('.latitude').innerHTML = `Latitude: ${latitude}`;
@@ -65,7 +65,7 @@ populateRoadConditionList();
 function checkVotable(docId, homeCity, cardCounter) {
     var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).doc(docId).collection("voteRecords")
     checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
-        console.log(doc.docs[0].data())
+        // console.log(doc.docs[0].data())
         if (doc.empty == false) {
             //The user has upvoted or downvoted before
             if (doc.docs[0].data().enableUpvote == false) {
@@ -120,10 +120,10 @@ function countUpvote(docId, votes, homeCity, cardCounter) {
 function disableUpvote(docId, votes, homeCity, cardCounter) {
     console.log("you disable the upvote with", votes)
     db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).doc(docId).update({
-        likes: votes 
+        likes: votes
 
     }).then(() => {
-        document.getElementsByClassName("upvotes")[cardCounter].innerHTML = votes -1
+        document.getElementsByClassName("upvotes")[cardCounter].innerHTML = votes - 1
         console.log("you disable the upvote and passed data to firebase with", votes)
 
     })
@@ -140,7 +140,7 @@ function disableDownVote(docId, votes, homeCity, cardCounter) {
         dislikes: votes
 
     }).then(() => {
-        document.getElementsByClassName("downvotes")[cardCounter].innerHTML = votes -1
+        document.getElementsByClassName("downvotes")[cardCounter].innerHTML = votes - 1
 
     })
 
@@ -165,8 +165,8 @@ function countDownVote(docId, votes, homeCity, cardCounter) {
 }
 
 
-function upvote(docId, votes, homeCity) {
-    console.log(docId, votes, homeCity)
+function upvote(docId, homeCity) {
+    // console.log(docId, votes, homeCity)
     cardCounter = event.target.getAttribute("type")
     console.log(cardCounter)
 
@@ -178,87 +178,98 @@ function upvote(docId, votes, homeCity) {
 
     } else {
         //update Enability
-        var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).doc(docId).collection("voteRecords")
-        checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
+        var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).doc(docId)
+        // .collection("voteRecords")
+        checkUser.get().then(doc => {
+            var votes = doc.data().likes
 
-            if (doc.docs.length == 0) {
+            checkUser.collection("voteRecords").where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
 
-                checkUser.add({
-                    enableDownvote: true,
-                    enableUpvote: false,
-                    votedUser: localStorage.getItem("uid")
-                }).then(() => {
-                    countUpvote(docId, votes+1, homeCity, cardCounter)
-                    UpvoteActive = false
-                })
+                if (doc.docs.length == 0) {
 
-            } else {
-                var voteId = doc.docs[0].id
-                var UpvoteActive = doc.docs[0].data().enableUpvote
-                if (UpvoteActive == true) {
-
-                    checkUser.doc(voteId).update({
-                        enableUpvote: false
+                    checkUser.collection("voteRecords").add({
+                        enableDownvote: true,
+                        enableUpvote: false,
+                        votedUser: localStorage.getItem("uid")
                     }).then(() => {
-                        countUpvote(docId, votes, homeCity, cardCounter)
+                        countUpvote(docId, votes + 1, homeCity, cardCounter)
                         UpvoteActive = false
                     })
+
                 } else {
-                    checkUser.doc(voteId).update({
-                        enableUpvote: true
-                    }).then(() => {
-                        disableUpvote(docId, votes, homeCity, cardCounter)
-                        UpvoteActive = true
-                    })
+                    var voteId = doc.docs[0].id
+                    var UpvoteActive = doc.docs[0].data().enableUpvote
+                    if (UpvoteActive == true) {
+
+                        checkUser.collection("voteRecords").doc(voteId).update({
+                            enableUpvote: false
+                        }).then(() => {
+                            countUpvote(docId, votes, homeCity, cardCounter)
+                            UpvoteActive = false
+                        })
+                    } else {
+                        checkUser.collection("voteRecords").doc(voteId).update({
+                            enableUpvote: true
+                        }).then(() => {
+                            disableUpvote(docId, votes, homeCity, cardCounter)
+                            UpvoteActive = true
+                        })
+                    }
                 }
-            }
+            })
         })
+
     }
 }
 
-function downvote(docId, votes, homeCity) {
-    console.log(docId, votes, homeCity)
+function downvote(docId, homeCity) {
+    // console.log(docId, votes, homeCity)
     cardCounter = event.target.getAttribute("type")
     console.log(cardCounter)
 
     if (!localStorage.getItem("loginStatus")) {
         console.log($('#guardContainerHolder').load('../components/navigationGuards.html'));
     } else {
-        var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).doc(docId).collection("voteRecords")
-        checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
+        var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).doc(docId)
+        checkUser.get().then(doc => {
+            var votes = doc.data().dislikes
 
-            if (doc.docs.length == 0) {
-                checkUser.add({
-                    enableDownvote: false,
-                    enableUpvote: true,
-                    votedUser: localStorage.getItem("uid")
-                }).then(() => {
-                    countDownvote(docId, votes, homeCity, cardCounter)
-                    DownvoteActive = false
-                })
-            } else {
-                var voteId = doc.docs[0].id
-                var DownvoteActive = doc.docs[0].data().enableDownvote
+            checkUser.collection("voteRecords").where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
 
-                if (DownvoteActive == true) {
-
-                    checkUser.doc(voteId).update({
-                        enableDownvote: false
+                if (doc.docs.length == 0) {
+                    checkUser.collection("voteRecords").add({
+                        enableDownvote: false,
+                        enableUpvote: true,
+                        votedUser: localStorage.getItem("uid")
                     }).then(() => {
-                        countDownVote(docId, votes, homeCity, cardCounter)
+                        countDownvote(docId, votes, homeCity, cardCounter)
                         DownvoteActive = false
-
                     })
                 } else {
-                    checkUser.doc(voteId).update({
-                        enableDownvote: true
-                    }).then(() => {
-                        disableDownVote(docId, votes, homeCity, cardCounter)
-                        DownvoteActive = true
-                    })
+                    var voteId = doc.docs[0].id
+                    var DownvoteActive = doc.docs[0].data().enableDownvote
+    
+                    if (DownvoteActive == true) {
+    
+                        checkUser.collection("voteRecords").doc(voteId).update({
+                            enableDownvote: false
+                        }).then(() => {
+                            countDownVote(docId, votes, homeCity, cardCounter)
+                            DownvoteActive = false
+    
+                        })
+                    } else {
+                        checkUser.collection("voteRecords").doc(voteId).update({
+                            enableDownvote: true
+                        }).then(() => {
+                            disableDownVote(docId, votes, homeCity, cardCounter)
+                            DownvoteActive = true
+                        })
+                    }
                 }
-            }
+            })
         })
+        
     }
 }
 
