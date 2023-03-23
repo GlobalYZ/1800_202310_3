@@ -1,5 +1,6 @@
 var imageFiles = []
 
+console.log(localStorage.getItem("uid"))
 
 var addressObj = new Object();
 var submitted = false;
@@ -104,6 +105,8 @@ function fileToBase64(file) {
 
 
 function submit() {
+    var loadingElem = document.getElementById("loadingHolder");
+    loadingElem.setAttribute("style", "display:flex;")
     var title = $("#title").val()
     var description = $("#description").val()
     var type = $('#roadType').val()
@@ -157,8 +160,11 @@ function submit() {
                                 roadConditionIds: firebase.firestore.FieldValue.arrayUnion(res.id)
                             }).then(()=>{
                                 window.submitted = true
+                                loadingElem.setAttribute("style", "display:none;")
                                 primaryMessage("The submission is successful! Thanks for your contribution")
-                                setTimeout(function(){})
+                                setTimeout(function(){
+                                    window.history.go(-1)
+                                },2000)
                             })
 
                         })

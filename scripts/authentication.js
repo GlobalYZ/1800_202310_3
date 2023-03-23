@@ -8,6 +8,7 @@ function getUser() {
             // Do something for the currently logged-in user here: 
             console.log(user.uid); //print the uid in the browser console
             console.log(user.displayName);  //print the user name in the browser console
+            localStorage.setItem("loginStatus", true)
             localStorage.setItem("uid", user.uid)
             localStorage.setItem("userName", user.displayName)
             console.log("I am localStorage" + localStorage.getItem("uid"))
@@ -32,7 +33,6 @@ var uiConfig = {
             // The Firestore rules must allow the user to write.
             // ------------------------------------------------------------------------------------------
             var user = authResult.user; // get the user object from the Firebase authentication database
-            localStorage.setItem("loginStatus", true)
             getUser()
             if (authResult.additionalUserInfo.isNewUser) { // if new user
                 db.collection("users").doc(user.uid).set({ // write to firestore. We are using the UID for the ID in users collection
