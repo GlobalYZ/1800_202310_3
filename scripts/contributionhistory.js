@@ -15,6 +15,7 @@ function populateRoadConditonList() {
                 roadConditions.forEach(doc => {
 
                     var img = doc.data().imgUrl; //gets the name field
+                    console.log(img[0]);
                     var title = doc.data().title; //gets the name field
                     var type = doc.data().type; //gets the type field
                     var upvotes = doc.data().likes; //gets the amount of likes
@@ -29,7 +30,7 @@ function populateRoadConditonList() {
 
                     let roadConditionCard = roadConditionCardTemplate.content.cloneNode(true);
                     let roadConditionCardImage = roadConditionCard.querySelector('.photo');
-                    // roadConditionCardImage.setAttribute('src', img);
+                    roadConditionCardImage.setAttribute('src', img);
                     roadConditionCard.querySelector('.titleHeading').innerHTML = title;     //equiv getElementByClassName
                     roadConditionCard.querySelector('.type').innerHTML = `Type: ${type}`;
                     roadConditionCard.querySelector('.upvotes').innerHTML = upvotes;
@@ -50,5 +51,22 @@ function populateRoadConditonList() {
         };
     })
 
-}
+    document.getElementById("logout").onclick = () => { logout() };
+    
+};
+
 populateRoadConditonList();
+
+function logout() {
+    firebase.auth().signOut().then(function () {
+        // Sign-out successful.
+        localStorage.removeItem("uid");
+        console.log(localStorage.getItem("uid"));
+        $('#logOutModal').modal('toggle')
+        console.log("Sign-out successful.");
+    }).catch(function (error) {
+        // An error happened.
+        console.log("An error happened.");
+    });
+    // window.location.href = "../index.html";
+}
