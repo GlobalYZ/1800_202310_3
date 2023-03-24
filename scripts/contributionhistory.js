@@ -3,6 +3,10 @@ function populateRoadConditonList() {
     let roadConditionCardGroup = document.getElementById("roadConditionCardGroup");
     var userID = "";
 
+    if (localStorage.getItem("uid") == null) {
+        window.location.href = "../index.html";
+    }
+
     firebase.auth().onAuthStateChanged(user => {
         if (user) {
             userID = user.uid;
@@ -58,15 +62,29 @@ function populateRoadConditonList() {
 populateRoadConditonList();
 
 function logout() {
-    firebase.auth().signOut().then(function () {
-        // Sign-out successful.
-        localStorage.removeItem("uid");
-        console.log(localStorage.getItem("uid"));
-        $('#logOutModal').modal('toggle')
-        console.log("Sign-out successful.");
-    }).catch(function (error) {
-        // An error happened.
-        console.log("An error happened.");
-    });
-    // window.location.href = "../index.html";
+    $('#logOutModal').modal('toggle')
+
+    document.getElementById('logOutConfirm').onclick = function() {
+        firebase.auth().signOut().then(function () {
+            // Sign-out successful.
+            console.log("Sign-out tried.");
+            localStorage.removeItem("uid");
+            localStorage.removeItem("userName");
+            localStorage.removeItem("loginStatus");
+            console.log(localStorage.getItem("uid"));
+            console.log("Sign-out successful.");        
+            window.location.href = "../index.html";
+        }).catch(function (error) {
+            // An error happened.
+            console.log("An error happened.");
+        });
+}}
+
+function changeCities() {
+    let type = $('#cities').val()
+    const uid = localStorage.getItem("uid")
+
+    db.collection("users").doc(uid).update({
+        homeCity: type
+    })
 }

@@ -47,6 +47,7 @@
 
     <!-- Post History List starts here-->
     <div class="container-fluid main row">
+
         <!-- Log Out Popup starts here-->
         <div class="modal fade" id="logOutModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -55,14 +56,16 @@
                         <h5 class="modal-title"></h5>
                     </div>
                     <div class="modal-body">
-                        <p>You have successfully logged out.</p>
+                        <p>Are you sure you want to log out?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                        <button type="button" class="btn btn-secondary close" id="logOutConfirm" data-bs-dismiss="modal" aria-label="Cancel">Yes, Log Me Out.</button>
+                        <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal" aria-label="Close">No, Take Me Back.</button>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Log Out Popup ends here-->
     
         <!-- User Profile starts here-->
         <div class="col-md-3">
@@ -76,7 +79,21 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">Cras justo odio</li>
                         <li class="list-group-item">Dapibus ac facilisis in</li>
-                        <li class="list-group-item">Vestibulum at eros</li>
+                        <li class="list-group-item" id="setHomeCity">
+                            <div class="form-group">
+                                <label id="citiesLabel" for="cities">Set Home City</label>
+                                <select class="form-select" aria-label="Default select example" id="cities" onchange="changeCities()">
+                                <option value="Burnaby">Burnaby</option>
+                                <option value="New Westminster">New Westminster</option>
+                                <option value="North Vancouver">North Vancouver</option>
+                                <option value="Richmond">Richmond</option>
+                                <option value="Surrey">Surrey</option>
+                                <option value="Vancouver">Vancouver</option>
+                                <option value="West Vancouver">West Vancouver</option>
+                                </select>
+                            </div> 
+                        </li>
+
                         <li class="list-group-item" id="logout">Log Out</li>
                     </ul>
                 </div>
