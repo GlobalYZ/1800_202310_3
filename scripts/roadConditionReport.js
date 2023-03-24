@@ -105,8 +105,7 @@ function fileToBase64(file) {
 
 
 function submit() {
-    var loadingElem = document.getElementById("loadingHolder");
-    loadingElem.setAttribute("style", "display:flex;")
+    
     var title = $("#title").val()
     var description = $("#description").val()
     var type = $('#roadType').val()
@@ -122,6 +121,8 @@ function submit() {
     } else if (! imageFiles) {
         alertMessage("Please upload at least one image!")
     } else {
+        var loadingElem = document.getElementById("loadingHolder");
+        loadingElem.setAttribute("style", "display:flex;")
         console.log(addressObj.city)
         // db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).get().then(list => {
         //     list.forEach(doc => {
@@ -158,6 +159,8 @@ function submit() {
                             console.log(res.id)  //this is the id of the new post
                             db.collection("users").doc(localStorage.getItem("uid")).set({
                                 roadConditionIds: firebase.firestore.FieldValue.arrayUnion(res.id)
+                            },{
+                                merge: true
                             }).then(()=>{
                                 window.submitted = true
                                 loadingElem.setAttribute("style", "display:none;")
