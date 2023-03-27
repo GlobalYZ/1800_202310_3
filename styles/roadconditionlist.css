@@ -1,110 +1,168 @@
-.container {
-    padding-top: 100px;
-    padding-bottom: 10px;
+.main {
+  padding-top: 70px;
+  min-height: 85vh;
+}
+
+#citiesLabel {
+  margin-bottom: 5px;
+}
+
+p {
+  padding: 5px;
+  text-align: center;
+  margin-bottom: 0%;
+}
+
+.roadconditionphoto {
+  max-width: 100%;
+}
+
+.roadconditionphoto img {
+  width: 100%;
+  padding: 5px;
+  border-radius: 10px;
+  max-height: 500px;
+}
+
+.submissionrow {
+  margin-bottom: 20px;
+}
+
+h2 {
+  margin-bottom: 0;
+}
+
+.votecontainer .col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.votecontainer .material-symbols-outlined:hover {
+  font-variation-settings:
+      'FILL' 1,
+      'wght' 700,
+      'GRAD' 0,
+      'opsz' 48
+}
+
+.details p {
+  text-align: justify;
+}
+
+.card {
+  background-color: white;
+}
+
+.card,
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.edit {
+  margin: 6px;
+}
+
+.btn {
+  background-color: #f6efa0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-card {
+  margin: 0 auto;
+  /* set margin to 0 on top and bottom, and center horizontally */
+  max-width: 100%;
+  /* set a max-width for the card */
+}
+
+.list-group {
+  margin: 0 auto;
+  /* set margin to 0 on top and bottom, and center horizontally */
+  max-width: 100%;
+  /* set a max-width for the card */
+}
+
+.list-group-item:hover {
+  background-color: black;
+  color: white;
+}
+
+@media screen and (max-width:550px) {
+  .user-card {
+      max-width: 400px !important;
   }
-  
-  .weatherconditionphoto {
-    max-width: 100%;
+
+  .list_group {
+      max-width: 400px !important;
   }
-  
-  img {
-    width: 100%;
-    padding: 5px;
-    border-radius: 10px;
-  }
-  
-  p {
-    padding: 5px;
-    text-align: center;
-    margin-bottom: 0;
-  }
-  
-  .card {
-    background-color: white;
-  }
-  
-  .row {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .titleHeading {
-    font-weight: bold;
-    font-size: 24px; /* Adjust the font size according to your preference */
-    padding: 0px 8px;
-  }
-  
-  .row {
-    --bs-gutter-x: 0 !important;
-  }
-  
-  .details p {
-    text-align: justify;
-  }
-  
-  footer {
-    position: static !important;
-    bottom: 0;
-    text-align: center;
-    justify-content: center;
-  }
-  
-  .detail-votecard {
-    background-color: #f6efa0;
-    width: 140px;
-    display: flex;
-    align-items: center;
-    height: 40px;
-    border-radius: 4px;
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
-    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.2);
-  }
-  
-  .shadow {
-    content: " ";
-    position: relative;
-    top: -20px;
-    left: 1.9vw;
-    display: inline-block;
-    height: 3px;
-    width: 88vw;
-    background-color: transparent;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.7);
-  }
-  
-  .detail-votecard-flex {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .detail-voteIcon {
-    margin-left: 10px;
-  }
-  
-  .detail-voteIcon:hover {
-    color: #ff9900;
-    cursor: pointer;
-  }
-  
-  .detail-voteNumber {
-    margin-right: 6px;
-  }
-  
-  .votecard {
-    background-color: #f6efa0;
-  }
-  
-  .votecontainer .col {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .votecontainer .material-symbols-outlined:hover {
-    font-variation-settings: "FILL" 1, "wght" 700, "GRAD" 0, "opsz" 48;
-  }
-  
+
+}
+
+.detail-votecard {
+  background-color: #f6efa0;
+  width: 140px;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  border-radius: 4px;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.2);
+}
+
+.shadow {
+  content: " ";
+  position: relative;
+  top: -20px;
+  left: 1.9vw;
+  display: inline-block;
+  height: 3px;
+  width: 88vw;
+  background-color: transparent;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.7);
+}
+
+.detail-votecard-flex {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.detail-voteIcon {
+  margin-left: 10px;
+}
+
+.detail-voteIcon:hover {
+  color: #ff9900;
+  cursor: pointer;
+}
+
+.detail-voteNumber {
+  margin-right: 6px;
+}
+
+.votecard {
+  background-color: #f6efa0;
+}
+
+.votecontainer .col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.votecontainer .material-symbols-outlined:hover {
+  font-variation-settings: "FILL" 1, "wght" 700, "GRAD" 0, "opsz" 48;
+}
+
+.titleHeading {
+  font-weight: bold;
+  font-size: 24px;
+  /* Adjust the font size according to your preference */
+  padding: 0px 8px;
+}
