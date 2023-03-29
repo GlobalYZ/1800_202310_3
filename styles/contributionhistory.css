@@ -137,11 +137,6 @@ h2 {
     margin-left: 10px;
 }
 
-.detail-voteIcon:hover {
-    color: #ff9900;
-    cursor: pointer;
-}
-
 .detail-voteNumber {
     margin-right: 6px;
 }

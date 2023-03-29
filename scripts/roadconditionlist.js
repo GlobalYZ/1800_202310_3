@@ -9,7 +9,10 @@ function populateRoadConditionList() {
     console.log(userId);
     db.collection("users").doc(userId).get().then(doc => {
         homeCity = doc.data().homeCity;
-        console.log(homeCity);
+        let formSelected = $(`#${homeCity}`) //.setAttribute('selected', 'True');
+        formSelected.attr('selected', 'True');
+
+
 
         db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).get().then(allRoadConditions => {
             roadConditions = allRoadConditions.docs;
@@ -21,17 +24,15 @@ function populateRoadConditionList() {
                 console.log(doc.id);
                 console.log(cardCounter);
 
-                var img = doc.data().imageUrl; //gets the name field
+                var img = doc.data().imageUrl; //gets the image field
                 var title = doc.data().title; //gets the name field
                 var type = doc.data().type; //gets the type field
                 var upvotes = doc.data().likes; //gets the amount of likes
                 var downvotes = doc.data().dislikes; //gets the amount of dislikes
-                // var city = doc.data().city;
                 var address = doc.data().address;
-                // var latitude = doc.data().latitude;
-                // var longitude = doc.data().longitude;
+
                 var description = doc.data().description; //gets the description field
-                // var time = doc.data().timestamp.toDate();
+
                 console.log(title)
 
                 let roadConditionCard = roadConditionCardTemplate.content.cloneNode(true);
@@ -248,15 +249,15 @@ function downvote(docId, homeCity) {
                 } else {
                     var voteId = doc.docs[0].id
                     var DownvoteActive = doc.docs[0].data().enableDownvote
-    
+
                     if (DownvoteActive == true) {
-    
+
                         checkUser.collection("voteRecords").doc(voteId).update({
                             enableDownvote: false
                         }).then(() => {
                             countDownVote(docId, votes, homeCity, cardCounter)
                             DownvoteActive = false
-    
+
                         })
                     } else {
                         checkUser.collection("voteRecords").doc(voteId).update({
@@ -269,7 +270,64 @@ function downvote(docId, homeCity) {
                 }
             })
         })
-        
+
     }
 }
 
+function changeCities() {
+    let type = $('#cities').val()
+    const uid = localStorage.getItem("uid")
+
+    removeAllChildren(document.getElementById("roadConditionCardGroup"))
+
+    console.log(type)
+
+    let roadConditionCardTemplate = document.getElementById("roadConditionCardTemplate");
+    let roadConditionCardGroup = document.getElementById("roadConditionCardGroup");
+
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(type).get().then(allRoadConditions => {
+        roadConditions = allRoadConditions.docs;
+        console.log(roadConditions);
+        let cardCounter = 0;
+
+        roadConditions.forEach(doc => {
+
+            console.log(doc.id);
+            console.log(cardCounter);
+
+            var img = doc.data().imageUrl; //gets the name field
+            var title = doc.data().title; //gets the name field
+            var type = doc.data().type; //gets the type field
+            var upvotes = doc.data().likes; //gets the amount of likes
+            var downvotes = doc.data().dislikes; //gets the amount of dislikes
+            var address = doc.data().address;
+            var description = doc.data().description; //gets the description field
+            console.log(title)
+
+            let roadConditionCard = roadConditionCardTemplate.content.cloneNode(true);
+            let roadConditionCardImage = roadConditionCard.querySelector('.photo');
+            roadConditionCardImage.setAttribute('src', img[0]);
+            roadConditionCard.querySelector('.titleHeading').innerHTML = title;     //equiv getElementByClassName
+            roadConditionCard.querySelector('.type').innerHTML = `Type: ${type}`;
+            roadConditionCard.querySelector('.upvotes').innerHTML = upvotes;
+            roadConditionCard.querySelector('.upvoteIcon').setAttribute("type", `${cardCounter}`)
+            roadConditionCard.querySelector('.upvoteIcon').onclick = () => upvote(doc.id, homeCity);
+            roadConditionCard.querySelector('.downvotes').innerHTML = downvotes;
+            roadConditionCard.querySelector('.downvoteIcon').setAttribute("type", `${cardCounter}`)
+            roadConditionCard.querySelector('.downvoteIcon').onclick = () => downvote(doc.id, homeCity);
+            roadConditionCard.querySelector('.address').innerHTML = address;
+            roadConditionCard.querySelector('.description').innerHTML = `Description: ${description}`;
+
+            checkVotable(doc.id, homeCity, cardCounter);
+
+            roadConditionCardGroup.appendChild(roadConditionCard);
+            cardCounter++;
+        })
+    })
+}
+
+function removeAllChildren(element) {
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+}
