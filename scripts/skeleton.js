@@ -73,7 +73,7 @@ function checkGuard() {
 
 // define the method to bring parameters when jump to a page
 (function ($) {
-    $.extend({ // 1、get the parameter    $.Request("name")
+    $.extend({ // 1、get the parameter    $.Request("add")
         Request: function (name) {
             var sValue = location.search.match(new RegExp("[\?\&]" + name + "=([^\&]*)(\&?)", "i"));
             // decodeURIComponent解码

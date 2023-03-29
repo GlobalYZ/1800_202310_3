@@ -57,14 +57,41 @@
                 <input type="search" id="search2" class="form-control" placeholder="Enter the destination location" aria-label="Search" />
                 <button class="navigationMap-multiSearch-button">Search</button>
               </div>
-
         </div>
 
         
 
         <!-- this is the map container -->
-        <div class="map_container">
-            
+        <div class="map_container" style="position:relative;">
+            <div class="popupBox" style="display:none;opacity:0;">
+                <span class="material-symbols-outlined popup-close" onclick="closePopUp(event)">
+                    close
+                    </span>
+                <p class="popup-title"  onclick="jumpToDetail()"></p>
+                <p class="popup-address">
+                    <span class="material-symbols-outlined" style="margin-right:3px;font-size:18px;">
+                    distance
+                    </span>
+                    <span class="popup-addressInput"></span>
+                    </p>
+                <p class="popup-description"  onclick="jumpToDetail()"></p>
+                <div class="popup-voteContainer">
+                    
+                    <div>
+                        <span class="material-symbols-outlined voteIcon">
+                            thumb_up
+                            </span>
+                            <span class="upvotes" style="margin-right:5px">10</span>
+                    </div>
+                    <div>
+                        <span class="material-symbols-outlined voteIcon">
+                            thumb_down
+                        </span>
+                        <span class="downvotes">10</span>
+                    </div>
+                </div>
+
+            </div>
             <div id="map"></div>
         </div>
         

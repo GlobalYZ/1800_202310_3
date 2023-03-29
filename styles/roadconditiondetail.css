@@ -95,8 +95,7 @@ p {
     position:absolute;
     right:10vw;
     bottom:20px;
-    box-shadow:0 4px 7px rgba(0, 0, 0, 0.2);
-    
+    box-shadow:0 4px 6px rgba(0, 0, 0, 0.2);
   }
 
   .shadow{

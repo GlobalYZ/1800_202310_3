@@ -272,14 +272,14 @@ function checkVotable() {
     checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
         console.log(doc.docs[0].data())
         if (doc.empty == false) {
-            //The user has upvoted or downvoted before
             if (doc.docs[0].data().enableUpvote == false) {
                 var elem = document.getElementsByClassName("voteIcon")[0]
                 UpvoteActive = false
                 elem.setAttribute("style", "color:#f8b943;")
-
             } else {
+                var elem = document.getElementsByClassName("voteIcon")[0]
                 UpvoteActive = true
+                elem.setAttribute("style", "color:black;")
             }
             if (doc.docs[0].data().enableDownvote == false) {
                 console.log(1)
@@ -287,7 +287,9 @@ function checkVotable() {
                 elem.setAttribute("style", "color:#f8b943;")
                 DownvoteActive = false
             } else {
+                var elem = document.getElementsByClassName("voteIcon")[1]
                 DownvoteActive = true
+                elem.setAttribute("style", "color:black;")
             }
         } else {
             //The user never upvote or downvotes
@@ -298,12 +300,6 @@ function checkVotable() {
 
         // console.log(doc.data().enableDownvote)
     })
-    // if(checkUser){
-    //     checkUser.get().then(doc => {
-    //         console.log(doc.data())
-    //         // console.log(doc.data().enableDownvote)
-    //     })
-    // }
 
 
 }

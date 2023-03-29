@@ -91,7 +91,7 @@
 
 .popup-description {
     cursor: pointer;
-    height: 50px;
+    height: 48px;
     margin: 0;
     overflow-wrap: break-word;
     overflow: hidden;
@@ -116,6 +116,7 @@
 .popupBox .popup-voteContainer div .voteIcon{
     font-size:19px;
     font-weight:bold;
+    color:black;
 }
 
 .popupBox .popup-voteContainer div .voteIcon:hover{

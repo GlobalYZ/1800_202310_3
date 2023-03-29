@@ -108,10 +108,8 @@ function submit() {
     
     var title = $("#title").val()
     var description = $("#description").val()
-    var type = $('#roadType').val()
     var addressObj = window.addressObj
     var imageFiles = window.imageFiles
-    var uid = localStorage.getItem("uid")
     if (title == "") {
         alertMessage("Please write title!")
     } else if (description == "") {
@@ -129,54 +127,87 @@ function submit() {
         //         console.log(doc.data().address)
         //     })
         // })
-        var imageUrls = []
+        if(window.submitted == false){
+            setTimeout(uploadToServer, 3000);
+        }
         for (var index = 0; index <= imageFiles.length-1; index++) {
             var storageRef = firebase.storage().ref("/images/" + imageFiles[index].name)
             console.log(index)
 
 
-            storageRef.put(imageFiles[index]).then(setTimeout(function () {
-                storageRef.getDownloadURL().then(function (url) {
-                    imageUrls.push(url)
-                    console.log(imageFiles.length -1)
-                    console.log(index -1)
-                    console.log(index-1 == imageFiles.length - 1)
-                    
-                    if (index-1 == imageFiles.length - 1 && window.submitted == false) {
-                        db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).add({
-                            uid: uid,
-                            imageUrl: imageUrls,
-                            address: addressObj.address,
-                            city: addressObj.city,
-                            description: description,
-                            latitude: addressObj.latitude,
-                            longitude: addressObj.longitude,
-                            type: type,
-                            likes: 0,
-                            dislikes: 0,
-                            title: title
-                        }).then((res) => {
-                            console.log(res.id)  //this is the id of the new post
-                            db.collection("users").doc(localStorage.getItem("uid")).set({
-                                roadConditionIds: firebase.firestore.FieldValue.arrayUnion(res.id)
-                            },{
-                                merge: true
-                            }).then(()=>{
-                                window.submitted = true
-                                loadingElem.setAttribute("style", "display:none;")
-                                primaryMessage("The submission is successful! Thanks for your contribution")
-                                setTimeout(function(){
-                                    window.history.go(-1)
-                                },2000)
-                            })
-
-                        })
-                        
-                        
-                    }
-                })
-            }, 3000))
+            storageRef.put(imageFiles[index]).then((res)=>{
+                primaryMessage("images saved to server");
+        })
+        
+        
+           
+            
         }
+    }
+}
+
+function passURL(index){
+    console.log("the index is " + index)
+    var loadingElem = document.getElementById("loadingHolder");
+    var title = $("#title").val()
+    var description = $("#description").val()
+    var type = $('#roadType').val()
+    var addressObj = window.addressObj
+    var imageFiles = window.imageFiles
+    var uid = localStorage.getItem("uid")
+    imageUrls = []
+    var storageRef = firebase.storage().ref("/images/" + imageFiles[index].name)
+    storageRef.getDownloadURL().then(function (url) {
+        
+        imageUrls.push(url)
+        console.log(imageUrls)
+        if (imageUrls.length == imageFiles.length && window.submitted == false) {
+            console.log(1111)
+            db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).add({
+                uid: uid,
+                imageUrl: imageUrls,
+                address: addressObj.address,
+                city: addressObj.city,
+                description: description,
+                latitude: addressObj.latitude,
+                longitude: addressObj.longitude,
+                type: type,
+                likes: 0,
+                dislikes: 0,
+                title: title
+            }).then((res) => {
+                console.log(res.id)  //this is the id of the new post
+                db.collection("users").doc(localStorage.getItem("uid")).set({
+                    roadConditionIds: firebase.firestore.FieldValue.arrayUnion(res.id)
+                },{
+                    merge: true
+                }).then(()=>{
+                    window.submitted = true
+                    loadingElem.setAttribute("style", "display:none;")
+                    primaryMessage("The submission is successful! Thanks for your contribution")
+                    setTimeout(function(){
+                        window.history.go(-1)
+                    },2000)
+                })
+
+            })
+            
+            
+        }
+    })
+
+}
+
+function uploadToServer(){
+    var imageFiles = window.imageFiles
+    
+    for(var index=0; index<imageFiles.length;index++){
+        console.log("pass+1")
+        passURL(index)
+        if(index == imageFiles.length -1){
+            break;
+        }
+
     }
 }
 
