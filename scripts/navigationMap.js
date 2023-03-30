@@ -7,16 +7,28 @@ var markers = [];
 var currentMarker;
 var UpvoteActive;
 var DownvoteActive;
+var location_1 = new Object();
+var location_2 = new Object();
 
 console.log(localStorage.getItem("uid"))
 console.log(localStorage.getItem("userName"))
 console.log(localStorage.getItem("loginStatus"))
 
 
-var locations = {
-    location1:"",
-    location2:""
-};
+// var locations = {
+//     location1:{
+//         address:"",
+//         latitude:"",
+//         longitude:"",
+//         city:""
+//     },
+//     location2:{
+//         address:"",
+//         latitude:"",
+//         longitude:"",
+//         city:""
+//     }
+// };
 var num = 111;
 
 function setupGeneral() {
@@ -45,9 +57,19 @@ function requestGaocoding(address, identifier) {
             if (res.status == "OK") {
                 console.log(res.results[0])
                 if(identifier == 1){
-                    locations.location1 = res.results[0].geometry.location
+                    console.log(res.results[0].formatted_address)
+                    let address = res.results[0].formatted_address
+                    console.log(window.location1)
+                    window.location_1.address = res.results[0].formatted_address
+                    window.location_1.latitude = res.results[0].geometry.location.lat
+                    window.location_1.longitude = res.results[0].geometry.location.lng
+                    window.location_1.city = address.substring(address.indexOf(", ") + 1, address.indexOf(", BC")).replace(/\s*/g, "");
                 }else{
-                    locations.location2 = res.results[0].geometry.location
+                    let address = res.results[0].formatted_address
+                    window.location_2.address = res.results[0].formatted_address
+                    window.location_2.latitude = res.results[0].geometry.location.lat
+                    window.location_2.longitude = res.results[0].geometry.location.lng
+                    window.location_2.city = address.substring(address.indexOf(", ") + 1, address.indexOf(", BC")).replace(/\s*/g, "");
                     setMultiMap()
                 }
                 
@@ -156,28 +178,58 @@ function addMarkers(markers) {
 }
 
 
+
+
+
 function setMultiMap() {
+    console.log(location_1)
+    console.log(location_2)
     window.map = L.map('map');
 
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
 
-    // L.Routing.control({
-    //     waypoints: [
-    //         L.latLng(49.282730, -123.120735),
-    //         L.latLng(49.181540, -123.118980)
-    //     ],
-    //     routeWhileDragging: true
 
-    // }).addTo(map);
-    // map.getSize is not defined bug
-    console.log(locations)
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(location_1.city).get().then(list => {
+        list.forEach(doc => {
+            var marker = new Object();
+            marker.title = doc.data().title
+            marker.address = doc.data().address
+            marker.description = doc.data().description
+            marker.likes = doc.data().likes
+            marker.dislikes = doc.data().dislikes
+            marker.type = doc.data().type
+            marker.latitude = doc.data().latitude
+            marker.longitude = doc.data().longitude
+            marker.postId = doc.id
+            markers.push(marker)
+        })
+        db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(location_2.city).get().then(list => {
+            list.forEach(doc => {
+                var marker = new Object();
+                marker.title = doc.data().title
+                marker.address = doc.data().address
+                marker.description = doc.data().description
+                marker.likes = doc.data().likes
+                marker.dislikes = doc.data().dislikes
+                marker.type = doc.data().type
+                marker.latitude = doc.data().latitude
+                marker.longitude = doc.data().longitude
+                marker.postId = doc.id
+                markers.push(marker)
+            })
+            console.log(markers)
 
-    L.Routing.control({
-        waypoints: [
-            L.latLng(locations.location1.lat, locations.location1.lng),
-            L.latLng(locations.location2.lat, locations.location2.lng)
-        ]
-    }).addTo(map);
+            L.Routing.control({
+                waypoints: [
+                    L.latLng(location_1.latitude, location_1.longitude),
+                    L.latLng(location_2.latitude, location_2.longitude)
+                ]
+            }).addTo(map);
+            addMarkers(markers)
+        })
+    })
+
+    
 }
 
 // False indicates that user denied to give the current address
@@ -190,13 +242,16 @@ map = setMap(false)
 // }).trigger('click', map);
 
 $("body").on('click', ".navigationMap-multiSearch-button", function () {
-    console.log(map)
     map.off()
     map.remove()
     location1 = $('#search1').val()
     location2 = $('#search2').val()
-    locations.location1 = requestGaocoding(location1, 1)
-    locations.location2 = requestGaocoding(location2, 2)
+    requestGaocoding(location1, 1)
+    markers = []
+    setTimeout(function(){
+        requestGaocoding(location2, 2)
+    }, 500)
+    
 })
 
 function popup(e) {
