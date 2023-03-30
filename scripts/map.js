@@ -52,7 +52,7 @@ function setupGeneral() {
     let elementContainer = document.getElementById('map')
     elementContainer.setAttribute('style', 'height:' + (
         h - 56
-    ) + 'px;margin-top:0;z-index:1;')
+    ) + 'px;margin-top:55px;z-index:1;')
     document.getElementById('map_go').setAttribute('style', 'left:' + (
         w - 102
     ) / 2 + 'px;')
@@ -302,10 +302,9 @@ function checkVotable() {
 
 }
 
-
-
 function jumpToDetail() {
-    console.log("go to detail")
+    let url = $.UrlUpdateParams("./roadConditionDetail", "postId", currentMarker.postId);
+    window.location.href=url
 }
 
 function closePopUp(event) {

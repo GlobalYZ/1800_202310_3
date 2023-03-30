@@ -4,14 +4,21 @@
 }
 
 .nav-search-bar {
-    display: none;
+    display: none !important;
 }
+
+.navbar {
+    position: fixed;
+    width:100vw;
+    z-index: 100;
+}
+
 
 .navigationMap-multiSearch {
     position:fixed;
     top:68px;
     left:50px;
-    z-index:800;
+    z-index:99;
 }
 
 .navigationMap-multiSearch .form-outline .form-control {
@@ -57,7 +64,7 @@
     background-color: #fff;
     position: absolute;
     right: 0;
-    top: 0;
+    top: 55px;
     z-index: 1000;
     border-bottom-left-radius: 10px;
     padding: 10px 15px;

@@ -14,21 +14,6 @@ console.log(localStorage.getItem("uid"))
 console.log(localStorage.getItem("userName"))
 console.log(localStorage.getItem("loginStatus"))
 
-
-// var locations = {
-//     location1:{
-//         address:"",
-//         latitude:"",
-//         longitude:"",
-//         city:""
-//     },
-//     location2:{
-//         address:"",
-//         latitude:"",
-//         longitude:"",
-//         city:""
-//     }
-// };
 var num = 111;
 
 function setupGeneral() {
@@ -36,7 +21,7 @@ function setupGeneral() {
     var elementContainer = document.getElementById('map')
     elementContainer.setAttribute('style', 'height:' + (
         h - 56
-    ) + 'px;margin-top:0;z-index:1;')
+    ) + 'px;margin-top:0;z-index:1;margin-top:55px;')
     num = 222
 }
 
@@ -200,25 +185,37 @@ function setMultiMap() {
             marker.type = doc.data().type
             marker.latitude = doc.data().latitude
             marker.longitude = doc.data().longitude
+            marker.city = doc.data().city
             marker.postId = doc.id
             markers.push(marker)
         })
-        db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(location_2.city).get().then(list => {
-            list.forEach(doc => {
-                var marker = new Object();
-                marker.title = doc.data().title
-                marker.address = doc.data().address
-                marker.description = doc.data().description
-                marker.likes = doc.data().likes
-                marker.dislikes = doc.data().dislikes
-                marker.type = doc.data().type
-                marker.latitude = doc.data().latitude
-                marker.longitude = doc.data().longitude
-                marker.postId = doc.id
-                markers.push(marker)
+        if(location_1.city !== location_2.city){
+            db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(location_2.city).get().then(list => {
+                list.forEach(doc => {
+                    var marker = new Object();
+                    marker.title = doc.data().title
+                    marker.address = doc.data().address
+                    marker.description = doc.data().description
+                    marker.likes = doc.data().likes
+                    marker.dislikes = doc.data().dislikes
+                    marker.type = doc.data().type
+                    marker.latitude = doc.data().latitude
+                    marker.longitude = doc.data().longitude
+                    marker.city = doc.data().city
+                    marker.postId = doc.id
+                    markers.push(marker)
+                })
+    
+                L.Routing.control({
+                    waypoints: [
+                        L.latLng(location_1.latitude, location_1.longitude),
+                        L.latLng(location_2.latitude, location_2.longitude)
+                    ]
+                }).addTo(map);
+                addMarkers(markers)
             })
-            console.log(markers)
 
+        }else{
             L.Routing.control({
                 waypoints: [
                     L.latLng(location_1.latitude, location_1.longitude),
@@ -226,10 +223,8 @@ function setMultiMap() {
                 ]
             }).addTo(map);
             addMarkers(markers)
-        })
-    })
-
-    
+        }
+    })    
 }
 
 // False indicates that user denied to give the current address
@@ -269,13 +264,9 @@ function popup(e) {
                 document.getElementsByClassName("popup-title")[0].innerHTML = markers[i].title
                 document.getElementsByClassName("popup-addressInput")[0].innerHTML = markers[i].address.substring(0, markers[i].address.indexOf(", BC"))
                 document.getElementsByClassName("popup-description")[0].innerHTML = markers[i].description
-                // var checkVotes = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId)
                 document.getElementsByClassName("upvotes")[0].innerHTML = markers[i].likes
                 document.getElementsByClassName("downvotes")[0].innerHTML = markers[i].dislikes
-                
-
-
-
+                console.log(currentMarker)
             }
         }
         elem.setAttribute("style", "opacity:1;dispay:block;")
@@ -285,10 +276,11 @@ function popup(e) {
 
 
 function checkVotable() {
-    var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).collection("voteRecords")
+    var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(currentMarker.city).doc(currentMarker.postId).collection("voteRecords")
     checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
         if (doc.empty == false) {
             if (doc.docs[0].data().enableUpvote == false) {
+                console.log(111)
                 var elem = document.getElementsByClassName("voteIcon")[0]
                 UpvoteActive = false
                 elem.setAttribute("style", "color:#f8b943;")
@@ -311,6 +303,7 @@ function checkVotable() {
             //The user never upvote or downvotes
             console.log("no data found")
         }
+        console.log(doc.empty)
         console.log("UpvoteActive" + UpvoteActive)
         console.log("DownvoteActive" + DownvoteActive)
 
@@ -337,7 +330,7 @@ function closePopUp(event) {
 }
 
 function countUpvote() {
-    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).update({
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(currentMarker.city).doc(currentMarker.postId).update({
         likes: currentMarker.likes + 1
 
     }).then(() => {
@@ -352,7 +345,7 @@ function countUpvote() {
 }
 
 function disableUpvote() {
-    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).update({
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(currentMarker.city).doc(currentMarker.postId).update({
         likes: currentMarker.likes - 1
 
     }).then(() => {
@@ -367,7 +360,7 @@ function disableUpvote() {
 }
 
 function disableDownVote() {
-    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).update({
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(currentMarker.city).doc(currentMarker.postId).update({
         dislikes: currentMarker.dislikes - 1
 
     }).then(() => {
@@ -382,7 +375,7 @@ function disableDownVote() {
 }
 
 function countDownVote() {
-    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).update({
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(currentMarker.city).doc(currentMarker.postId).update({
         dislikes: currentMarker.dislikes + 1
 
     }).then(() => {
@@ -412,7 +405,7 @@ function upvote() {
         
     }else{
          //update Enability
-    var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).collection("voteRecords")
+    var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(currentMarker.city).doc(currentMarker.postId).collection("voteRecords")
     checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
 
         if (doc.docs.length == 0) {
@@ -448,22 +441,14 @@ function upvote() {
 
         }
     })
-
     }
-
-
-
-   
-
-
-
 }
 
 function downvote() {
     if(!localStorage.getItem("loginStatus")){
         console.log($('#guardContainerHolder').load('../components/navigationGuards.html'));
     }else{
-        var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).collection("voteRecords")
+        var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(currentMarker.city).doc(currentMarker.postId).collection("voteRecords")
     checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
 
         if (doc.docs.length == 0) {
