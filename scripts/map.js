@@ -252,11 +252,9 @@ function popup(e) {
                 document.getElementsByClassName("popup-title")[0].innerHTML = markers[i].title
                 document.getElementsByClassName("popup-addressInput")[0].innerHTML = markers[i].address.substring(0, markers[i].address.indexOf(", BC"))
                 document.getElementsByClassName("popup-description")[0].innerHTML = markers[i].description
-                var checkVotes = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId)
-                checkVotes.get().then((doc) => {
-                    document.getElementsByClassName("upvotes")[0].innerHTML = doc.data().likes
-                    document.getElementsByClassName("downvotes")[0].innerHTML = doc.data().dislikes
-                })
+                document.getElementsByClassName("upvotes")[0].innerHTML = markers[i].likes
+                document.getElementsByClassName("downvotes")[0].innerHTML = markers[i].dislikes
+                
 
 
 
