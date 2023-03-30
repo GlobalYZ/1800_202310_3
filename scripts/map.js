@@ -254,10 +254,6 @@ function popup(e) {
                 document.getElementsByClassName("popup-description")[0].innerHTML = markers[i].description
                 document.getElementsByClassName("upvotes")[0].innerHTML = markers[i].likes
                 document.getElementsByClassName("downvotes")[0].innerHTML = markers[i].dislikes
-                
-
-
-
             }
         }
         elem.setAttribute("style", "opacity:1;dispay:block;")
@@ -295,17 +291,12 @@ function checkVotable() {
         }
         console.log("UpvoteActive" + UpvoteActive)
         console.log("DownvoteActive" + DownvoteActive)
-
-        // console.log(doc.data().enableDownvote)
     })
-
-
 }
 
 function jumpToDetail() {
     let url = $.UrlUpdateParams("./roadconditiondetail.html", "postId", currentMarker.postId);
     let new_url = $.UrlUpdateParams(url, "city", addressObj.city);
-    // console.log(new_url)
     window.location.href=new_url
 }
 
@@ -431,15 +422,7 @@ function upvote() {
 
         }
     })
-
     }
-
-
-
-   
-
-
-
 }
 
 function downvote() {

@@ -45,51 +45,42 @@
         <nav id="navbarPlaceholder"></nav>
         <!-- Navbar ends here -->
 
-        <!-- Road Condition Detail starts here-->
         <div
             class="detail-container">
-            <!-- Title starts here-->
-
-            <h1 class="detail-title">Road Condition 1</h1>
-
-            <div class="detail-image-container">
-                <img src="../images/road_conditions.jpg" alt="road conditions">
-                <img src="../images/road_conditions.jpg" alt="road conditions">
-                <img src="../images/road_conditions.jpg" alt="road conditions">
-                <img src="../images/road_conditions.jpg" alt="road conditions">
-                <img src="../images/road_conditions.jpg" alt="road conditions">
-                <img src="../images/road_conditions.jpg" alt="road conditions">
-            </div>
 
 
-            <!-- Details starts here-->
+            <h1 class="detail-title"></h1>
+
+            <div class="detail-image-container"></div>
+
 
             <div
                 class="detail-text card">
                 <div class="shadow"> </div>
 
-                <p class="detail-textBody">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores impedit fuga debitis laborum cupiditate, maxime sed rerum amet ratione dolore delectus. Sint nemo quia similique culpa,facilis aperiam. Expedita, aliquam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque amet doloremque ex doloribus vero repellendus qui omnis id voluptates, harum nihil et esse dicta debitis! Similique voluptatum possimus error reprehenderit.
-                </p>
+                <div class="detail-textBody">
+                    <p class="detail-address"></p>
+                    <p class="detail-description"></p>
+                </div>
 
                 <div
                     class="detail-votecard">
 
                     <!-- Upvotes starts here-->
                     <div class="detail-votecard-flex">
-                        <span class="material-symbols-outlined detail-voteIcon">
+                        <span class="material-symbols-outlined detail-voteIcon voteIcon">
                             thumb_up
                         </span>
-                        <span style="margin-right:5px">10</span>
+                        <span style="margin-right:5px" class="detail-likes upvotes"></span>
                     </div>
                     <!-- Vote count here-->
                     
                     <!-- Downvotes starts here-->
                     <div class="detail-votecard-flex">
-                        <span class="material-symbols-outlined detail-voteIcon">
+                        <span class="material-symbols-outlined detail-voteIcon voteIcon">
                             thumb_down
                         </span>
-                        <span class="detail-voteNumber">10</span>
+                        <span class="detail-voteNumber detail-dislikes downvotes"></span>
                     </div>
                 </div>
 
@@ -97,9 +88,10 @@
             </div>
 
 
-            <!-- Votes start    s here-->
 
         </div>
+        <!-- loading holder -->
+        <div id="loadingHolder" style="display: none;"></div>
     </body>
     <script src="../scripts/firebaseAPI_TEAM99.js"></script>
     <script src="../scripts/skeleton.js" id="skeleton" message="roadconditiondetail"></script>

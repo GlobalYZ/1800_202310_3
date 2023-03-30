@@ -4,9 +4,7 @@
 }
 
 p {
-    padding: 5px;
     text-align: center;
-    margin-bottom: 0%;
 }
 
 .votecontainer .col{
@@ -81,7 +79,8 @@ p {
 }
 
 .detail-textBody{
-    text-align:justify;
+    padding:0;
+    margin:0;
   }
 
 
@@ -138,4 +137,15 @@ p {
 
 ::-webkit-scrollbar {
     display: none;
+  }
+
+
+  .detail-address{
+    display:flex;
+    align-items: center;
+    margin-bottom:15px;
+  }
+
+  .detail-description{
+    text-align: justify;
   }
