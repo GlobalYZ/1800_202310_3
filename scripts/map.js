@@ -303,8 +303,10 @@ function checkVotable() {
 }
 
 function jumpToDetail() {
-    let url = $.UrlUpdateParams("./roadConditionDetail", "postId", currentMarker.postId);
-    window.location.href=url
+    let url = $.UrlUpdateParams("./roadconditiondetail.html", "postId", currentMarker.postId);
+    let new_url = $.UrlUpdateParams(url, "city", addressObj.city);
+    // console.log(new_url)
+    window.location.href=new_url
 }
 
 function closePopUp(event) {

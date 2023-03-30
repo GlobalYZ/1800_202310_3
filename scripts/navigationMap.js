@@ -487,3 +487,10 @@ function downvote() {
     }
 }
 
+
+function jumpToDetail() {
+    let url = $.UrlUpdateParams("./roadconditiondetail.html", "postId", currentMarker.postId);
+    let new_url = $.UrlUpdateParams(url, "city", currentMarker.city);
+    // console.log(new_url)
+    window.location.href=new_url
+}
