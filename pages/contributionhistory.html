@@ -65,6 +65,28 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleFormControlTextarea1">Title:</label>
+                            <textarea class="form-control" id="titleForm" rows="1"></textarea>
+                            <label for="exampleFormControlTextarea1">Description:</label>
+                            <textarea class="form-control" id="descriptionForm" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary editConfirm" id="editConfirm" data-bs-dismiss="modal" aria-label="Confirm" onclick="submitEdit()">Submit My Edits</button>
+                        <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal" aria-label="Cancel">Cancel My Edits</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Log Out Popup ends here-->
     
         <!-- User Profile starts here-->
@@ -110,7 +132,7 @@
 
     <!-- Template for Road Condition Card 1 starts here-->
     <template id="roadConditionCardTemplate">
-        <div class="card row">
+        <div class="card row col-md-10">
             <!-- Photo starts here-->
             <div class="col-md-3 align-items-center">
                 <div class="roadconditionphoto">
@@ -144,16 +166,25 @@
                 </div>
 
                 <!-- Details starts here-->
-                <div class="row px-1 justify-content-around">
-                    <div class="details">
+                <div class="row px-1 justify-content-start">
+                    <div class="details col-md-7">
                         <p class="city"></p>
                         <p class="address"></p>
-                        <p class="latitude"></p>
-                        <p class="longitude"></p>
                         <p class="type"></p>
                         <p class="description"></p>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="editCol col-md-1">
+            <!-- Edit Buttons starts here-->
+            <div class="edit row justify-content-center">
+                <button type="button" class="btn navi-bottons-strong col-6 col-md-auto editPost" id="editPost">
+                    <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button type="button" class="btn navi-bottons-strong col-6 col-md-auto">
+                    <span class="material-symbols-outlined"> delete </span>
+                </button>
             </div>
         </div>
     </template>

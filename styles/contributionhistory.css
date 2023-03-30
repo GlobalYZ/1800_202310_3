@@ -90,16 +90,8 @@ h2 {
     color: white;
 }
 
-@media screen and (max-width:550px) {
-    .user-card {
-        max-width: 400px !important;
-    }
 
-    .list_group {
-        max-width: 400px !important;
-    }
 
-}
 
 .detail-votecard {
     background-color: #f6efa0;
@@ -160,4 +152,36 @@ h2 {
     font-size: 24px;
     /* Adjust the font size according to your preference */
     padding: 0px 8px;
+}
+
+@media screen and (max-width:550px) {
+    .user-card {
+        max-width: 400px !important;
+    }
+
+    .list_group {
+        max-width: 400px !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .edit {
+        margin-top: 0;
+        margin-bottom: 42px;
+
+        padding: 0%;
+    }
+
+    .editCol {
+        padding-left: 5%;
+    }
+
+    .detail-votecard {
+        right: 10px;
+        bottom: 10px;
+    }
+
+    .details {
+        margin-bottom: 45px;
+    }
 }

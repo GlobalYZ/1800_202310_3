@@ -1,3 +1,6 @@
+var currentdocId = "";
+var currentCity = "";
+
 function populateRoadConditonList() {
     let roadConditionCardTemplate = document.getElementById("roadConditionCardTemplate");
     let roadConditionCardGroup = document.getElementById("roadConditionCardGroup");
@@ -16,7 +19,7 @@ function populateRoadConditonList() {
             // db.collection("users").doc(userId).get().then(doc => {
             //     homeCity = doc.data().homeCity;
             //     console.log(homeCity);
-        
+
 
             db.collection("users").doc(userID).get().then(userInfo => {
                 let userId = localStorage.getItem("uid");
@@ -25,9 +28,9 @@ function populateRoadConditonList() {
                     let formSelected = $(`#${homeCity}`) //.setAttribute('selected', 'True');
                     formSelected.attr('selected', 'True');
                 })
-            
-            
-                roadConditions = userInfo.data().roadConditionIds;                ;
+
+
+                roadConditions = userInfo.data().roadConditionIds;;
                 console.log(roadConditions);
                 roadConditions.forEach(post => {
 
@@ -38,8 +41,8 @@ function populateRoadConditonList() {
 
                     let allCities = ["Burnaby", "New Westminster", "North Vancouver", "Richmond", "Surrey", "Vancouver", "West Vancouver"];
 
-                    allCities.forEach(city => 
-                        {db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(city).doc(post).get().then(doc => {
+                    allCities.forEach(city => {
+                        db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(city).doc(post).get().then(doc => {
 
                             var img = doc.data().imageUrl; //gets the image field
                             var title = doc.data().title; //gets the name field
@@ -62,11 +65,13 @@ function populateRoadConditonList() {
                             roadConditionCard.querySelector('.address').innerHTML = address;
                             roadConditionCard.querySelector('.description').innerHTML = `Description: ${description}`;
 
-                            roadConditionCardGroup.appendChild(roadConditionCard);
-                            })
-                    })
+                            roadConditionCard.querySelector('.editPost').onclick = () => editPost(doc.id, city);
 
-                
+                            roadConditionCardGroup.appendChild(roadConditionCard);
+                        })
+                    }
+                    )
+
                 })
 
             })
@@ -76,7 +81,7 @@ function populateRoadConditonList() {
     })
 
     document.getElementById("logout").onclick = () => { logout() };
-    
+
 };
 
 populateRoadConditonList();
@@ -84,7 +89,7 @@ populateRoadConditonList();
 function logout() {
     $('#logOutModal').modal('toggle')
 
-    document.getElementById('logOutConfirm').onclick = function() {
+    document.getElementById('logOutConfirm').onclick = function () {
         firebase.auth().signOut().then(function () {
             // Sign-out successful.
             console.log("Sign-out tried.");
@@ -92,13 +97,58 @@ function logout() {
             localStorage.removeItem("userName");
             localStorage.removeItem("loginStatus");
             console.log(localStorage.getItem("uid"));
-            console.log("Sign-out successful.");        
+            console.log("Sign-out successful.");
             window.location.href = "../index.html";
         }).catch(function (error) {
             // An error happened.
             console.log("An error happened.");
         });
-}}
+    }
+}
+
+function editPost(docId, city) {
+    console.log("edit post clicked")
+    $('#editModal').modal('toggle')
+
+    currentdocId = docId;
+    currentCity = city;
+
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(city).doc(docId).get().then(doc => {
+
+        var title = doc.data().title; //gets the name field
+        var description = doc.data().description; //gets the description field
+
+        document.getElementById("titleForm").value = title;
+        document.getElementById("descriptionForm").value = description;
+
+
+    })
+}
+
+function submitEdit() {
+    console.log("submit edit clicked")
+
+    let docId = currentdocId;
+    let city = currentCity;
+
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(city).doc(docId).get().then(doc => {
+        new_title = document.getElementById("titleForm").value
+        new_description = document.getElementById("descriptionForm").value
+
+        console.log(new_title)
+        console.log(new_description)
+
+        db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(city).doc(docId).update({
+            title: new_title,
+            description: new_description
+        }).then(() => {
+            //reload page
+            window.location.reload();
+        })
+    })
+}
+
+
 
 function changeCities() {
     let type = $('#cities').val()
