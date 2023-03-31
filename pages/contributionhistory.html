@@ -65,7 +65,9 @@
                 </div>
             </div>
         </div>
+        <!-- Log Out Popup ends here-->
 
+        <!-- Edit Popup starts here-->
         <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -87,7 +89,26 @@
                 </div>
             </div>
         </div>
-        <!-- Log Out Popup ends here-->
+        <!-- Edit Popup ends here-->
+
+        <!-- Delete Popup starts here-->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"></h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to delete this post?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary editConfirm" id="editConfirm" data-bs-dismiss="modal" aria-label="Confirm" onclick="confirmDelete()">Delete My Post</button>
+                        <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal" aria-label="Cancel">Do Not Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Delete Popup ends here-->
     
         <!-- User Profile starts here-->
         <div class="col-md-3">
@@ -182,7 +203,7 @@
                 <button type="button" class="btn navi-bottons-strong col-6 col-md-auto editPost" id="editPost">
                     <span class="material-symbols-outlined"> edit </span>
                 </button>
-                <button type="button" class="btn navi-bottons-strong col-6 col-md-auto">
+                <button type="button" class="btn navi-bottons-strong col-6 col-md-auto deletePost" id="deletePost">
                     <span class="material-symbols-outlined"> delete </span>
                 </button>
             </div>

@@ -19,6 +19,8 @@ p {
 
 .roadconditionphoto img {
     width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
     padding: 5px;
     border-radius: 10px;
     max-height: 500px;
@@ -29,6 +31,7 @@ p {
 }
 
 h2 {
+    margin-bottom: 0;
     margin-bottom: 0;
 }
 
@@ -182,6 +185,10 @@ h2 {
     }
 
     .details {
-        margin-bottom: 45px;
+        margin-bottom: 52px;
     }
+}
+
+.main {
+    margin-left: 1px !important;
 }

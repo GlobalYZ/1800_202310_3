@@ -66,6 +66,7 @@ function populateRoadConditonList() {
                             roadConditionCard.querySelector('.description').innerHTML = `Description: ${description}`;
 
                             roadConditionCard.querySelector('.editPost').onclick = () => editPost(doc.id, city);
+                            roadConditionCard.querySelector('.deletePost').onclick = () => deletePost(doc.id, city);
 
                             roadConditionCardGroup.appendChild(roadConditionCard);
                         })
@@ -148,6 +149,36 @@ function submitEdit() {
     })
 }
 
+function deletePost(docId, city) {
+    console.log("delete post clicked")
+    $('#deleteModal').modal('toggle')
+
+    currentdocId = docId;
+    currentCity = city;
+
+}
+
+function confirmDelete() {
+
+    let docId = currentdocId;
+    let city = currentCity;
+
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(city).doc(docId).collection("voteRecords").get().then(voteRecord => {
+        voteRecord.docs.forEach(doc => {
+            db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(city).doc(docId).collection("voteRecords").doc(doc.id).delete().then(() => {
+                console.log("Document successfully deleted!");
+            }).catch((error) => {
+                console.error("Error removing document: ", error);
+            });
+        })
+    })
+    db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(city).doc(docId).delete().then(() => {
+        console.log("Document successfully deleted!");
+    }).catch((error) => {
+        console.error("Error removing document: ", error);
+    });
+
+}
 
 
 function changeCities() {
