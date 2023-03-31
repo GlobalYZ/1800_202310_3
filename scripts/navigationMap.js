@@ -41,7 +41,7 @@ function requestGaocoding(address, identifier) {
             console.log(res)
             if (res.status == "OK") {
                 console.log(res.results[0])
-                if(identifier == 1){
+                if (identifier == 1) {
                     console.log(res.results[0].formatted_address)
                     let address = res.results[0].formatted_address
                     console.log(window.location1)
@@ -49,7 +49,7 @@ function requestGaocoding(address, identifier) {
                     window.location_1.latitude = res.results[0].geometry.location.lat
                     window.location_1.longitude = res.results[0].geometry.location.lng
                     window.location_1.city = address.substring(address.indexOf(", ") + 1, address.indexOf(", BC")).replace(/\s*/g, "");
-                }else{
+                } else {
                     let address = res.results[0].formatted_address
                     window.location_2.address = res.results[0].formatted_address
                     window.location_2.latitude = res.results[0].geometry.location.lat
@@ -57,7 +57,7 @@ function requestGaocoding(address, identifier) {
                     window.location_2.city = address.substring(address.indexOf(", ") + 1, address.indexOf(", BC")).replace(/\s*/g, "");
                     setMultiMap()
                 }
-                
+
             } else {
                 alert("Address is not matched, please edit your input!")
             }
@@ -101,11 +101,11 @@ function setMap(currentAddress) {
         window.map = L.map("map", config).setView([
             currentAddress.latitude, currentAddress.longitude
         ], zoom);
-    
-    
 
-        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
-    
+
+
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' }).addTo(map);
+
         // add current location as primary marker
         marker = new L.marker([currentAddress.latitude, currentAddress.longitude]).addTo(map);
         addMarkers(markers)
@@ -116,50 +116,55 @@ function setMap(currentAddress) {
 
 
 function addMarkers(markers) {
-    console.log(markers)
+    db.collection("users").doc(localStorage.getItem('uid')).get().then(doc => {
+        ifShowMarkers = doc.data().enableMapIcons
+        if (ifShowMarkers) {
 
-    for (var i = 0; i < markers.length; i++) {
-        var iconUrl = ""
-        switch (markers[i].type) {
-            case "Road Closure": iconUrl = "../images/construction&road_closure.png"
-                break;
-            case "Icy Road": iconUrl = "../images/ice_road.png"
-                break;
-            case "Bush Fire": iconUrl = "../images/bushfire.png"
-                break;
-            case "Accident":
-                iconUrl = "../images/car_accident.png"
-                break;
-            case "Traffic Jam":
-                iconUrl = "../images/traffic.png";
-                break;
-            case "Construction":
-                iconUrl = "../images/construction&road_closure.png";
-                break;
-            case "Landslide":
-                iconUrl = "../images/landslide.png"
+            for (var i = 0; i < markers.length; i++) {
+                var iconUrl = ""
+                switch (markers[i].type) {
+                    case "Road Closure": iconUrl = "../images/construction&road_closure.png"
+                        break;
+                    case "Icy Road": iconUrl = "../images/ice_road.png"
+                        break;
+                    case "Bush Fire": iconUrl = "../images/bushfire.png"
+                        break;
+                    case "Accident":
+                        iconUrl = "../images/car_accident.png"
+                        break;
+                    case "Traffic Jam":
+                        iconUrl = "../images/traffic.png";
+                        break;
+                    case "Construction":
+                        iconUrl = "../images/construction&road_closure.png";
+                        break;
+                    case "Landslide":
+                        iconUrl = "../images/landslide.png"
 
+                }
+
+                var Icon = new L.Icon({
+                    iconUrl: iconUrl,
+                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                    iconSize: [
+                        50, 50
+                    ],
+                    iconAnchor: [
+                        12, 41
+                    ],
+                    popupAnchor: [
+                        1, -34
+                    ],
+                    shadowSize: [41, 41]
+                });
+                console.log(Icon)
+
+                var marker = L.marker(new L.LatLng(markers[i].latitude, markers[i].longitude), { icon: Icon }).addTo(map).on('click', popup);
+
+            }
         }
+    })
 
-        var Icon = new L.Icon({
-            iconUrl: iconUrl,
-            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-            iconSize: [
-                50, 50
-            ],
-            iconAnchor: [
-                12, 41
-            ],
-            popupAnchor: [
-                1, -34
-            ],
-            shadowSize: [41, 41]
-        });
-        console.log(Icon)
-
-        var marker = L.marker(new L.LatLng(markers[i].latitude, markers[i].longitude), { icon: Icon }).addTo(map).on('click', popup);
-
-    }
 
 }
 
@@ -172,7 +177,7 @@ function setMultiMap() {
     console.log(location_2)
     window.map = L.map('map');
 
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}).addTo(map);
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', { attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors' }).addTo(map);
 
 
     db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(location_1.city).get().then(list => {
@@ -191,7 +196,7 @@ function setMultiMap() {
             marker.postId = doc.id
             markers.push(marker)
         })
-        if(location_1.city !== location_2.city){
+        if (location_1.city !== location_2.city) {
             db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(location_2.city).get().then(list => {
                 list.forEach(doc => {
                     var marker = new Object();
@@ -207,7 +212,7 @@ function setMultiMap() {
                     marker.postId = doc.id
                     markers.push(marker)
                 })
-    
+
                 L.Routing.control({
                     waypoints: [
                         L.latLng(location_1.latitude, location_1.longitude),
@@ -217,7 +222,7 @@ function setMultiMap() {
                 addMarkers(markers)
             })
 
-        }else{
+        } else {
             L.Routing.control({
                 waypoints: [
                     L.latLng(location_1.latitude, location_1.longitude),
@@ -226,7 +231,7 @@ function setMultiMap() {
             }).addTo(map);
             addMarkers(markers)
         }
-    })    
+    })
 }
 
 // False indicates that user denied to give the current address
@@ -245,10 +250,10 @@ $("body").on('click', ".navigationMap-multiSearch-button", function () {
     location2 = $('#search2').val()
     requestGaocoding(location1, 1)
     markers = []
-    setTimeout(function(){
+    setTimeout(function () {
         requestGaocoding(location2, 2)
     }, 500)
-    
+
 })
 
 function popup(e) {
@@ -352,7 +357,7 @@ function disableUpvote() {
 
     }).then(() => {
         document.getElementsByClassName("upvotes")[0].innerHTML = currentMarker.likes - 1
-        currentMarker.likes = currentMarker.likes -1
+        currentMarker.likes = currentMarker.likes - 1
 
     })
 
@@ -393,99 +398,99 @@ function countDownVote() {
     elem.setAttribute("style", "color:#f8b943;")
 }
 
-function closeLogin(){
+function closeLogin() {
     document.getElementById("guardContainerHolder").innerHTML = ""
 }
 
 
 function upvote() {
 
-    if(!localStorage.getItem("loginStatus")){
+    if (!localStorage.getItem("loginStatus")) {
         console.log($('#guardContainerHolder').load('../components/navigationGuards.html'));
         document.getElementById("popup-back").setAttribute("onclick", "")
         document.getElementById("popup-back").addEventListener("click", closeLogin)
-        
-    }else{
-         //update Enability
-    var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(currentMarker.city).doc(currentMarker.postId).collection("voteRecords")
-    checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
 
-        if (doc.docs.length == 0) {
+    } else {
+        //update Enability
+        var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(currentMarker.city).doc(currentMarker.postId).collection("voteRecords")
+        checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
 
-            checkUser.add({
-                enableDownvote: true,
-                enableUpvote: false,
-                votedUser: localStorage.getItem("uid")
-            }).then(() => {
-                countUpvote()
-                UpvoteActive = false
-            })
+            if (doc.docs.length == 0) {
 
-        } else {
-            var voteId = doc.docs[0].id
-            if (UpvoteActive == true) {
-
-                checkUser.doc(voteId).update({
-                    enableUpvote: false
+                checkUser.add({
+                    enableDownvote: true,
+                    enableUpvote: false,
+                    votedUser: localStorage.getItem("uid")
                 }).then(() => {
                     countUpvote()
                     UpvoteActive = false
                 })
+
             } else {
-                checkUser.doc(voteId).update({
-                    enableUpvote: true
-                }).then(() => {
-                    disableUpvote()
-                    UpvoteActive = true
-                })
+                var voteId = doc.docs[0].id
+                if (UpvoteActive == true) {
+
+                    checkUser.doc(voteId).update({
+                        enableUpvote: false
+                    }).then(() => {
+                        countUpvote()
+                        UpvoteActive = false
+                    })
+                } else {
+                    checkUser.doc(voteId).update({
+                        enableUpvote: true
+                    }).then(() => {
+                        disableUpvote()
+                        UpvoteActive = true
+                    })
+
+                }
 
             }
-
-        }
-    })
+        })
     }
 }
 
 function downvote() {
-    if(!localStorage.getItem("loginStatus")){
+    if (!localStorage.getItem("loginStatus")) {
         console.log($('#guardContainerHolder').load('../components/navigationGuards.html'));
-    }else{
+    } else {
         var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(currentMarker.city).doc(currentMarker.postId).collection("voteRecords")
-    checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
+        checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
 
-        if (doc.docs.length == 0) {
-            checkUser.add({
-                enableDownvote: false,
-                enableUpvote: true,
-                votedUser: localStorage.getItem("uid")
-            }).then(() => {
-                countDownvote()
-                DownvoteActive = false
-            })
-        } else {
-            var voteId = doc.docs[0].id
-           
-            if (DownvoteActive == true) {
-
-                checkUser.doc(voteId).update({
-                    enableDownvote: false
+            if (doc.docs.length == 0) {
+                checkUser.add({
+                    enableDownvote: false,
+                    enableUpvote: true,
+                    votedUser: localStorage.getItem("uid")
                 }).then(() => {
-                    countDownVote()
-                DownvoteActive = false
-
+                    countDownvote()
+                    DownvoteActive = false
                 })
             } else {
-                checkUser.doc(voteId).update({
-                    enableDownvote: true
-                }).then(() => {
-                    disableDownVote()
-                    DownvoteActive = true
-                })
+                var voteId = doc.docs[0].id
+
+                if (DownvoteActive == true) {
+
+                    checkUser.doc(voteId).update({
+                        enableDownvote: false
+                    }).then(() => {
+                        countDownVote()
+                        DownvoteActive = false
+
+                    })
+                } else {
+                    checkUser.doc(voteId).update({
+                        enableDownvote: true
+                    }).then(() => {
+                        disableDownVote()
+                        DownvoteActive = true
+                    })
+
+                }
 
             }
-
-        }
-    })
+        })
     }
 }
 
@@ -494,5 +499,5 @@ function jumpToDetail() {
     let url = $.UrlUpdateParams("./roadconditiondetail.html", "postId", currentMarker.postId);
     let new_url = $.UrlUpdateParams(url, "city", currentMarker.city);
     // console.log(new_url)
-    window.location.href=new_url
+    window.location.href = new_url
 }

@@ -2,6 +2,7 @@
 // var DownvoteActive;
 
 function populateRoadConditionList(homeCity) {
+    startLoading()
     let roadConditionCardTemplate = document.getElementById("roadConditionCardTemplate");
     let roadConditionCardGroup = document.getElementById("roadConditionCardGroup");
 
@@ -47,6 +48,9 @@ function populateRoadConditionList(homeCity) {
 
             roadConditionCardGroup.appendChild(roadConditionCard);
             cardCounter++;
+            if(cardCounter == roadConditions.length-1){
+                finishLoading()
+            }
         })
     })
 }
@@ -343,4 +347,14 @@ function jumpToDetail(docId, city) {
     let new_url = $.UrlUpdateParams(url, "city", city);
     console.log(new_url)
     window.location.href=new_url
+}
+
+function startLoading(){
+    var loadingElem = document.getElementById("loadingHolder");
+    loadingElem.setAttribute("style", "display:flex;")
+}
+
+function finishLoading(){
+    var loadingElem = document.getElementById("loadingHolder");
+    loadingElem.setAttribute("style", "display:none;")
 }

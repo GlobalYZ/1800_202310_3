@@ -1,5 +1,6 @@
 var currentdocId = "";
 var currentCity = "";
+startLoading()
 
 function populateRoadConditonList() {
     let roadConditionCardTemplate = document.getElementById("roadConditionCardTemplate");
@@ -71,7 +72,11 @@ function populateRoadConditonList() {
                             roadConditionCard.querySelector('.post').onclick = () => jumpToDetail(doc.id, city);
 
                             roadConditionCardGroup.appendChild(roadConditionCard);
+            
                         })
+                        if(city == "West Vancouver"){
+                            finishLoading()
+                        }
                     }
                     )
 
@@ -199,4 +204,14 @@ function jumpToDetail(docId, city) {
     let new_url = $.UrlUpdateParams(url, "city", city);
     console.log(new_url)
     window.location.href=new_url
+}
+
+function startLoading(){
+    var loadingElem = document.getElementById("loadingHolder");
+    loadingElem.setAttribute("style", "display:flex;")
+}
+
+function finishLoading(){
+    var loadingElem = document.getElementById("loadingHolder");
+    loadingElem.setAttribute("style", "display:none;")
 }

@@ -88,11 +88,14 @@ h2 {
     /* set a max-width for the card */
 }
 
-.list-group-item:hover {
-    background-color: black;
-    color: white;
+.list-group-item{
+    cursor: pointer;
 }
 
+.list-group-item:hover {
+    background-color: #ffc107;
+    color: white;
+}
 
 
 
@@ -106,7 +109,7 @@ h2 {
     position: absolute;
     right: 20px;
     bottom: 20px;
-    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
 }
 
 .shadow {
@@ -148,6 +151,17 @@ h2 {
 
 .votecontainer .material-symbols-outlined:hover {
     font-variation-settings: "FILL" 1, "wght" 700, "GRAD" 0, "opsz" 48;
+}
+
+.profile-image-container{
+    display: flex;
+    align-items: center;
+    height:168px;
+}
+
+.card{
+    height:160px;
+    overflow: hidden;
 }
 
 .titleHeading {
@@ -192,3 +206,13 @@ h2 {
 .main {
     margin-left: 1px !important;
 }
+
+.profile-button-box{
+    display: flex;
+    justify-items: center;
+}
+
+.btn {
+    background-color: #ffffcc;
+}
+

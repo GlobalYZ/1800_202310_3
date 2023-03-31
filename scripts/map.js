@@ -43,7 +43,6 @@ function getUrlParams() {
     } else {
         getCurrentAddress()
     }
-
 }
 
 function setupGeneral() {
@@ -191,50 +190,57 @@ function setMap(currentAddress) {
 
 function addMarkers(markers) {
     console.log(markers)
+    db.collection("users").doc(localStorage.getItem('uid')).get().then(doc => {
+        ifShowMarkers = doc.data().enableMapIcons
+        if (ifShowMarkers) {
+            for (var i = 0; i < markers.length; i++) {
+                var iconUrl = ""
+                switch (markers[i].type) {
+                    case "Road Closure": iconUrl = "../images/construction&road_closure.png"
+                        break;
+                    case "Icy Road": iconUrl = "../images/ice_road.png"
+                        break;
+                    case "Bush Fire": iconUrl = "../images/bushfire.png"
+                        break;
+                    case "Accident":
+                        iconUrl = "../images/car_accident.png"
+                        break;
+                    case "Traffic Jam":
+                        iconUrl = "../images/traffic.png";
+                        break;
+                    case "Construction":
+                        iconUrl = "../images/construction&road_closure.png";
+                        break;
+                    case "Landslide":
+                        iconUrl = "../images/landslide.png"
 
-    for (var i = 0; i < markers.length; i++) {
-        var iconUrl = ""
-        switch (markers[i].type) {
-            case "Road Closure": iconUrl = "../images/construction&road_closure.png"
-                break;
-            case "Icy Road": iconUrl = "../images/ice_road.png"
-                break;
-            case "Bush Fire": iconUrl = "../images/bushfire.png"
-                break;
-            case "Accident":
-                iconUrl = "../images/car_accident.png"
-                break;
-            case "Traffic Jam":
-                iconUrl = "../images/traffic.png";
-                break;
-            case "Construction":
-                iconUrl = "../images/construction&road_closure.png";
-                break;
-            case "Landslide":
-                iconUrl = "../images/landslide.png"
+                }
+
+                var Icon = new L.Icon({
+                    iconUrl: iconUrl,
+                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                    iconSize: [
+                        50, 50
+                    ],
+                    iconAnchor: [
+                        12, 41
+                    ],
+                    popupAnchor: [
+                        1, -34
+                    ],
+                    shadowSize: [41, 41]
+                });
+                console.log(Icon)
+
+                db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz")
+
+
+
+                var marker = L.marker(new L.LatLng(markers[i].latitude, markers[i].longitude), { icon: Icon }).addTo(map).on('click', popup);
+            }
 
         }
-
-        var Icon = new L.Icon({
-            iconUrl: iconUrl,
-            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-            iconSize: [
-                50, 50
-            ],
-            iconAnchor: [
-                12, 41
-            ],
-            popupAnchor: [
-                1, -34
-            ],
-            shadowSize: [41, 41]
-        });
-        console.log(Icon)
-
-        var marker = L.marker(new L.LatLng(markers[i].latitude, markers[i].longitude), { icon: Icon }).addTo(map).on('click', popup);
-
-    }
-
+    })
 }
 
 function popup(e) {
@@ -296,7 +302,7 @@ function checkVotable() {
 function jumpToDetail() {
     let url = $.UrlUpdateParams("./roadconditiondetail.html", "postId", currentMarker.postId);
     let new_url = $.UrlUpdateParams(url, "city", addressObj.city);
-    window.location.href=new_url
+    window.location.href = new_url
 }
 
 function closePopUp(event) {
@@ -330,7 +336,7 @@ function disableUpvote() {
 
     }).then(() => {
         document.getElementsByClassName("upvotes")[0].innerHTML = currentMarker.likes - 1
-        currentMarker.likes = currentMarker.likes -1
+        currentMarker.likes = currentMarker.likes - 1
 
     })
 
@@ -371,99 +377,99 @@ function countDownVote() {
     elem.setAttribute("style", "color:#f8b943;")
 }
 
-function closeLogin(){
+function closeLogin() {
     document.getElementById("guardContainerHolder").innerHTML = ""
 }
 
 
 function upvote() {
 
-    if(!localStorage.getItem("loginStatus")){
+    if (!localStorage.getItem("loginStatus")) {
         console.log($('#guardContainerHolder').load('../components/navigationGuards.html'));
         document.getElementById("popup-back").setAttribute("onclick", "")
         document.getElementById("popup-back").addEventListener("click", closeLogin)
-        
-    }else{
-         //update Enability
-    var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).collection("voteRecords")
-    checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
 
-        if (doc.docs.length == 0) {
+    } else {
+        //update Enability
+        var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).collection("voteRecords")
+        checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
 
-            checkUser.add({
-                enableDownvote: true,
-                enableUpvote: false,
-                votedUser: localStorage.getItem("uid")
-            }).then(() => {
-                countUpvote()
-                UpvoteActive = false
-            })
+            if (doc.docs.length == 0) {
 
-        } else {
-            var voteId = doc.docs[0].id
-            if (UpvoteActive == true) {
-
-                checkUser.doc(voteId).update({
-                    enableUpvote: false
+                checkUser.add({
+                    enableDownvote: true,
+                    enableUpvote: false,
+                    votedUser: localStorage.getItem("uid")
                 }).then(() => {
                     countUpvote()
                     UpvoteActive = false
                 })
+
             } else {
-                checkUser.doc(voteId).update({
-                    enableUpvote: true
-                }).then(() => {
-                    disableUpvote()
-                    UpvoteActive = true
-                })
+                var voteId = doc.docs[0].id
+                if (UpvoteActive == true) {
+
+                    checkUser.doc(voteId).update({
+                        enableUpvote: false
+                    }).then(() => {
+                        countUpvote()
+                        UpvoteActive = false
+                    })
+                } else {
+                    checkUser.doc(voteId).update({
+                        enableUpvote: true
+                    }).then(() => {
+                        disableUpvote()
+                        UpvoteActive = true
+                    })
+
+                }
 
             }
-
-        }
-    })
+        })
     }
 }
 
 function downvote() {
-    if(!localStorage.getItem("loginStatus")){
+    if (!localStorage.getItem("loginStatus")) {
         console.log($('#guardContainerHolder').load('../components/navigationGuards.html'));
-    }else{
+    } else {
         var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).collection("voteRecords")
-    checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
+        checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
 
-        if (doc.docs.length == 0) {
-            checkUser.add({
-                enableDownvote: false,
-                enableUpvote: true,
-                votedUser: localStorage.getItem("uid")
-            }).then(() => {
-                countDownvote()
-                DownvoteActive = false
-            })
-        } else {
-            var voteId = doc.docs[0].id
-           
-            if (DownvoteActive == true) {
-
-                checkUser.doc(voteId).update({
-                    enableDownvote: false
+            if (doc.docs.length == 0) {
+                checkUser.add({
+                    enableDownvote: false,
+                    enableUpvote: true,
+                    votedUser: localStorage.getItem("uid")
                 }).then(() => {
-                    countDownVote()
-                DownvoteActive = false
-
+                    countDownvote()
+                    DownvoteActive = false
                 })
             } else {
-                checkUser.doc(voteId).update({
-                    enableDownvote: true
-                }).then(() => {
-                    disableDownVote()
-                    DownvoteActive = true
-                })
+                var voteId = doc.docs[0].id
+
+                if (DownvoteActive == true) {
+
+                    checkUser.doc(voteId).update({
+                        enableDownvote: false
+                    }).then(() => {
+                        countDownVote()
+                        DownvoteActive = false
+
+                    })
+                } else {
+                    checkUser.doc(voteId).update({
+                        enableDownvote: true
+                    }).then(() => {
+                        disableDownVote()
+                        DownvoteActive = true
+                    })
+
+                }
 
             }
-
-        }
-    })
+        })
     }
 }
 

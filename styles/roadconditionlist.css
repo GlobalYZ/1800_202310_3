@@ -67,10 +67,15 @@ h2 {
 }
 
 .btn {
-  background-color: #f6efa0;
+  background-color: #ffffcc;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.list-group-item:hover {
+  background-color: #ffc107;
+  color: white;
 }
 
 .user-card {
@@ -88,8 +93,19 @@ h2 {
 }
 
 .list-group-item:hover {
-  background-color: black;
+  background-color: #ffc107;
   color: white;
+}
+
+.profile-image-container{
+  display: flex;
+  align-items: center;
+  height:168px;
+}
+
+.card{
+  height:160px;
+  overflow: hidden;
 }
 
 
@@ -103,7 +119,7 @@ h2 {
   position: absolute;
   right: 20px;
   bottom: 20px;
-  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2);
 }
 
 .shadow {
