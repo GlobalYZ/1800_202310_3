@@ -19,6 +19,8 @@ p {
 
 .roadconditionphoto img {
   width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
   padding: 5px;
   border-radius: 10px;
   max-height: 500px;
@@ -90,16 +92,6 @@ h2 {
   color: white;
 }
 
-@media screen and (max-width:550px) {
-  .user-card {
-      max-width: 400px !important;
-  }
-
-  .list_group {
-      max-width: 400px !important;
-  }
-
-}
 
 .detail-votecard {
   background-color: #f6efa0;
@@ -165,4 +157,27 @@ h2 {
   font-size: 24px;
   /* Adjust the font size according to your preference */
   padding: 0px 8px;
+}
+
+@media screen and (max-width:550px) {
+  .user-card {
+      max-width: 400px !important;
+  }
+
+  .list_group {
+      max-width: 400px !important;
+  }
+
+}
+
+@media screen and (max-width: 768px) {
+
+  .detail-votecard {
+      right: 10px;
+      bottom: 10px;
+  }
+
+  .details {
+      margin-bottom: 52px;
+  }
 }

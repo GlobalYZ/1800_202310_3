@@ -68,6 +68,8 @@ function populateRoadConditonList() {
                             roadConditionCard.querySelector('.editPost').onclick = () => editPost(doc.id, city);
                             roadConditionCard.querySelector('.deletePost').onclick = () => deletePost(doc.id, city);
 
+                            roadConditionCard.querySelector('.post').onclick = () => jumpToDetail(doc.id, city);
+
                             roadConditionCardGroup.appendChild(roadConditionCard);
                         })
                     }
@@ -178,6 +180,8 @@ function confirmDelete() {
         console.error("Error removing document: ", error);
     });
 
+    window.location.reload();
+
 }
 
 
@@ -188,4 +192,11 @@ function changeCities() {
     db.collection("users").doc(uid).update({
         homeCity: type
     })
+}
+
+function jumpToDetail(docId, city) {
+    let url = $.UrlUpdateParams("./roadconditiondetail.html", "postId", docId);
+    let new_url = $.UrlUpdateParams(url, "city", city);
+    console.log(new_url)
+    window.location.href=new_url
 }
