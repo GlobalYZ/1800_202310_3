@@ -94,6 +94,7 @@ function setMap(currentAddress) {
             marker.type = doc.data().type
             marker.latitude = doc.data().latitude
             marker.longitude = doc.data().longitude
+            marker.city = doc.data().city
             marker.postId = doc.id
             markers.push(marker)
         })
@@ -176,6 +177,7 @@ function setMultiMap() {
 
     db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(location_1.city).get().then(list => {
         list.forEach(doc => {
+            console.log(doc)
             var marker = new Object();
             marker.title = doc.data().title
             marker.address = doc.data().address
@@ -229,7 +231,7 @@ function setMultiMap() {
 
 // False indicates that user denied to give the current address
 setupGeneral()
-map = setMap(false)
+setMap(false)
 
 
 // $(".navigationMap-multiSearch-button").click(function (e, map) {
@@ -251,7 +253,7 @@ $("body").on('click', ".navigationMap-multiSearch-button", function () {
 
 function popup(e) {
     var elem = document.getElementsByClassName("popupBox")[0]
-    elem.setAttribute("style", "opacity:0;dispay:none;");
+    elem.setAttribute("style", "opacity:0;dispay:none;z-index:10");
 
 
     setTimeout(function () {
@@ -260,13 +262,13 @@ function popup(e) {
                 currentMarker = markers[i]
                 document.getElementsByClassName("voteIcon")[0].addEventListener("click", upvote)
                 document.getElementsByClassName("voteIcon")[1].addEventListener("click", downvote)
+                console.log(currentMarker)
                 checkVotable()
                 document.getElementsByClassName("popup-title")[0].innerHTML = markers[i].title
                 document.getElementsByClassName("popup-addressInput")[0].innerHTML = markers[i].address.substring(0, markers[i].address.indexOf(", BC"))
                 document.getElementsByClassName("popup-description")[0].innerHTML = markers[i].description
                 document.getElementsByClassName("upvotes")[0].innerHTML = markers[i].likes
                 document.getElementsByClassName("downvotes")[0].innerHTML = markers[i].dislikes
-                console.log(currentMarker)
             }
         }
         elem.setAttribute("style", "opacity:1;dispay:block;")
@@ -321,7 +323,7 @@ function jumpToDetail() {
 
 function closePopUp(event) {
     var elem = document.getElementsByClassName("popupBox")[0];
-    elem.setAttribute("style", "opacity:0;dispay:none;");
+    elem.setAttribute("style", "opacity:0;dispay:none;z-index:-1;");
     event.stopPropagation(); // prevent jumpToDetail from triger
     var up = document.getElementsByClassName("voteIcon")[0];
     var down = document.getElementsByClassName("voteIcon")[0];

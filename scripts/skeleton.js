@@ -1,9 +1,6 @@
 var isNvbarOpen = false;
 
-// ---------------------------------------------------
-// This function loads the parts of your skeleton
-// (navbar, footer, and other things) into html doc.
-// ---------------------------------------------------
+
 function loadSkeleton() { // message used to tell which page we are loading
     console.log(document.getElementById("skeleton").getAttribute("message"))
 
@@ -49,7 +46,19 @@ function loadSkeleton() { // message used to tell which page we are loading
 }
 
 function getNavbar() {
-    console.log(localStorage.getItem("loginStatus"))
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            var currentUser = db.collection("users").doc(user.uid)
+            console.log(currentUser)
+            localStorage.setItem("loginStatus", "true")
+            localStorage.setItem("uid", user.uid)
+            localStorage.setItem("userName", user.displayName)
+        }else{
+            localStorage.removeItem("uid");
+            localStorage.removeItem("userName");
+            localStorage.removeItem("loginStatus");
+        }
+    })
 
     if (localStorage.getItem("loginStatus") == "true") {
         console.log(111)
@@ -62,13 +71,11 @@ function getNavbar() {
 }
 
 function checkGuard() {
-
-
-    if (localStorage.getItem("loginStatus") == "false") {
-
-        console.log($('#guardContainerHolder').load('../components/navigationGuards.html'));
-    }
-
+    firebase.auth().onAuthStateChanged(user => {
+        if(!user){
+            console.log($('#guardContainerHolder').load('../components/navigationGuards.html'));
+        }
+    })
 }
 
 
@@ -133,8 +140,6 @@ loadSkeleton();
 
 // define the navbar search event
 function navbarSearch() {
-
-    console.log(222)
     var address = $(".nav-searchbar-input").val()
     console.log(address)
     $.ajax({
@@ -166,7 +171,6 @@ function navbarSearch() {
 // document.getElementById("navbarButton").addEventListener("click", navbarOpen)
 
 function navbarOpen(){
-    console.log(111)
     if(isNvbarOpen == false){
         document.getElementById("navbar-searchForm").setAttribute("style", "display:none;")
         isNvbarOpen = true

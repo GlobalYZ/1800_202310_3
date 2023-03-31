@@ -17,6 +17,7 @@ function getScroll(){
 }
 
 function setup(){
+    startLoading()
     city = $.Request("city")
     postId = $.Request("postId")
     console.log(city + " " + postId)
@@ -37,6 +38,9 @@ function setup(){
             var htmlContent = document.getElementsByClassName("detail-image-container")[0].innerHTML
             console.log(htmlContent)
             $(".detail-image-container").html(htmlContent + html)
+            if(i == images.length -1){
+                finishLoading()
+            }
 
         }
     })
@@ -231,6 +235,16 @@ function downvote() {
         }
     })
     }
+}
+
+function startLoading(){
+    var loadingElem = document.getElementById("loadingHolder");
+    loadingElem.setAttribute("style", "display:flex;")
+}
+
+function finishLoading(){
+    var loadingElem = document.getElementById("loadingHolder");
+    loadingElem.setAttribute("style", "display:none;")
 }
 
 getScroll()
