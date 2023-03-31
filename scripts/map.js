@@ -239,7 +239,7 @@ function addMarkers(markers) {
 
 function popup(e) {
     var elem = document.getElementsByClassName("popupBox")[0]
-    elem.setAttribute("style", "opacity:0;dispay:none;");
+    elem.setAttribute("style", "opacity:0;dispay:none;z-index:10;");
 
 
     setTimeout(function () {
@@ -254,10 +254,6 @@ function popup(e) {
                 document.getElementsByClassName("popup-description")[0].innerHTML = markers[i].description
                 document.getElementsByClassName("upvotes")[0].innerHTML = markers[i].likes
                 document.getElementsByClassName("downvotes")[0].innerHTML = markers[i].dislikes
-                
-
-
-
             }
         }
         elem.setAttribute("style", "opacity:1;dispay:block;")
@@ -268,7 +264,6 @@ function popup(e) {
 function checkVotable() {
     var checkUser = db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).doc(currentMarker.postId).collection("voteRecords")
     checkUser.where("votedUser", "==", localStorage.getItem("uid")).get().then(doc => {
-        console.log(doc.docs[0].data())
         if (doc.empty == false) {
             if (doc.docs[0].data().enableUpvote == false) {
                 var elem = document.getElementsByClassName("voteIcon")[0]
@@ -295,21 +290,18 @@ function checkVotable() {
         }
         console.log("UpvoteActive" + UpvoteActive)
         console.log("DownvoteActive" + DownvoteActive)
-
-        // console.log(doc.data().enableDownvote)
     })
-
-
 }
 
 function jumpToDetail() {
-    let url = $.UrlUpdateParams("./roadConditionDetail", "postId", currentMarker.postId);
-    window.location.href=url
+    let url = $.UrlUpdateParams("./roadconditiondetail.html", "postId", currentMarker.postId);
+    let new_url = $.UrlUpdateParams(url, "city", addressObj.city);
+    window.location.href=new_url
 }
 
 function closePopUp(event) {
     var elem = document.getElementsByClassName("popupBox")[0];
-    elem.setAttribute("style", "opacity:0;dispay:none;");
+    elem.setAttribute("style", "opacity:0;dispay:none;z-index:-1;");
     event.stopPropagation(); // prevent jumpToDetail from triger
     var up = document.getElementsByClassName("voteIcon")[0];
     var down = document.getElementsByClassName("voteIcon")[0];
@@ -429,15 +421,7 @@ function upvote() {
 
         }
     })
-
     }
-
-
-
-   
-
-
-
 }
 
 function downvote() {

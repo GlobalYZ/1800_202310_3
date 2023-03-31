@@ -6,14 +6,12 @@ var addressObj = new Object();
 var submitted = false;
 
 function preview() {
+    console.log("before add image " + window.imageFiles)
     var imageUrl = URL.createObjectURL(event.target.files[0]);
-    console.log(imageUrl)
+    console.log(event.target.files[0])
     window.imageFiles.push(event.target.files[0])
+    console.log("added image " + window.imageFiles)
 
-    // fileToBase64(event.target.files[0]).then((result)=>{
-    //     var base64 = "data:image/png;base64," + result;
-    // window.base64List.push(base64)
-    // frame.src = base64
     let element = document.createElement("div");
     $(element).addClass("reportImageContainer");
     $("#reportImagePreview").append(element);
@@ -32,9 +30,10 @@ function clearImage() {
     var elems = document.getElementsByClassName("reportImageContainer")
     for (var i = 0; i < elems.length; i++) {
         if (i == index) {
+            console.log("I am deleting", index)
             elems[i].remove()
-            window.imageFiles.splice(index, index + 1)
-            console.log(window.imageFiles)
+            window.imageFiles.splice(index, 1)
+            console.log("after clear image", window.imageFiles)
         }
     }
 }
@@ -96,13 +95,6 @@ function fileToBase64(file) {
 }
 
 
-// db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection("Richmond").get().then(list => {
-//     list.forEach(doc => {
-//         console.log(doc.data().address)
-//     })
-// })
-// console.log(data)
-
 
 function submit() {
     
@@ -138,10 +130,6 @@ function submit() {
             storageRef.put(imageFiles[index]).then((res)=>{
                 primaryMessage("images saved to server");
         })
-        
-        
-           
-            
         }
     }
 }
@@ -161,6 +149,10 @@ function passURL(index){
         
         imageUrls.push(url)
         console.log(imageUrls)
+        if(imageUrls.length == imageFiles.length && window.submitted == false){
+            console.log("I am ready to submit images: " + imageUrls.length)
+            console.log(imageUrls)
+        }
         if (imageUrls.length == imageFiles.length && window.submitted == false) {
             console.log(1111)
             db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(addressObj.city).add({
@@ -232,5 +224,3 @@ function primaryMessage(message){
         elem.setAttribute("style", "top:120px;opacity:0;display:none;")
     }, 2000)
 }
-
-
