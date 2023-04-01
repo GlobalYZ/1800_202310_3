@@ -59,8 +59,10 @@
                         <p>Are you sure you want to log out?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary close" id="logOutConfirm" data-bs-dismiss="modal" aria-label="Cancel">Yes, Log Me Out.</button>
-                        <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal" aria-label="Close">No, Take Me Back.</button>
+                        <button type="button" class="btn btn-secondary close" id="logOutConfirm" data-bs-dismiss="modal"
+                            aria-label="Cancel">Yes, Log Me Out.</button>
+                        <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal"
+                            aria-label="Close">No, Take Me Back.</button>
                     </div>
                 </div>
             </div>
@@ -83,8 +85,10 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary editConfirm" id="editConfirm" data-bs-dismiss="modal" aria-label="Confirm" onclick="submitEdit()">Submit My Edits</button>
-                        <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal" aria-label="Cancel">Cancel My Edits</button>
+                        <button type="button" class="btn btn-secondary editConfirm" id="editConfirm"
+                            data-bs-dismiss="modal" aria-label="Confirm" onclick="submitEdit()">Submit My Edits</button>
+                        <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal"
+                            aria-label="Cancel">Cancel My Edits</button>
                     </div>
                 </div>
             </div>
@@ -102,14 +106,17 @@
                         <p>Are you sure you want to delete this post?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary editConfirm" id="editConfirm" data-bs-dismiss="modal" aria-label="Confirm" onclick="confirmDelete()">Delete My Post</button>
-                        <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal" aria-label="Cancel">Do Not Delete</button>
+                        <button type="button" class="btn btn-secondary editConfirm" id="editConfirm"
+                            data-bs-dismiss="modal" aria-label="Confirm" onclick="confirmDelete()">Delete My
+                            Post</button>
+                        <button type="button" class="btn btn-secondary close" data-bs-dismiss="modal"
+                            aria-label="Cancel">Do Not Delete</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Delete Popup ends here-->
-    
+
         <!-- User Profile starts here-->
         <div class="col-md-3">
             <div class="px-4 py-5 my-5 text-center welcome-banner">
@@ -119,22 +126,31 @@
                 <!-- User Profile starts here-->
 
                 <ul class="list-group">
-                        <li class="list-group-item" id="setHomeCity">
+                    <li class="list-group-item" id="setHomeCity">
 
-                                <label id="citiesLabel" for="cities">Set Home City</label>
-                                <select class="form-select" aria-label="Default select example" id="cities" onchange="changeCities()">
-                                <option value="Burnaby" id="Burnaby">Burnaby</option>
-                                <option value="New Westminster" id="New Westminster">New Westminster</option>
-                                <option value="North Vancouver" id="North Vancouver">North Vancouver</option>
-                                <option value="Richmond" id="Richmond">Richmond</option>
-                                <option value="Surrey" id="Surrey">Surrey</option>
-                                <option value="Vancouver" id="Vancouver">Vancouver</option>
-                                <option value="West Vancouver" id="West Vancouver">West Vancouver</option>
-                                </select>
+                        <label id="citiesLabel" for="cities">Set Home City</label>
+                        <select class="form-select" aria-label="Default select example" id="cities"
+                            onchange="changeCities()">
+                            <option value="Burnaby" id="Burnaby">Burnaby</option>
+                            <option value="New Westminster" id="New Westminster">New Westminster</option>
+                            <option value="North Vancouver" id="North Vancouver">North Vancouver</option>
+                            <option value="Richmond" id="Richmond">Richmond</option>
+                            <option value="Surrey" id="Surrey">Surrey</option>
+                            <option value="Vancouver" id="Vancouver">Vancouver</option>
+                            <option value="West Vancouver" id="West Vancouver">West Vancouver</option>
+                        </select>
 
-                        </li>
-                        <li class="list-group-item" id="logout">Show map markers</li>
-                        <li class="list-group-item" id="logout">Log Out</li>
+                    </li>
+                    <li class="list-group-item">
+                        <!-- map icon switch -->
+                        <label class="form-check-label" for="flexSwitchCheckDefault">Show Map Icon</label> 
+                        <div class="form-check form-switch justify-content-center row">
+                            <label class="form-check-label col" for="flexSwitchCheckDefault">Off</label>
+                            <input class="form-check-input mapIcon col" type="checkbox" role="switch" id="mapIcon flexSwitchCheckDefault" checked onclick="mapIconSwitch()">
+                            <label class="form-check-label col" for="flexSwitchCheckChecked">On</label>
+                        </div>
+                    </li>
+                    <li class="list-group-item" id="logout">Log Out</li>
                 </ul>
             </div>
         </div>
@@ -170,7 +186,7 @@
                         <!-- Upvotes starts here-->
                         <div class="detail-votecard-flex">
                             <span class="material-symbols-outlined detail-voteIcon">
-                            thumb_up
+                                thumb_up
                             </span>
                             <span class="upvotes" style="margin-right:10px">10</span>
                         </div>
@@ -198,17 +214,19 @@
         <div class="editCol col-md-1">
             <!-- Edit Buttons starts here-->
             <div class="edit row justify-content-center">
-                <button type="button" class="btn navi-bottons col-6 col-md-3 editPost" id="editPost" style="margin-top:15px;">
+                <button type="button" class="btn navi-bottons col-6 col-md-3 editPost" id="editPost"
+                    style="margin-top:15px;">
                     <span class="material-symbols-outlined"> edit </span>
                 </button>
-                <button type="button" class="btn navi-bottons-strong col-6 col-md-4 deletePost" id="deletePost" style="margin-top:15px;">
+                <button type="button" class="btn navi-bottons-strong col-6 col-md-4 deletePost" id="deletePost"
+                    style="margin-top:15px;">
                     <span class="material-symbols-outlined"> delete </span>
                 </button>
             </div>
         </div>
     </template>
     <!-- Template for Road Condition Card ends here-->
-    
+
     <!-- loading holder -->
     <div id="loadingHolder" style="display: none;"></div>
 

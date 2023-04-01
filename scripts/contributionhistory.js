@@ -23,22 +23,29 @@ function populateRoadConditonList() {
 
 
             db.collection("users").doc(userID).get().then(userInfo => {
-                let userId = localStorage.getItem("uid");
-                db.collection("users").doc(userId).get().then(doc => {
-                    homeCity = doc.data().homeCity;
-                    let formSelected = $(`#${homeCity}`) //.setAttribute('selected', 'True');
-                    formSelected.attr('selected', 'True');
-                })
+
+                homeCity = userInfo.data().homeCity;
+                enableIcon = userInfo.data().enableMapIcons;
+                console.log(`This is mapIcons ${enableIcon}`);
+                // Map icons enabled status
+                if (enableIcon == true) {
+                    $('.mapIcon').attr('checked', true);
+                } else {
+                    $('.mapIcon').attr('checked', false);
+                }
+
+                // Set home city
+                let formSelected = $(`#${homeCity}`) //.setAttribute('selected', 'True');
+                formSelected.attr('selected', 'True');
 
 
-                roadConditions = userInfo.data().roadConditionIds;;
+
+                roadConditions = userInfo.data().roadConditionIds;
+                if (roadConditions == 0) {
+                    finishLoading();
+                }
                 console.log(roadConditions);
                 roadConditions.forEach(post => {
-
-                    // db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).get().then(allRoadConditions => {
-                    //     roadConditions = allRoadConditions.docs;
-                    //     console.log(roadConditions);
-                    //     let cardCounter = 0;
 
                     let allCities = ["Burnaby", "New Westminster", "North Vancouver", "Richmond", "Surrey", "Vancouver", "West Vancouver"];
 
@@ -72,9 +79,9 @@ function populateRoadConditonList() {
                             roadConditionCard.querySelector('.post').onclick = () => jumpToDetail(doc.id, city);
 
                             roadConditionCardGroup.appendChild(roadConditionCard);
-            
+
                         })
-                        if(city == "West Vancouver"){
+                        if (city == "West Vancouver") {
                             finishLoading()
                         }
                     }
@@ -199,19 +206,39 @@ function changeCities() {
     })
 }
 
+function mapIconSwitch() {
+    const userId = localStorage.getItem("uid")
+
+    db.collection("users").doc(userId).get().then(userInfo => {
+
+        let enableIcon = userInfo.data().enableMapIcons;
+
+        if (enableIcon == true) {
+            db.collection("users").doc(userId).update({
+                enableMapIcons: false
+            })
+        } else {
+            db.collection("users").doc(userId).update({
+                enableMapIcons: true
+            })
+        }
+    })
+}
+
+
 function jumpToDetail(docId, city) {
     let url = $.UrlUpdateParams("./roadconditiondetail.html", "postId", docId);
     let new_url = $.UrlUpdateParams(url, "city", city);
     console.log(new_url)
-    window.location.href=new_url
+    window.location.href = new_url
 }
 
-function startLoading(){
+function startLoading() {
     var loadingElem = document.getElementById("loadingHolder");
     loadingElem.setAttribute("style", "display:flex;")
 }
 
-function finishLoading(){
+function finishLoading() {
     var loadingElem = document.getElementById("loadingHolder");
     loadingElem.setAttribute("style", "display:none;")
 }
