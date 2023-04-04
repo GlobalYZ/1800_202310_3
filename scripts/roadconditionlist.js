@@ -133,10 +133,10 @@ function checkVotable(docId, homeCity, cardCounter) {
 
 function countUpvote(docId, votes, homeCity, cardCounter) {
     db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).doc(docId).update({
-        likes: votes
+        likes: votes + 1
 
     }).then(() => {
-        document.getElementsByClassName("upvotes")[cardCounter].innerHTML = votes
+        document.getElementsByClassName("upvotes")[cardCounter].innerHTML = votes + 1
         // votes = votes + 1
 
     })
@@ -149,7 +149,7 @@ function countUpvote(docId, votes, homeCity, cardCounter) {
 function disableUpvote(docId, votes, homeCity, cardCounter) {
     console.log("you disable the upvote with", votes)
     db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).doc(docId).update({
-        likes: votes
+        likes: votes -1
 
     }).then(() => {
         document.getElementsByClassName("upvotes")[cardCounter].innerHTML = votes - 1
@@ -166,7 +166,7 @@ function disableUpvote(docId, votes, homeCity, cardCounter) {
 function disableDownVote(docId, votes, homeCity, cardCounter) {
     console.log("you disabled the downvote")
     db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(homeCity).doc(docId).update({
-        dislikes: votes
+        dislikes: votes -1
 
     }).then(() => {
         document.getElementsByClassName("downvotes")[cardCounter].innerHTML = votes - 1
@@ -229,7 +229,6 @@ function upvote(docId, homeCity) {
                     var voteId = doc.docs[0].id
                     var UpvoteActive = doc.docs[0].data().enableUpvote
                     if (UpvoteActive == true) {
-
                         checkUser.collection("voteRecords").doc(voteId).update({
                             enableUpvote: false
                         }).then(() => {
