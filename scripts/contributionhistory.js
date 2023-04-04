@@ -186,6 +186,12 @@ function deletePost(docId, city) {
 
 }
 
+function removeAllChildren(element) {
+    while (element.firstChild) {
+        element.removeChild(element.firstChild);
+    }
+}
+
 function confirmDelete() {
 
     let docId = currentdocId;
@@ -206,7 +212,9 @@ function confirmDelete() {
         console.error("Error removing document: ", error);
     });
 
-    window.location.reload();
+    removeAllChildren(document.getElementById("roadConditionCardGroup"))
+
+    // populateRoadConditonList() 
 
 }
 
