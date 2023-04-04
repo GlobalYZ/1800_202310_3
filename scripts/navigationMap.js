@@ -22,7 +22,6 @@ function setupGeneral() {
     elementContainer.setAttribute('style', 'height:' + (
         h - 56
     ) + 'px;margin-top:0;z-index:1;margin-top:55px;')
-    num = 222
 }
 
 
@@ -257,8 +256,16 @@ $("body").on('click', ".navigationMap-multiSearch-button", function () {
 })
 
 function popup(e) {
+    var h = window.innerHeight;
+    var w = window.innerWidth;
     var elem = document.getElementsByClassName("popupBox")[0]
-    elem.setAttribute("style", "opacity:0;dispay:none;z-index:10");
+
+    if (w < 550){
+        h-= 216
+        elem.setAttribute("style", "opacity:0;dispay:none;z-index:10;;margin-top:" + h + 'px;')
+    }else{
+        elem.setAttribute("style", "opacity:0;dispay:none;z-index:10;")
+    }
 
 
     setTimeout(function () {
@@ -276,7 +283,15 @@ function popup(e) {
                 document.getElementsByClassName("downvotes")[0].innerHTML = markers[i].dislikes
             }
         }
-        elem.setAttribute("style", "opacity:1;dispay:block;")
+        var h = window.innerHeight;
+        var w = window.innerWidth;
+        console.log(h)
+        if (w < 550){
+            h-= 216
+            elem.setAttribute("style", "opacity:1;dispay:block;margin-top:" + h + 'px;')
+        }else{
+            elem.setAttribute("style", "opacity:1;dispay:block;")
+        }
 
     }, 300)
 }
@@ -328,7 +343,17 @@ function jumpToDetail() {
 
 function closePopUp(event) {
     var elem = document.getElementsByClassName("popupBox")[0];
-    elem.setAttribute("style", "opacity:0;dispay:none;z-index:-1;");
+    var h = window.innerHeight;
+    var w = window.innerWidth;
+    var elem = document.getElementsByClassName("popupBox")[0]
+
+    if (w < 550){
+        h-= 216
+        elem.setAttribute("style", "opacity:0;dispay:none;z-index:-1;;margin-top:" + h + 'px;')
+    }else{
+        elem.setAttribute("style", "opacity:0;dispay:none;z-index:-1;")
+    }
+
     event.stopPropagation(); // prevent jumpToDetail from triger
     var up = document.getElementsByClassName("voteIcon")[0];
     var down = document.getElementsByClassName("voteIcon")[0];
