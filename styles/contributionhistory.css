@@ -74,6 +74,27 @@ h2 {
     justify-content: center;
 }
 
+.address {
+    text-align: left;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+}
+
+.description {
+    text-align: left;
+    overflow-wrap: break-word;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    padding:0;
+}
+
 .user-card {
     margin: 0 auto;
     /* set margin to 0 on top and bottom, and center horizontally */
@@ -143,6 +164,12 @@ h2 {
     background-color: #f6efa0;
 }
 
+.card_img{
+    height:28px;
+    width:28px;
+    margin-bottom:10px;
+  }
+
 .votecontainer .col {
     display: flex;
     align-items: center;
@@ -156,12 +183,13 @@ h2 {
 .profile-image-container{
     display: flex;
     align-items: center;
-    height:168px;
 }
 
 .card{
     height:160px;
     overflow: hidden;
+    padding:10px;
+    margin-bottom:15px;
 }
 
 .titleHeading {
@@ -174,6 +202,11 @@ h2 {
 @media screen and (max-width:550px) {
     .user-card {
         max-width: 400px !important;
+    }
+
+    .card {
+        height: unset!important;
+        padding-bottom:20px !important;
     }
 
     .list_group {

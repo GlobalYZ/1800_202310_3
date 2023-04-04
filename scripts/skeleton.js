@@ -5,11 +5,27 @@ function loadSkeleton() { // message used to tell which page we are loading
     console.log(document.getElementById("skeleton").getAttribute("message"))
 
     if (document.getElementById("skeleton").getAttribute("message") == "landing") {
-        getNavbar();
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                var currentUser = db.collection("users").doc(user.uid)
+                console.log(currentUser)
+                localStorage.setItem("loginStatus", "true")
+                localStorage.setItem("uid", user.uid)
+                localStorage.setItem("userName", user.displayName)
+                var elem = document.getElementById("loginButton")
+                elem.setAttribute("style", "opacity:0;")
+                console.log(elem)
+                console.log($('#navbarPlaceholder').load('./components/navbar-loggedIn.html'));
+            }else{
+                localStorage.removeItem("uid");
+                localStorage.removeItem("userName");
+                localStorage.removeItem("loginStatus");
+                console.log($('#navbarPlaceholder').load('./components/navbar.html'));
+            }
+        })
         console.log($('#footerPlaceholder').load('./components/footer.html'));
-    } else if (document.getElementById("skeleton").getAttribute("message") == "loginpage") {
+    } else if (document.getElementById("skeleton").getAttribute("message") == "login") {
         getNavbar();
-        
     } else if (document.getElementById("skeleton").getAttribute("message") == "weatheralert") {
         getNavbar();
         console.log($('#footerPlaceholder').load('../components/footer.html'));
@@ -55,20 +71,14 @@ function getNavbar() {
             localStorage.setItem("loginStatus", "true")
             localStorage.setItem("uid", user.uid)
             localStorage.setItem("userName", user.displayName)
+            console.log($('#navbarPlaceholder').load('../components/navbar-loggedIn.html'));
         }else{
             localStorage.removeItem("uid");
             localStorage.removeItem("userName");
             localStorage.removeItem("loginStatus");
+            console.log($('#navbarPlaceholder').load('../components/navbar.html'));
         }
     })
-
-    if (localStorage.getItem("loginStatus") == "true") {
-        console.log(111)
-        console.log($('#navbarPlaceholder').load('../components/navbar-loggedIn.html'));
-
-    } else {
-        console.log($('#navbarPlaceholder').load('../components/navbar.html'));
-    }
 
 }
 

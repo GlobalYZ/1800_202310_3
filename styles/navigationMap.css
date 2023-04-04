@@ -150,3 +150,14 @@
     color:#f8b943;
     cursor: pointer;
 }
+
+@media screen and (max-width:550px) {
+    .navigationMap-multiSearch .form-outline .form-control {
+        border:1px solid rgba(0,0,0,0.2);
+        width:60vw;
+    }
+    
+    .navigationMap-multiSearch .form-outline #search1{
+        margin-bottom:5px;
+    }
+}

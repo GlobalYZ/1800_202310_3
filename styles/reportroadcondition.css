@@ -117,3 +117,9 @@ footer {
     right:10px;
     cursor: pointer;
 }
+
+@media screen and (max-width:550px) {
+    .addressButton {
+        margin-top:10px;
+    }
+}

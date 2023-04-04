@@ -2,6 +2,21 @@ var currentdocId = "";
 var currentCity = "";
 startLoading()
 
+function findImageUrl(type){
+    console.log(type)
+    if(type == "Road Closure" || type == "Construction"){
+        return "../images/construction_icon.png"
+    }else if(type == "Icy Road"){
+        return "../images/snow_icon.png"
+    }else if(type == "Bush Fire"){
+        return "../images/bushfire_icon.png"
+    }else if(type == "Accident"){
+        return "../images/accident_icon.png"
+    }else if(type == "Traffic Jam"){
+        return "../images/traffic_icon.png"
+    }
+}
+
 function populateRoadConditonList() {
     let roadConditionCardTemplate = document.getElementById("roadConditionCardTemplate");
     let roadConditionCardGroup = document.getElementById("roadConditionCardGroup");
@@ -51,35 +66,34 @@ function populateRoadConditonList() {
 
                     allCities.forEach(city => {
                         db.collection("roadConditions").doc("SfAsSuFAr88IIAPo2edz").collection(city).doc(post).get().then(doc => {
+                            if(doc.data()){
+                                var img = doc.data().imageUrl; //gets the image field
+                                var title = doc.data().title; //gets the name field
+                                var type = doc.data().type; //gets the type field
+                                var upvotes = doc.data().likes; //gets the amount of likes
+                                var downvotes = doc.data().dislikes; //gets the amount of dislikes
+                                var city = doc.data().city;
+                                var address = doc.data().address;
+                                var description = doc.data().description; //gets the description field
 
-                            var img = doc.data().imageUrl; //gets the image field
-                            var title = doc.data().title; //gets the name field
-                            var type = doc.data().type; //gets the type field
-                            var upvotes = doc.data().likes; //gets the amount of likes
-                            var downvotes = doc.data().dislikes; //gets the amount of dislikes
-                            var city = doc.data().city;
-                            var address = doc.data().address;
-                            var description = doc.data().description; //gets the description field
-                            console.log(title);
+                                let roadConditionCard = roadConditionCardTemplate.content.cloneNode(true);
+                                let roadConditionCardImage = roadConditionCard.querySelector('.photo');
+                                roadConditionCardImage.setAttribute('src', img[0]);
+                                roadConditionCard.querySelector('.titleHeading').innerHTML = title;     //equiv getElementByClassName
+                                // roadConditionCard.querySelector('.type').innerHTML = `Type: ${type}`;
+                                var icon = findImageUrl(type)
+                                roadConditionCard.querySelector('.card_img').setAttribute("src", icon)                    
+                                roadConditionCard.querySelector('.upvotes').innerHTML = upvotes;
+                                roadConditionCard.querySelector('.downvotes').innerHTML = downvotes;
+                                // roadConditionCard.querySelector('.city').innerHTML = city;
+                                roadConditionCard.querySelector('.address').innerHTML = address;
+                                roadConditionCard.querySelector('.description').innerHTML = `${description}`;
+                                roadConditionCard.querySelector('.editPost').onclick = () => editPost(doc.id, city);
+                                roadConditionCard.querySelector('.deletePost').onclick = () => deletePost(doc.id, city);
+                                roadConditionCard.querySelector('.post').onclick = () => jumpToDetail(doc.id, city);
 
-                            let roadConditionCard = roadConditionCardTemplate.content.cloneNode(true);
-                            let roadConditionCardImage = roadConditionCard.querySelector('.photo');
-                            roadConditionCardImage.setAttribute('src', img[0]);
-                            roadConditionCard.querySelector('.titleHeading').innerHTML = title;     //equiv getElementByClassName
-                            roadConditionCard.querySelector('.type').innerHTML = `Type: ${type}`;
-                            roadConditionCard.querySelector('.upvotes').innerHTML = upvotes;
-                            roadConditionCard.querySelector('.downvotes').innerHTML = downvotes;
-                            roadConditionCard.querySelector('.city').innerHTML = city;
-                            roadConditionCard.querySelector('.address').innerHTML = address;
-                            roadConditionCard.querySelector('.description').innerHTML = `Description: ${description}`;
-
-                            roadConditionCard.querySelector('.editPost').onclick = () => editPost(doc.id, city);
-                            roadConditionCard.querySelector('.deletePost').onclick = () => deletePost(doc.id, city);
-
-                            roadConditionCard.querySelector('.post').onclick = () => jumpToDetail(doc.id, city);
-
-                            roadConditionCardGroup.appendChild(roadConditionCard);
-
+                                roadConditionCardGroup.appendChild(roadConditionCard);
+                            }
                         })
                         if (city == "West Vancouver") {
                             finishLoading()
