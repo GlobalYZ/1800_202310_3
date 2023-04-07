@@ -7,8 +7,7 @@ var markers = [];
 var currentMarker;
 var UpvoteActive;
 var DownvoteActive;
-
-console.log(localStorage.getItem("uid"))
+var uid = localStorage.getItem("uid")
 console.log(localStorage.getItem("userName"))
 console.log(localStorage.getItem("loginStatus"))
 
@@ -174,12 +173,6 @@ function setMap(currentAddress) {
 
         // add current location as primary marker
         marker = new L.marker([currentAddress.latitude, currentAddress.longitude]).addTo(map);
-        // loop that adds many markers to the map
-        // for (let i = 0; i < points.length; i++) {
-        //     const [lat, lng, popupText] = points[i];
-
-        //     marker = new L.marker([lat, lng]).bindPopup(popupText).addTo(map);
-        // }
 
         addMarkers(markers)
 
@@ -189,8 +182,8 @@ function setMap(currentAddress) {
 }
 
 function addMarkers(markers) {
-    console.log(markers)
-    db.collection("users").doc(localStorage.getItem('uid')).get().then(doc => {
+    console.log(uid)
+    db.collection("users").doc(uid).get().then(doc => {
         ifShowMarkers = doc.data().enableMapIcons
         if (ifShowMarkers) {
             for (var i = 0; i < markers.length; i++) {
